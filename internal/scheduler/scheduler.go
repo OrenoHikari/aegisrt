@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"sort"
 	"sync"
-	"sync/atomic"
 	"time"
 
 	"aegisrt/internal/agent"
+	"aegisrt/internal/pressure"
 	"aegisrt/internal/resource"
 )
 
@@ -22,6 +22,11 @@ var (
 // Executor is implemented by runtime.Runner.
 type Executor interface {
 	Run(ctx context.Context, acb *agent.ACB) error
+}
+
+// PressureSource supplies Linux resource-pressure samples.
+type PressureSource interface {
+	Sample() (pressure.Snapshot, error)
 }
 
 // Phase describes the state of a scheduled job.
@@ -38,6 +43,7 @@ const (
 type Job struct {
 	Agent   *agent.ACB
 	Timeout time.Duration
+	Demand  Demand
 }
 
 // Record is the Scheduler's observable state for one Agent.
@@ -51,6 +57,15 @@ type Record struct {
 	StartedAt   *time.Time `json:"started_at,omitempty"`
 	FinishedAt  *time.Time `json:"finished_at,omitempty"`
 
+	WorkerID int `json:"worker_id,omitempty"`
+
+	Demand Demand `json:"demand"`
+
+	DispatchScore  float64            `json:"dispatch_score,omitempty"`
+	DispatchReason string             `json:"dispatch_reason,omitempty"`
+	Pressure       *pressure.Snapshot `json:"pressure_at_dispatch,omitempty"`
+	PressureError  string             `json:"pressure_error,omitempty"`
+
 	Error    string `json:"error,omitempty"`
 	ExitCode *int   `json:"exit_code,omitempty"`
 
@@ -59,53 +74,95 @@ type Record struct {
 	ResourceStats *resource.Stats `json:"resource_stats,omitempty"`
 }
 
-// Scheduler provides a bounded queue and a fixed number of execution slots.
-type Scheduler struct {
-	executor Executor
-	queue    chan Job
-	stop     chan struct{}
+// Options configures the Scheduler.
+type Options struct {
+	WorkerCount    int
+	QueueSize      int
+	Policy         Policy
+	PressureSource PressureSource
+}
 
-	workerCount int
+type queuedJob struct {
+	Job
+	submittedAt time.Time
+	sequence    uint64
+}
+
+// Scheduler provides a bounded policy-driven queue.
+type Scheduler struct {
+	executor       Executor
+	workerCount    int
+	queueCapacity  int
+	policy         Policy
+	pressureSource PressureSource
+
+	mu       sync.Mutex
+	cond     *sync.Cond
+	queue    []queuedJob
+	records  map[string]*Record
+	sequence uint64
+	stopped  bool
 
 	startOnce sync.Once
 	stopOnce  sync.Once
-	stopped   atomic.Bool
 
 	workers sync.WaitGroup
 	pending sync.WaitGroup
-
-	mu      sync.RWMutex
-	records map[string]*Record
 }
 
-// New creates a Scheduler.
-//
-// queueSize limits the number of Agents waiting to be executed.
-// workerCount limits the number of Agents running concurrently.
+// New creates a backward-compatible FIFO Scheduler.
 func New(
 	executor Executor,
 	workerCount int,
 	queueSize int,
 ) (*Scheduler, error) {
+	return NewWithOptions(
+		executor,
+		Options{
+			WorkerCount: workerCount,
+			QueueSize:   queueSize,
+			Policy:      FIFOPolicy{},
+		},
+	)
+}
+
+// NewWithOptions creates a policy-driven Scheduler.
+func NewWithOptions(
+	executor Executor,
+	options Options,
+) (*Scheduler, error) {
 	if executor == nil {
 		return nil, fmt.Errorf("executor is required")
 	}
 
-	if workerCount <= 0 {
+	if options.WorkerCount <= 0 {
 		return nil, fmt.Errorf("worker count must be greater than zero")
 	}
 
-	if queueSize <= 0 {
+	if options.QueueSize <= 0 {
 		return nil, fmt.Errorf("queue size must be greater than zero")
 	}
 
-	return &Scheduler{
-		executor:    executor,
-		queue:       make(chan Job, queueSize),
-		stop:        make(chan struct{}),
-		workerCount: workerCount,
-		records:     make(map[string]*Record),
-	}, nil
+	if options.Policy == nil {
+		options.Policy = FIFOPolicy{}
+	}
+
+	if options.PressureSource == nil {
+		options.PressureSource = zeroPressureSource{}
+	}
+
+	scheduler := &Scheduler{
+		executor:       executor,
+		workerCount:    options.WorkerCount,
+		queueCapacity:  options.QueueSize,
+		policy:         options.Policy,
+		pressureSource: options.PressureSource,
+		records:        make(map[string]*Record),
+	}
+
+	scheduler.cond = sync.NewCond(&scheduler.mu)
+
+	return scheduler, nil
 }
 
 // Start launches the fixed set of execution workers.
@@ -120,10 +177,6 @@ func (s *Scheduler) Start() {
 
 // Submit places an Agent in the bounded waiting queue.
 func (s *Scheduler) Submit(job Job) error {
-	if s.stopped.Load() {
-		return ErrSchedulerStopped
-	}
-
 	if job.Agent == nil {
 		return fmt.Errorf("Agent is required")
 	}
@@ -136,13 +189,37 @@ func (s *Scheduler) Submit(job Job) error {
 		return fmt.Errorf("Agent timeout must be greater than zero")
 	}
 
+	if job.Demand.isZero() {
+		job.Demand = balancedDemand()
+	}
+
+	if err := job.Demand.Validate(); err != nil {
+		return fmt.Errorf("invalid Agent demand: %w", err)
+	}
+
 	now := time.Now().UTC()
 
 	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if s.stopped {
+		return ErrSchedulerStopped
+	}
 
 	if _, exists := s.records[job.Agent.ID]; exists {
-		s.mu.Unlock()
 		return fmt.Errorf("%w: %s", ErrDuplicateAgent, job.Agent.ID)
+	}
+
+	if len(s.queue) >= s.queueCapacity {
+		return ErrQueueFull
+	}
+
+	s.sequence++
+
+	entry := queuedJob{
+		Job:         job,
+		submittedAt: now,
+		sequence:    s.sequence,
 	}
 
 	s.records[job.Agent.ID] = &Record{
@@ -150,25 +227,15 @@ func (s *Scheduler) Submit(job Job) error {
 		Role:         job.Agent.Role,
 		Phase:        PhaseQueued,
 		SubmittedAt:  now,
+		Demand:       job.Demand,
 		ResourceSpec: job.Agent.Resources,
 	}
 
 	s.pending.Add(1)
-	s.mu.Unlock()
+	s.queue = append(s.queue, entry)
+	s.cond.Signal()
 
-	select {
-	case s.queue <- job:
-		return nil
-
-	default:
-		s.mu.Lock()
-		delete(s.records, job.Agent.ID)
-		s.mu.Unlock()
-
-		s.pending.Done()
-
-		return ErrQueueFull
-	}
+	return nil
 }
 
 // Wait blocks until all accepted jobs have finished.
@@ -176,21 +243,22 @@ func (s *Scheduler) Wait() {
 	s.pending.Wait()
 }
 
-// Stop terminates idle Scheduler workers.
-//
-// Call Wait before Stop so that accepted jobs are not abandoned.
+// Stop wakes and terminates idle Scheduler workers.
 func (s *Scheduler) Stop() {
 	s.stopOnce.Do(func() {
-		s.stopped.Store(true)
-		close(s.stop)
+		s.mu.Lock()
+		s.stopped = true
+		s.cond.Broadcast()
+		s.mu.Unlock()
+
 		s.workers.Wait()
 	})
 }
 
 // Snapshot returns a point-in-time copy of all scheduling records.
 func (s *Scheduler) Snapshot() []Record {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
+	s.mu.Lock()
+	defer s.mu.Unlock()
 
 	result := make([]Record, 0, len(s.records))
 
@@ -209,45 +277,101 @@ func (s *Scheduler) worker(workerID int) {
 	defer s.workers.Done()
 
 	for {
-		select {
-		case job := <-s.queue:
-			s.execute(workerID, job)
-
-		case <-s.stop:
+		entry, ok := s.take(workerID)
+		if !ok {
 			return
 		}
+
+		s.execute(entry)
 	}
 }
 
-func (s *Scheduler) execute(workerID int, job Job) {
-	defer s.pending.Done()
-
-	startedAt := time.Now().UTC()
-
+func (s *Scheduler) take(workerID int) (queuedJob, bool) {
 	s.mu.Lock()
-	record := s.records[job.Agent.ID]
+	defer s.mu.Unlock()
+
+	for len(s.queue) == 0 && !s.stopped {
+		s.cond.Wait()
+	}
+
+	if len(s.queue) == 0 && s.stopped {
+		return queuedJob{}, false
+	}
+
+	now := time.Now().UTC()
+
+	snapshot, sampleErr := s.pressureSource.Sample()
+	if snapshot.Timestamp.IsZero() {
+		snapshot.Timestamp = now
+	}
+
+	candidates := make([]Candidate, 0, len(s.queue))
+
+	for _, entry := range s.queue {
+		candidates = append(candidates, Candidate{
+			ID:          entry.Agent.ID,
+			SubmittedAt: entry.submittedAt,
+			Sequence:    entry.sequence,
+			Demand:      entry.Demand,
+		})
+	}
+
+	decision := s.policy.Select(now, candidates, snapshot)
+
+	if decision.Index < 0 || decision.Index >= len(s.queue) {
+		decision = Decision{
+			Index:  0,
+			Reason: "policy returned invalid index; FIFO fallback",
+		}
+	}
+
+	entry := s.queue[decision.Index]
+	s.queue = append(
+		s.queue[:decision.Index],
+		s.queue[decision.Index+1:]...,
+	)
+
+	startedAt := now
+	record := s.records[entry.Agent.ID]
+
 	record.Phase = PhaseRunning
 	record.StartedAt = &startedAt
-	s.mu.Unlock()
+	record.WorkerID = workerID
+	record.DispatchScore = decision.Score
+	record.DispatchReason = decision.Reason
+
+	snapshotCopy := snapshot
+	record.Pressure = &snapshotCopy
+
+	if sampleErr != nil {
+		record.PressureError = sampleErr.Error()
+		record.DispatchReason += "; PSI unavailable, zero-pressure fallback"
+	}
+
+	return entry, true
+}
+
+func (s *Scheduler) execute(entry queuedJob) {
+	defer s.pending.Done()
 
 	ctx, cancel := context.WithTimeout(
 		context.Background(),
-		job.Timeout,
+		entry.Timeout,
 	)
 	defer cancel()
 
-	err := s.executor.Run(ctx, job.Agent)
-
+	err := s.executor.Run(ctx, entry.Agent)
 	finishedAt := time.Now().UTC()
 
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	record = s.records[job.Agent.ID]
+	record := s.records[entry.Agent.ID]
+
 	record.FinishedAt = &finishedAt
-	record.ExitCode = cloneInt(job.Agent.ExitCode)
-	record.CgroupPath = job.Agent.CgroupPath
-	record.ResourceStats = cloneStats(job.Agent.ResourceStats)
+	record.ExitCode = cloneInt(entry.Agent.ExitCode)
+	record.CgroupPath = entry.Agent.CgroupPath
+	record.ResourceStats = cloneStats(entry.Agent.ResourceStats)
 
 	if err != nil {
 		record.Phase = PhaseFailed
@@ -262,6 +386,11 @@ func cloneRecord(source *Record) Record {
 	result := *source
 	result.ExitCode = cloneInt(source.ExitCode)
 	result.ResourceStats = cloneStats(source.ResourceStats)
+
+	if source.Pressure != nil {
+		snapshot := *source.Pressure
+		result.Pressure = &snapshot
+	}
 
 	return result
 }
@@ -282,4 +411,12 @@ func cloneStats(source *resource.Stats) *resource.Stats {
 
 	value := *source
 	return &value
+}
+
+type zeroPressureSource struct{}
+
+func (zeroPressureSource) Sample() (pressure.Snapshot, error) {
+	return pressure.Snapshot{
+		Timestamp: time.Now().UTC(),
+	}, nil
 }
