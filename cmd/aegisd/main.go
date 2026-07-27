@@ -7,9 +7,12 @@ import (
 	"io"
 	"log"
 	"os"
+	"path/filepath"
+	"strconv"
 	"time"
 
 	"aegisrt/internal/agent"
+	"aegisrt/internal/resource"
 	agentRuntime "aegisrt/internal/runtime"
 )
 
@@ -22,13 +25,48 @@ func main() {
 
 	timeout := flag.Duration(
 		"timeout",
-		10*time.Second,
+		15*time.Second,
 		"maximum Agent execution time",
+	)
+
+	agentSeconds := flag.Uint64(
+		"agent-seconds",
+		3,
+		"number of Agent heartbeat iterations",
+	)
+
+	cpuPercent := flag.Uint64(
+		"cpu-percent",
+		25,
+		"Agent CPU quota as a percentage of one CPU",
+	)
+
+	memoryMiB := flag.Uint64(
+		"memory-mib",
+		128,
+		"Agent memory limit in MiB",
+	)
+
+	pidsMax := flag.Uint64(
+		"pids-max",
+		16,
+		"maximum number of processes in the Agent resource domain",
+	)
+
+	disableCgroup := flag.Bool(
+		"disable-cgroup",
+		false,
+		"run without cgroup isolation for local development only",
 	)
 
 	flag.Parse()
 
-	if _, err := os.Stat(*workerPath); err != nil {
+	absoluteWorkerPath, err := filepath.Abs(*workerPath)
+	if err != nil {
+		log.Fatalf("resolve worker path: %v", err)
+	}
+
+	if _, err := os.Stat(absoluteWorkerPath); err != nil {
 		log.Fatalf("worker file is unavailable: %v", err)
 	}
 
@@ -48,22 +86,52 @@ func main() {
 
 	output := io.MultiWriter(os.Stdout, logFile)
 
+	var resourceManager *resource.Manager
+
+	if !*disableCgroup {
+		resourceManager, err = resource.NewManagerFromCurrent()
+		if err != nil {
+			log.Fatalf("discover delegated cgroup: %v", err)
+		}
+
+		if err := resourceManager.Initialize(); err != nil {
+			log.Fatalf(
+				"initialize cgroup resource manager: %v",
+				err,
+			)
+		}
+	}
+
 	acb := agent.New(
 		"agent-hello-001",
 		"hello-worker",
 		"python3",
-		[]string{*workerPath, "--seconds", "3"},
+		[]string{
+			absoluteWorkerPath,
+			"--seconds",
+			strconv.FormatUint(*agentSeconds, 10),
+		},
 	)
 
-	ctx, cancel := context.WithTimeout(context.Background(), *timeout)
+	acb.Resources = resource.Spec{
+		CPUQuotaPercent: *cpuPercent,
+		MemoryMaxBytes:  *memoryMiB * 1024 * 1024,
+		PidsMax:         *pidsMax,
+	}
+
+	ctx, cancel := context.WithTimeout(
+		context.Background(),
+		*timeout,
+	)
 	defer cancel()
 
 	runner := agentRuntime.Runner{
-		Log: output,
+		Log:       output,
+		Resources: resourceManager,
 	}
 
 	if err := runner.Run(ctx, acb); err != nil {
-		fmt.Fprintf(os.Stderr, "runtime error: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Runtime error: %v\n", err)
 		os.Exit(1)
 	}
 }

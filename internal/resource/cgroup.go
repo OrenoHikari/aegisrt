@@ -18,9 +18,9 @@ var invalidName = regexp.MustCompile(`[^A-Za-z0-9_.-]+`)
 
 // Spec defines the resource boundary of one Agent.
 type Spec struct {
-	CPUQuotaPercent uint64
-	MemoryMaxBytes  uint64
-	PidsMax         uint64
+	CPUQuotaPercent uint64 `json:"cpu_quota_percent"`
+	MemoryMaxBytes  uint64 `json:"memory_max_bytes"`
+	PidsMax         uint64 `json:"pids_max"`
 }
 
 // Stats contains cgroup v2 accounting data for one Agent.
