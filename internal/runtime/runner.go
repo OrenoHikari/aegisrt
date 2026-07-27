@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os/exec"
+	"sync"
 	"time"
 
 	"aegisrt/internal/agent"
@@ -33,6 +34,8 @@ type Event struct {
 type Runner struct {
 	Log       io.Writer
 	Resources *resource.Manager
+
+	logMu sync.Mutex
 }
 
 func (r *Runner) emit(acb *agent.ACB, message string) {
@@ -50,8 +53,15 @@ func (r *Runner) emit(acb *agent.ACB, message string) {
 		ResourceStats: acb.ResourceStats,
 	}
 
-	encoder := json.NewEncoder(r.Log)
-	_ = encoder.Encode(event)
+	data, err := json.Marshal(event)
+	if err != nil {
+		return
+	}
+
+	r.logMu.Lock()
+	defer r.logMu.Unlock()
+
+	_, _ = r.Log.Write(append(data, '\n'))
 }
 
 // Run executes one Agent and records its lifecycle.
@@ -82,8 +92,9 @@ func (r *Runner) Run(ctx context.Context, acb *agent.ACB) error {
 	}
 
 	cmd := exec.Command(acb.Command, acb.Args...)
-	cmd.Stdout = r.Log
-	cmd.Stderr = r.Log
+	output := &lockedWriter{runner: r}
+	cmd.Stdout = output
+	cmd.Stderr = output
 
 	if err := cmd.Start(); err != nil {
 		acb.Error = err.Error()
@@ -179,4 +190,15 @@ func setExitCode(acb *agent.ACB, cmd *exec.Cmd) {
 
 	exitCode := cmd.ProcessState.ExitCode()
 	acb.ExitCode = &exitCode
+}
+
+type lockedWriter struct {
+	runner *Runner
+}
+
+func (w *lockedWriter) Write(data []byte) (int, error) {
+	w.runner.logMu.Lock()
+	defer w.runner.logMu.Unlock()
+
+	return w.runner.Log.Write(data)
 }
