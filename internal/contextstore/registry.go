@@ -1,6 +1,7 @@
 package contextstore
 
 import (
+	"encoding/hex"
 	"fmt"
 	"sort"
 	"strings"
@@ -9,80 +10,134 @@ import (
 )
 
 // Ref describes one context object required by an Agent.
+//
+// Key is a logical ContextFS reference name.
+// Digest is the immutable content identity after resolution.
+// SizeBytes is authoritative after ContextFS resolution.
 type Ref struct {
-	Key       string `json:"key"`
+	Key       string `json:"key,omitempty"`
+	Digest    string `json:"digest,omitempty"`
 	SizeBytes uint64 `json:"size_bytes"`
 }
 
-// Entry describes one context object currently considered resident.
+// Identity returns the canonical identity used for affinity matching.
+//
+// Two different logical names with the same SHA-256 digest represent
+// the same immutable context object.
+func (r Ref) Identity() string {
+	digest := strings.ToLower(strings.TrimSpace(r.Digest))
+
+	if digest != "" {
+		return "sha256:" + digest
+	}
+
+	return "key:" + strings.TrimSpace(r.Key)
+}
+
+// Entry describes one context object currently considered warm.
 type Entry struct {
-	Key        string    `json:"key"`
+	Identity   string    `json:"identity"`
+	Key        string    `json:"key,omitempty"`
+	Digest     string    `json:"digest,omitempty"`
 	SizeBytes  uint64    `json:"size_bytes"`
 	Hits       uint64    `json:"hits"`
 	AddedAt    time.Time `json:"added_at"`
 	LastUsedAt time.Time `json:"last_used_at"`
 }
 
-// Snapshot is an immutable view of the context registry.
+// Snapshot is an immutable view of the warm-context registry.
 type Snapshot struct {
 	Timestamp  time.Time        `json:"timestamp"`
 	Entries    map[string]Entry `json:"entries"`
 	TotalBytes uint64           `json:"total_bytes"`
 }
 
-// Registry tracks warm context objects.
+// Catalog defines the warm-context operations required by Scheduler.
+type Catalog interface {
+	Add(refs []Ref) error
+	Touch(refs []Ref) error
+	Snapshot() Snapshot
+}
+
+// Registry tracks warm context identities.
 //
-// M3-C stores metadata only. ContextFS will later own the actual data.
+// ContextFS owns the persistent object data. Registry tracks which
+// resolved immutable objects are currently warm for scheduling.
 type Registry struct {
 	mu      sync.RWMutex
 	entries map[string]Entry
 }
 
-// NewRegistry creates an empty context registry.
+// NewRegistry creates an empty warm-context registry.
 func NewRegistry() *Registry {
 	return &Registry{
 		entries: make(map[string]Entry),
 	}
 }
 
-// NormalizeRefs validates, deduplicates, and sorts context references.
+// NormalizeRefs validates, deduplicates, and sorts resolved references.
 func NormalizeRefs(refs []Ref) ([]Ref, error) {
-	sizes := make(map[string]uint64)
+	byIdentity := make(map[string]Ref)
 
 	for _, ref := range refs {
-		key := strings.TrimSpace(ref.Key)
+		ref.Key = strings.TrimSpace(ref.Key)
+		ref.Digest = strings.ToLower(
+			strings.TrimSpace(ref.Digest),
+		)
 
-		if key == "" {
-			return nil, fmt.Errorf("context key is required")
+		if ref.Key == "" && ref.Digest == "" {
+			return nil, fmt.Errorf(
+				"context key or digest is required",
+			)
+		}
+
+		if ref.Digest != "" {
+			if err := validateDigest(ref.Digest); err != nil {
+				return nil, err
+			}
 		}
 
 		if ref.SizeBytes == 0 {
 			return nil, fmt.Errorf(
 				"context %q size must be greater than zero",
-				key,
+				ref.Key,
 			)
 		}
 
-		if ref.SizeBytes > sizes[key] {
-			sizes[key] = ref.SizeBytes
+		identity := ref.Identity()
+		existing, exists := byIdentity[identity]
+
+		if !exists {
+			byIdentity[identity] = ref
+			continue
 		}
+
+		// Preserve the authoritative maximum size and a stable
+		// logical name when aliases share one digest.
+		if ref.SizeBytes > existing.SizeBytes {
+			existing.SizeBytes = ref.SizeBytes
+		}
+
+		if existing.Key == "" ||
+			(ref.Key != "" && ref.Key < existing.Key) {
+			existing.Key = ref.Key
+		}
+
+		byIdentity[identity] = existing
 	}
 
-	keys := make([]string, 0, len(sizes))
+	identities := make([]string, 0, len(byIdentity))
 
-	for key := range sizes {
-		keys = append(keys, key)
+	for identity := range byIdentity {
+		identities = append(identities, identity)
 	}
 
-	sort.Strings(keys)
+	sort.Strings(identities)
 
-	result := make([]Ref, 0, len(keys))
+	result := make([]Ref, 0, len(identities))
 
-	for _, key := range keys {
-		result = append(result, Ref{
-			Key:       key,
-			SizeBytes: sizes[key],
-		})
+	for _, identity := range identities {
+		result = append(result, byIdentity[identity])
 	}
 
 	return result, nil
@@ -100,7 +155,7 @@ func CloneRefs(refs []Ref) []Ref {
 	return result
 }
 
-// Add marks context objects as resident.
+// Add marks resolved context objects as warm.
 func (r *Registry) Add(refs []Ref) error {
 	normalized, err := NormalizeRefs(refs)
 	if err != nil {
@@ -113,12 +168,15 @@ func (r *Registry) Add(refs []Ref) error {
 	defer r.mu.Unlock()
 
 	for _, ref := range normalized {
-		entry, exists := r.entries[ref.Key]
+		identity := ref.Identity()
+		entry, exists := r.entries[identity]
 
 		if !exists {
 			entry = Entry{
-				Key:     ref.Key,
-				AddedAt: now,
+				Identity: identity,
+				Key:      ref.Key,
+				Digest:   ref.Digest,
+				AddedAt:  now,
 			}
 		}
 
@@ -126,14 +184,22 @@ func (r *Registry) Add(refs []Ref) error {
 			entry.SizeBytes = ref.SizeBytes
 		}
 
+		if entry.Key == "" {
+			entry.Key = ref.Key
+		}
+
+		if entry.Digest == "" {
+			entry.Digest = ref.Digest
+		}
+
 		entry.LastUsedAt = now
-		r.entries[ref.Key] = entry
+		r.entries[identity] = entry
 	}
 
 	return nil
 }
 
-// Touch records reuse of already-resident context objects.
+// Touch records reuse of already-warm context objects.
 func (r *Registry) Touch(refs []Ref) error {
 	normalized, err := NormalizeRefs(refs)
 	if err != nil {
@@ -146,20 +212,22 @@ func (r *Registry) Touch(refs []Ref) error {
 	defer r.mu.Unlock()
 
 	for _, ref := range normalized {
-		entry, exists := r.entries[ref.Key]
+		identity := ref.Identity()
+		entry, exists := r.entries[identity]
+
 		if !exists {
 			continue
 		}
 
 		entry.Hits++
 		entry.LastUsedAt = now
-		r.entries[ref.Key] = entry
+		r.entries[identity] = entry
 	}
 
 	return nil
 }
 
-// Snapshot returns a copy of the current registry state.
+// Snapshot returns a copy of the warm registry.
 func (r *Registry) Snapshot() Snapshot {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -167,8 +235,8 @@ func (r *Registry) Snapshot() Snapshot {
 	entries := make(map[string]Entry, len(r.entries))
 	var totalBytes uint64
 
-	for key, entry := range r.entries {
-		entries[key] = entry
+	for identity, entry := range r.entries {
+		entries[identity] = entry
 		totalBytes += entry.SizeBytes
 	}
 
@@ -179,7 +247,7 @@ func (r *Registry) Snapshot() Snapshot {
 	}
 }
 
-// RequestedBytes returns the total unique context bytes requested.
+// RequestedBytes returns total unique requested context bytes.
 func (s Snapshot) RequestedBytes(refs []Ref) uint64 {
 	normalized, err := NormalizeRefs(refs)
 	if err != nil {
@@ -195,7 +263,7 @@ func (s Snapshot) RequestedBytes(refs []Ref) uint64 {
 	return total
 }
 
-// ReusableBytes returns how many requested bytes are already resident.
+// ReusableBytes returns requested bytes already warm.
 func (s Snapshot) ReusableBytes(refs []Ref) uint64 {
 	normalized, err := NormalizeRefs(refs)
 	if err != nil {
@@ -205,7 +273,7 @@ func (s Snapshot) ReusableBytes(refs []Ref) uint64 {
 	var total uint64
 
 	for _, ref := range normalized {
-		entry, exists := s.Entries[ref.Key]
+		entry, exists := s.Entries[ref.Identity()]
 		if !exists {
 			continue
 		}
@@ -222,7 +290,7 @@ func (s Snapshot) ReusableBytes(refs []Ref) uint64 {
 	return total
 }
 
-// Affinity returns the fraction of requested context already resident.
+// Affinity returns the fraction of requested context already warm.
 func (s Snapshot) Affinity(refs []Ref) float64 {
 	requested := s.RequestedBytes(refs)
 	if requested == 0 {
@@ -232,4 +300,19 @@ func (s Snapshot) Affinity(refs []Ref) float64 {
 	reusable := s.ReusableBytes(refs)
 
 	return float64(reusable) / float64(requested)
+}
+
+func validateDigest(digest string) error {
+	if len(digest) != 64 {
+		return fmt.Errorf(
+			"invalid SHA-256 digest length",
+		)
+	}
+
+	decoded, err := hex.DecodeString(digest)
+	if err != nil || len(decoded) != 32 {
+		return fmt.Errorf("invalid SHA-256 digest")
+	}
+
+	return nil
 }

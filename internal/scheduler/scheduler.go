@@ -87,7 +87,8 @@ type Options struct {
 	QueueSize       int
 	Policy          Policy
 	PressureSource  PressureSource
-	ContextRegistry *contextstore.Registry
+	ContextRegistry contextstore.Catalog
+	ContextResolver contextstore.Resolver
 }
 
 type queuedJob struct {
@@ -98,12 +99,13 @@ type queuedJob struct {
 
 // Scheduler provides a bounded policy-driven queue.
 type Scheduler struct {
-	executor       Executor
-	workerCount    int
-	queueCapacity  int
-	policy         Policy
-	pressureSource PressureSource
-	contexts       *contextstore.Registry
+	executor        Executor
+	workerCount     int
+	queueCapacity   int
+	policy          Policy
+	pressureSource  PressureSource
+	contexts        contextstore.Catalog
+	contextResolver contextstore.Resolver
 
 	mu       sync.Mutex
 	cond     *sync.Cond
@@ -164,14 +166,20 @@ func NewWithOptions(
 		options.ContextRegistry = contextstore.NewRegistry()
 	}
 
+	if options.ContextResolver == nil {
+		options.ContextResolver =
+			contextstore.PassthroughResolver{}
+	}
+
 	scheduler := &Scheduler{
-		executor:       executor,
-		workerCount:    options.WorkerCount,
-		queueCapacity:  options.QueueSize,
-		policy:         options.Policy,
-		pressureSource: options.PressureSource,
-		contexts:       options.ContextRegistry,
-		records:        make(map[string]*Record),
+		executor:        executor,
+		workerCount:     options.WorkerCount,
+		queueCapacity:   options.QueueSize,
+		policy:          options.Policy,
+		pressureSource:  options.PressureSource,
+		contexts:        options.ContextRegistry,
+		contextResolver: options.ContextResolver,
+		records:         make(map[string]*Record),
 	}
 
 	scheduler.cond = sync.NewCond(&scheduler.mu)
@@ -211,9 +219,13 @@ func (s *Scheduler) Submit(job Job) error {
 		return fmt.Errorf("invalid Agent demand: %w", err)
 	}
 
-	contexts, err := contextstore.NormalizeRefs(job.Contexts)
+	contexts, err :=
+		s.contextResolver.Resolve(job.Contexts)
 	if err != nil {
-		return fmt.Errorf("invalid Agent contexts: %w", err)
+		return fmt.Errorf(
+			"resolve Agent contexts: %w",
+			err,
+		)
 	}
 
 	job.Contexts = contexts
