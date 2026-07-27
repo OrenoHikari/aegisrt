@@ -1,0 +1,6 @@
+bin/
+logs/*.jsonl
+__pycache__/
+*.pyc
+*.db
+.vscode/
