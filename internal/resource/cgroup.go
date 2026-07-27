@@ -25,10 +25,11 @@ type Spec struct {
 
 // Stats contains cgroup v2 accounting data for one Agent.
 type Stats struct {
-	CPUUsageUsec uint64 `json:"cpu_usage_usec"`
-	MemoryPeak   uint64 `json:"memory_peak_bytes"`
-	PidsPeak     uint64 `json:"pids_peak"`
-	OOMKills     uint64 `json:"oom_kills"`
+	CPUUsageUsec   uint64 `json:"cpu_usage_usec"`
+	MemoryPeak     uint64 `json:"memory_peak_bytes"`
+	MemorySwapPeak uint64 `json:"memory_swap_peak_bytes"`
+	PidsPeak       uint64 `json:"pids_peak"`
+	OOMKills       uint64 `json:"oom_kills"`
 }
 
 // Manager owns the cgroup subtree delegated to the Runtime service.
@@ -155,6 +156,7 @@ func (m *Manager) Create(agentID string, spec Spec) (*Group, error) {
 	settings := map[string]string{
 		"cpu.max":          fmt.Sprintf("%d 100000", quota),
 		"memory.max":       strconv.FormatUint(spec.MemoryMaxBytes, 10),
+		"memory.swap.max":  "0",
 		"memory.oom.group": "1",
 		"pids.max":         strconv.FormatUint(spec.PidsMax, 10),
 	}
@@ -188,10 +190,11 @@ func (g *Group) Stats() Stats {
 	memory := readKeyValues(filepath.Join(g.Path, "memory.events"))
 
 	return Stats{
-		CPUUsageUsec: cpu["usage_usec"],
-		MemoryPeak:   readUint(filepath.Join(g.Path, "memory.peak")),
-		PidsPeak:     readUint(filepath.Join(g.Path, "pids.peak")),
-		OOMKills:     memory["oom_kill"],
+		CPUUsageUsec:   cpu["usage_usec"],
+		MemoryPeak:     readUint(filepath.Join(g.Path, "memory.peak")),
+		MemorySwapPeak: readUint(filepath.Join(g.Path, "memory.swap.peak")),
+		PidsPeak:       readUint(filepath.Join(g.Path, "pids.peak")),
+		OOMKills:       memory["oom_kill"],
 	}
 }
 

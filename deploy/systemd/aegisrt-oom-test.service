@@ -1,0 +1,27 @@
+[Unit]
+Description=AegisRT Agent OOM fault-domain test
+After=local-fs.target
+
+[Service]
+Type=oneshot
+
+User=linya
+Group=linya
+
+WorkingDirectory=/home/linya/workspace/aegisrt
+
+ExecStart=/usr/local/libexec/aegisrt/aegisd -worker /home/linya/workspace/aegisrt/worker/python/oom_agent.py -agent-seconds=30 -timeout=15s -cpu-percent=100 -memory-mib=64 -pids-max=16
+
+Delegate=cpu memory pids
+
+CPUAccounting=yes
+MemoryAccounting=yes
+TasksAccounting=yes
+
+TimeoutStartSec=30
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
