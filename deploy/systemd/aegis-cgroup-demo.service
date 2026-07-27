@@ -1,0 +1,26 @@
+[Unit]
+Description=AegisRT cgroup v2 resource demo
+After=local-fs.target
+
+[Service]
+Type=oneshot
+
+User=linya
+Group=linya
+
+WorkingDirectory=/home/linya/workspace/aegisrt
+ExecStart=/home/linya/workspace/aegisrt/bin/cgroupdemo
+
+Delegate=cpu memory pids
+
+CPUAccounting=yes
+MemoryAccounting=yes
+TasksAccounting=yes
+
+TimeoutStartSec=30
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
