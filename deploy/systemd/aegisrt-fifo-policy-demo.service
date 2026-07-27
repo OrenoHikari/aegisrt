@@ -1,0 +1,27 @@
+[Unit]
+Description=AegisRT FIFO scheduling policy demo
+After=local-fs.target
+
+[Service]
+Type=oneshot
+
+User=linya
+Group=linya
+
+WorkingDirectory=/home/linya/workspace/aegisrt
+
+ExecStart=/usr/local/libexec/aegisrt/capsdemo -worker /home/linya/workspace/aegisrt/worker/python/profile_agent.py -policy=fifo -concurrency=1
+
+Delegate=cpu memory pids
+
+CPUAccounting=yes
+MemoryAccounting=yes
+TasksAccounting=yes
+
+TimeoutStartSec=60
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
