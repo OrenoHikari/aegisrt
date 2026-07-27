@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"aegisrt/internal/agent"
+	"aegisrt/internal/contextstore"
 	"aegisrt/internal/pressure"
 	"aegisrt/internal/resource"
 )
@@ -41,9 +42,10 @@ const (
 
 // Job is one Agent execution submitted to the Scheduler.
 type Job struct {
-	Agent   *agent.ACB
-	Timeout time.Duration
-	Demand  Demand
+	Agent    *agent.ACB
+	Timeout  time.Duration
+	Demand   Demand
+	Contexts []contextstore.Ref
 }
 
 // Record is the Scheduler's observable state for one Agent.
@@ -59,7 +61,12 @@ type Record struct {
 
 	WorkerID int `json:"worker_id,omitempty"`
 
-	Demand Demand `json:"demand"`
+	Demand   Demand             `json:"demand"`
+	Contexts []contextstore.Ref `json:"contexts,omitempty"`
+
+	RequestedContextBytes uint64  `json:"requested_context_bytes,omitempty"`
+	ReusableContextBytes  uint64  `json:"reusable_context_bytes,omitempty"`
+	ContextAffinity       float64 `json:"context_affinity,omitempty"`
 
 	DispatchScore  float64            `json:"dispatch_score,omitempty"`
 	DispatchReason string             `json:"dispatch_reason,omitempty"`
@@ -76,10 +83,11 @@ type Record struct {
 
 // Options configures the Scheduler.
 type Options struct {
-	WorkerCount    int
-	QueueSize      int
-	Policy         Policy
-	PressureSource PressureSource
+	WorkerCount     int
+	QueueSize       int
+	Policy          Policy
+	PressureSource  PressureSource
+	ContextRegistry *contextstore.Registry
 }
 
 type queuedJob struct {
@@ -95,6 +103,7 @@ type Scheduler struct {
 	queueCapacity  int
 	policy         Policy
 	pressureSource PressureSource
+	contexts       *contextstore.Registry
 
 	mu       sync.Mutex
 	cond     *sync.Cond
@@ -151,12 +160,17 @@ func NewWithOptions(
 		options.PressureSource = zeroPressureSource{}
 	}
 
+	if options.ContextRegistry == nil {
+		options.ContextRegistry = contextstore.NewRegistry()
+	}
+
 	scheduler := &Scheduler{
 		executor:       executor,
 		workerCount:    options.WorkerCount,
 		queueCapacity:  options.QueueSize,
 		policy:         options.Policy,
 		pressureSource: options.PressureSource,
+		contexts:       options.ContextRegistry,
 		records:        make(map[string]*Record),
 	}
 
@@ -197,6 +211,13 @@ func (s *Scheduler) Submit(job Job) error {
 		return fmt.Errorf("invalid Agent demand: %w", err)
 	}
 
+	contexts, err := contextstore.NormalizeRefs(job.Contexts)
+	if err != nil {
+		return fmt.Errorf("invalid Agent contexts: %w", err)
+	}
+
+	job.Contexts = contexts
+
 	now := time.Now().UTC()
 
 	s.mu.Lock()
@@ -228,6 +249,7 @@ func (s *Scheduler) Submit(job Job) error {
 		Phase:        PhaseQueued,
 		SubmittedAt:  now,
 		Demand:       job.Demand,
+		Contexts:     contextstore.CloneRefs(contexts),
 		ResourceSpec: job.Agent.Resources,
 	}
 
@@ -300,23 +322,41 @@ func (s *Scheduler) take(workerID int) (queuedJob, bool) {
 
 	now := time.Now().UTC()
 
-	snapshot, sampleErr := s.pressureSource.Sample()
-	if snapshot.Timestamp.IsZero() {
-		snapshot.Timestamp = now
+	pressureSnapshot, sampleErr := s.pressureSource.Sample()
+	if pressureSnapshot.Timestamp.IsZero() {
+		pressureSnapshot.Timestamp = now
 	}
+
+	contextSnapshot := s.contexts.Snapshot()
 
 	candidates := make([]Candidate, 0, len(s.queue))
 
 	for _, entry := range s.queue {
+		requested :=
+			contextSnapshot.RequestedBytes(entry.Contexts)
+
+		reusable :=
+			contextSnapshot.ReusableBytes(entry.Contexts)
+
+		affinity :=
+			contextSnapshot.Affinity(entry.Contexts)
+
 		candidates = append(candidates, Candidate{
-			ID:          entry.Agent.ID,
-			SubmittedAt: entry.submittedAt,
-			Sequence:    entry.sequence,
-			Demand:      entry.Demand,
+			ID:                    entry.Agent.ID,
+			SubmittedAt:           entry.submittedAt,
+			Sequence:              entry.sequence,
+			Demand:                entry.Demand,
+			RequestedContextBytes: requested,
+			ReusableContextBytes:  reusable,
+			ContextAffinity:       affinity,
 		})
 	}
 
-	decision := s.policy.Select(now, candidates, snapshot)
+	decision := s.policy.Select(
+		now,
+		candidates,
+		pressureSnapshot,
+	)
 
 	if decision.Index < 0 || decision.Index >= len(s.queue) {
 		decision = Decision{
@@ -325,7 +365,9 @@ func (s *Scheduler) take(workerID int) (queuedJob, bool) {
 		}
 	}
 
+	selectedCandidate := candidates[decision.Index]
 	entry := s.queue[decision.Index]
+
 	s.queue = append(
 		s.queue[:decision.Index],
 		s.queue[decision.Index+1:]...,
@@ -339,14 +381,23 @@ func (s *Scheduler) take(workerID int) (queuedJob, bool) {
 	record.WorkerID = workerID
 	record.DispatchScore = decision.Score
 	record.DispatchReason = decision.Reason
+	record.RequestedContextBytes =
+		selectedCandidate.RequestedContextBytes
+	record.ReusableContextBytes =
+		selectedCandidate.ReusableContextBytes
+	record.ContextAffinity =
+		selectedCandidate.ContextAffinity
 
-	snapshotCopy := snapshot
+	snapshotCopy := pressureSnapshot
 	record.Pressure = &snapshotCopy
 
 	if sampleErr != nil {
 		record.PressureError = sampleErr.Error()
-		record.DispatchReason += "; PSI unavailable, zero-pressure fallback"
+		record.DispatchReason +=
+			"; PSI unavailable, zero-pressure fallback"
 	}
+
+	_ = s.contexts.Touch(entry.Contexts)
 
 	return entry, true
 }
@@ -380,12 +431,17 @@ func (s *Scheduler) execute(entry queuedJob) {
 	}
 
 	record.Phase = PhaseSucceeded
+
+	// Successful execution means the requested contexts were loaded
+	// and can benefit later Agents.
+	_ = s.contexts.Add(entry.Contexts)
 }
 
 func cloneRecord(source *Record) Record {
 	result := *source
 	result.ExitCode = cloneInt(source.ExitCode)
 	result.ResourceStats = cloneStats(source.ResourceStats)
+	result.Contexts = contextstore.CloneRefs(source.Contexts)
 
 	if source.Pressure != nil {
 		snapshot := *source.Pressure

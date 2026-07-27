@@ -9,7 +9,6 @@ import (
 )
 
 // Demand describes the normalized resource demand of one Agent.
-// Each field must be between 0 and 1.
 type Demand struct {
 	CPU    float64 `json:"cpu"`
 	Memory float64 `json:"memory"`
@@ -58,6 +57,10 @@ type Candidate struct {
 	SubmittedAt time.Time
 	Sequence    uint64
 	Demand      Demand
+
+	RequestedContextBytes uint64
+	ReusableContextBytes  uint64
+	ContextAffinity       float64
 }
 
 // Decision records how a policy selected one Agent.
@@ -100,16 +103,17 @@ func (FIFOPolicy) Select(
 	}
 }
 
-// CAPSPolicy implements the pressure-aware part of CAPS.
+// CAPSPolicy implements Context-Affinity and Pressure-aware Scheduling.
 //
 // Lower scores are preferred:
 //
-//	score = pressure penalty - waiting-age bonus
-//
-// Aging prevents a resource-intensive Agent from waiting forever.
+//	score = pressure penalty
+//	      - context affinity benefit
+//	      - waiting-age bonus
 type CAPSPolicy struct {
 	AgingPerSecond float64
 	FullWeight     float64
+	AffinityWeight float64
 }
 
 // NewCAPSPolicy returns the default CAPS policy.
@@ -117,10 +121,11 @@ func NewCAPSPolicy() *CAPSPolicy {
 	return &CAPSPolicy{
 		AgingPerSecond: 0.01,
 		FullWeight:     2.0,
+		AffinityWeight: 0.35,
 	}
 }
 
-// Select chooses the Agent with the lowest pressure-adjusted score.
+// Select chooses the Agent with the lowest combined score.
 func (p *CAPSPolicy) Select(
 	now time.Time,
 	candidates []Candidate,
@@ -138,6 +143,11 @@ func (p *CAPSPolicy) Select(
 	fullWeight := p.FullWeight
 	if fullWeight <= 0 {
 		fullWeight = 2
+	}
+
+	affinityWeight := p.AffinityWeight
+	if affinityWeight <= 0 {
+		affinityWeight = 0.35
 	}
 
 	cpuPressure := pressureLevel(snapshot.CPU, fullWeight)
@@ -159,12 +169,17 @@ func (p *CAPSPolicy) Select(
 				memoryPressure*candidate.Demand.Memory +
 				ioPressure*candidate.Demand.IO
 
+		affinityBenefit :=
+			affinityWeight * candidate.ContextAffinity
+
 		ageBonus := age.Seconds() * agingPerSecond
 		if ageBonus > 3 {
 			ageBonus = 3
 		}
 
-		score := pressurePenalty - ageBonus
+		score := pressurePenalty -
+			affinityBenefit -
+			ageBonus
 
 		if score < selectedScore-1e-9 ||
 			(math.Abs(score-selectedScore) <= 1e-9 &&
@@ -183,6 +198,7 @@ func (p *CAPSPolicy) Select(
 		Reason: fmt.Sprintf(
 			"CAPS pressure cpu=%.3f memory=%.3f io=%.3f; "+
 				"demand cpu=%.2f memory=%.2f io=%.2f; "+
+				"context affinity=%.3f reusable=%d requested=%d; "+
 				"wait=%s",
 			cpuPressure,
 			memoryPressure,
@@ -190,6 +206,9 @@ func (p *CAPSPolicy) Select(
 			candidate.Demand.CPU,
 			candidate.Demand.Memory,
 			candidate.Demand.IO,
+			candidate.ContextAffinity,
+			candidate.ReusableContextBytes,
+			candidate.RequestedContextBytes,
 			selectedAge.Round(time.Millisecond),
 		),
 	}

@@ -1,0 +1,27 @@
+[Unit]
+Description=AegisRT context-affinity scheduling demo
+After=local-fs.target
+
+[Service]
+Type=oneshot
+
+User=linya
+Group=linya
+
+WorkingDirectory=/home/linya/workspace/aegisrt
+
+ExecStart=/usr/local/libexec/aegisrt/affinitydemo -worker /home/linya/workspace/aegisrt/worker/python/hello_agent.py
+
+Delegate=cpu memory pids
+
+CPUAccounting=yes
+MemoryAccounting=yes
+TasksAccounting=yes
+
+TimeoutStartSec=30
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
