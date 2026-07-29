@@ -1,0 +1,27 @@
+[Unit]
+Description=AegisRT ContextFS workspace execution demo
+After=local-fs.target
+
+[Service]
+Type=oneshot
+
+User=linya
+Group=linya
+
+WorkingDirectory=/home/linya/workspace/aegisrt
+
+ExecStart=/usr/local/libexec/aegisrt/workspaceexecdemo -worker /home/linya/workspace/aegisrt/worker/python/workspace_agent.py -root /home/linya/workspace/aegisrt/var/contextfs-execution-demo -reset=true
+
+Delegate=cpu memory pids
+
+CPUAccounting=yes
+MemoryAccounting=yes
+TasksAccounting=yes
+
+TimeoutStartSec=30
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

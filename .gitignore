@@ -7,3 +7,4 @@ __pycache__/
 /var/contextfs-demo/
 /var/contextfs-bridge-demo/
 /var/contextfs-workspace-demo/
+/var/contextfs-execution-demo/

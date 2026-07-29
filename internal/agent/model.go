@@ -3,6 +3,7 @@ package agent
 import (
 	"time"
 
+	"aegisrt/internal/contextstore"
 	"aegisrt/internal/resource"
 )
 
@@ -37,6 +38,19 @@ type ACB struct {
 
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
+
+	// Contexts contains authoritative ContextFS identities resolved
+	// before the Agent enters the execution queue.
+	Contexts []contextstore.Ref `json:"contexts,omitempty"`
+
+	// WorkingDirectory and Environment configure the Agent process.
+	WorkingDirectory string            `json:"working_directory,omitempty"`
+	Environment      map[string]string `json:"-"`
+
+	// WorkspacePath remains available for observability even when the
+	// workspace has already been cleaned.
+	WorkspacePath     string `json:"workspace_path,omitempty"`
+	WorkspaceRetained bool   `json:"workspace_retained"`
 }
 
 // New creates a new Agent Control Block.

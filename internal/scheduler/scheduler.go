@@ -68,6 +68,9 @@ type Record struct {
 	ReusableContextBytes  uint64  `json:"reusable_context_bytes,omitempty"`
 	ContextAffinity       float64 `json:"context_affinity,omitempty"`
 
+	WorkspacePath     string `json:"workspace_path,omitempty"`
+	WorkspaceRetained bool   `json:"workspace_retained"`
+
 	DispatchScore  float64            `json:"dispatch_score,omitempty"`
 	DispatchReason string             `json:"dispatch_reason,omitempty"`
 	Pressure       *pressure.Snapshot `json:"pressure_at_dispatch,omitempty"`
@@ -229,6 +232,7 @@ func (s *Scheduler) Submit(job Job) error {
 	}
 
 	job.Contexts = contexts
+	job.Agent.Contexts = contextstore.CloneRefs(contexts)
 
 	now := time.Now().UTC()
 
@@ -435,6 +439,8 @@ func (s *Scheduler) execute(entry queuedJob) {
 	record.ExitCode = cloneInt(entry.Agent.ExitCode)
 	record.CgroupPath = entry.Agent.CgroupPath
 	record.ResourceStats = cloneStats(entry.Agent.ResourceStats)
+	record.WorkspacePath = entry.Agent.WorkspacePath
+	record.WorkspaceRetained = entry.Agent.WorkspaceRetained
 
 	if err != nil {
 		record.Phase = PhaseFailed

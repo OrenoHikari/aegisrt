@@ -92,6 +92,7 @@ func (r *Runner) Run(ctx context.Context, acb *agent.ACB) error {
 	}
 
 	cmd := exec.Command(acb.Command, acb.Args...)
+	configureCommand(cmd, acb)
 	output := &lockedWriter{runner: r}
 	cmd.Stdout = output
 	cmd.Stderr = output
