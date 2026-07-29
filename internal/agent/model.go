@@ -64,6 +64,12 @@ type ACB struct {
 	OutputBytes         uint64      `json:"output_bytes,omitempty"`
 	OutputError         string      `json:"output_error,omitempty"`
 
+	OutputVerified           bool       `json:"output_verified"`
+	OutputVerificationMethod string     `json:"output_verification_method,omitempty"`
+	OutputManifestSHA256     string     `json:"output_manifest_sha256,omitempty"`
+	OutputVerifiedAt         *time.Time `json:"output_verified_at,omitempty"`
+	OutputVerificationError  string     `json:"output_verification_error,omitempty"`
+
 	// DependencyOutputs contains committed results from upstream Agents.
 	DependencyOutputs map[string]DependencyOutput `json:"dependency_outputs,omitempty"`
 }

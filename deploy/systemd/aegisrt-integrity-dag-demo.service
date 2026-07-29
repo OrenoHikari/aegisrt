@@ -1,0 +1,27 @@
+[Unit]
+Description=AegisRT verified-output DAG demo
+After=local-fs.target
+
+[Service]
+Type=oneshot
+
+User=linya
+Group=linya
+
+WorkingDirectory=/home/linya/workspace/aegisrt
+
+ExecStart=/usr/local/libexec/aegisrt/integritydagdemo -worker /home/linya/workspace/aegisrt/worker/python/integrity_dag_agent.py -root /home/linya/workspace/aegisrt/var/integrity-dag-demo -reset=true
+
+Delegate=cpu memory pids
+
+CPUAccounting=yes
+MemoryAccounting=yes
+TasksAccounting=yes
+
+TimeoutStartSec=60
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

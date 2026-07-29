@@ -48,9 +48,9 @@ func normalizeDependencies(
 
 // dependencyStatusLocked returns:
 //
-//   - ready: every dependency succeeded with committed output
+//   - ready: every dependency succeeded with verified output
 //   - blockedReason: one dependency permanently failed
-//   - outputs: committed upstream outputs
+//   - outputs: verified upstream outputs
 //
 // s.mu must already be held.
 func (s *Scheduler) dependencyStatusLocked(
@@ -85,8 +85,9 @@ func (s *Scheduler) dependencyStatusLocked(
 		case PhaseFailed:
 			return false,
 				fmt.Sprintf(
-					"dependency %s failed",
+					"dependency %s failed: %s",
 					dependencyID,
+					record.Error,
 				),
 				nil
 
@@ -108,6 +109,29 @@ func (s *Scheduler) dependencyStatusLocked(
 					nil
 			}
 
+			if !record.OutputVerified {
+				reason :=
+					record.OutputVerificationError
+
+				if reason == "" {
+					reason = "output was not verified"
+				}
+
+				return false,
+					fmt.Sprintf(
+						"dependency %s failed integrity verification: %s",
+						dependencyID,
+						reason,
+					),
+					nil
+			}
+
+			verifiedAt := time.Time{}
+
+			if record.OutputVerifiedAt != nil {
+				verifiedAt = *record.OutputVerifiedAt
+			}
+
 			outputs[dependencyID] =
 				agent.DependencyOutput{
 					AgentID:       dependencyID,
@@ -116,6 +140,14 @@ func (s *Scheduler) dependencyStatusLocked(
 					ManifestPath:  record.OutputManifestPath,
 					FileCount:     record.OutputFileCount,
 					TotalBytes:    record.OutputBytes,
+
+					Verified: true,
+
+					VerificationMethod: record.OutputVerificationMethod,
+
+					ManifestSHA256: record.OutputManifestSHA256,
+
+					VerifiedAt: verifiedAt,
 				}
 
 		default:
@@ -203,6 +235,19 @@ func applyDependencyOutputs(
 		fmt.Sprintf("%d", len(outputs))
 
 	return nil
+}
+
+func dependencyOutputFromACB(
+	acb *agent.ACB,
+) agent.DependencyOutput {
+	return agent.DependencyOutput{
+		AgentID:       acb.ID,
+		TransactionID: acb.OutputTransactionID,
+		CommitPath:    acb.OutputCommitPath,
+		ManifestPath:  acb.OutputManifestPath,
+		FileCount:     acb.OutputFileCount,
+		TotalBytes:    acb.OutputBytes,
+	}
 }
 
 func cloneDependencyOutputs(

@@ -9,3 +9,4 @@ __pycache__/
 /var/contextfs-workspace-demo/
 /var/contextfs-execution-demo/
 /var/output-transaction-demo/
+/var/integrity-dag-demo/

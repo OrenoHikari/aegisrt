@@ -88,6 +88,12 @@ type Record struct {
 	OutputBytes         uint64            `json:"output_bytes,omitempty"`
 	OutputError         string            `json:"output_error,omitempty"`
 
+	OutputVerified           bool       `json:"output_verified"`
+	OutputVerificationMethod string     `json:"output_verification_method,omitempty"`
+	OutputManifestSHA256     string     `json:"output_manifest_sha256,omitempty"`
+	OutputVerifiedAt         *time.Time `json:"output_verified_at,omitempty"`
+	OutputVerificationError  string     `json:"output_verification_error,omitempty"`
+
 	DispatchScore  float64            `json:"dispatch_score,omitempty"`
 	DispatchReason string             `json:"dispatch_reason,omitempty"`
 	Pressure       *pressure.Snapshot `json:"pressure_at_dispatch,omitempty"`
@@ -109,6 +115,7 @@ type Options struct {
 	PressureSource  PressureSource
 	ContextRegistry contextstore.Catalog
 	ContextResolver contextstore.Resolver
+	OutputVerifier  OutputVerifier
 }
 
 type queuedJob struct {
@@ -126,6 +133,7 @@ type Scheduler struct {
 	pressureSource  PressureSource
 	contexts        contextstore.Catalog
 	contextResolver contextstore.Resolver
+	outputVerifier  OutputVerifier
 
 	mu       sync.Mutex
 	cond     *sync.Cond
@@ -191,6 +199,10 @@ func NewWithOptions(
 			contextstore.PassthroughResolver{}
 	}
 
+	if options.OutputVerifier == nil {
+		options.OutputVerifier = TrustOutputVerifier{}
+	}
+
 	scheduler := &Scheduler{
 		executor:        executor,
 		workerCount:     options.WorkerCount,
@@ -199,6 +211,7 @@ func NewWithOptions(
 		pressureSource:  options.PressureSource,
 		contexts:        options.ContextRegistry,
 		contextResolver: options.ContextResolver,
+		outputVerifier:  options.OutputVerifier,
 		records:         make(map[string]*Record),
 	}
 
@@ -527,7 +540,48 @@ func (s *Scheduler) execute(entry queuedJob) {
 	)
 	defer cancel()
 
-	err := s.executor.Run(ctx, entry.Agent)
+	runErr := s.executor.Run(ctx, entry.Agent)
+
+	if runErr == nil && entry.Agent.OutputCommitted {
+		verifyCtx, verifyCancel := context.WithTimeout(
+			context.Background(),
+			outputVerificationTimeout,
+		)
+
+		verification, verifyErr :=
+			s.outputVerifier.Verify(
+				verifyCtx,
+				dependencyOutputFromACB(entry.Agent),
+			)
+
+		verifyCancel()
+
+		if verifyErr != nil {
+			entry.Agent.OutputVerified = false
+			entry.Agent.OutputVerificationError =
+				verifyErr.Error()
+
+			runErr = fmt.Errorf(
+				"verify committed Agent output: %w",
+				verifyErr,
+			)
+		} else {
+			verifiedAt := verification.VerifiedAt
+
+			if verifiedAt.IsZero() {
+				verifiedAt = time.Now().UTC()
+			}
+
+			entry.Agent.OutputVerified = true
+			entry.Agent.OutputVerificationMethod =
+				verification.Method
+			entry.Agent.OutputManifestSHA256 =
+				verification.ManifestSHA256
+			entry.Agent.OutputVerifiedAt = &verifiedAt
+			entry.Agent.OutputVerificationError = ""
+		}
+	}
+
 	finishedAt := time.Now().UTC()
 
 	s.mu.Lock()
@@ -539,24 +593,50 @@ func (s *Scheduler) execute(entry queuedJob) {
 	record.FinishedAt = &finishedAt
 	record.ExitCode = cloneInt(entry.Agent.ExitCode)
 	record.CgroupPath = entry.Agent.CgroupPath
-	record.ResourceStats = cloneStats(entry.Agent.ResourceStats)
+	record.ResourceStats =
+		cloneStats(entry.Agent.ResourceStats)
+
 	record.WorkspacePath = entry.Agent.WorkspacePath
-	record.WorkspaceRetained = entry.Agent.WorkspaceRetained
+	record.WorkspaceRetained =
+		entry.Agent.WorkspaceRetained
 
 	record.OutputState = entry.Agent.OutputState
-	record.OutputTransactionID = entry.Agent.OutputTransactionID
-	record.OutputStagingPath = entry.Agent.OutputStagingPath
-	record.OutputCommitPath = entry.Agent.OutputCommitPath
-	record.OutputManifestPath = entry.Agent.OutputManifestPath
-	record.OutputCommitted = entry.Agent.OutputCommitted
-	record.OutputRetained = entry.Agent.OutputRetained
-	record.OutputFileCount = entry.Agent.OutputFileCount
-	record.OutputBytes = entry.Agent.OutputBytes
-	record.OutputError = entry.Agent.OutputError
+	record.OutputTransactionID =
+		entry.Agent.OutputTransactionID
+	record.OutputStagingPath =
+		entry.Agent.OutputStagingPath
+	record.OutputCommitPath =
+		entry.Agent.OutputCommitPath
+	record.OutputManifestPath =
+		entry.Agent.OutputManifestPath
+	record.OutputCommitted =
+		entry.Agent.OutputCommitted
+	record.OutputRetained =
+		entry.Agent.OutputRetained
+	record.OutputFileCount =
+		entry.Agent.OutputFileCount
+	record.OutputBytes =
+		entry.Agent.OutputBytes
+	record.OutputError =
+		entry.Agent.OutputError
 
-	if err != nil {
+	record.OutputVerified =
+		entry.Agent.OutputVerified
+	record.OutputVerificationMethod =
+		entry.Agent.OutputVerificationMethod
+	record.OutputManifestSHA256 =
+		entry.Agent.OutputManifestSHA256
+	record.OutputVerificationError =
+		entry.Agent.OutputVerificationError
+
+	if entry.Agent.OutputVerifiedAt != nil {
+		verifiedAt := *entry.Agent.OutputVerifiedAt
+		record.OutputVerifiedAt = &verifiedAt
+	}
+
+	if runErr != nil {
 		record.Phase = PhaseFailed
-		record.Error = err.Error()
+		record.Error = runErr.Error()
 		return
 	}
 
@@ -579,6 +659,11 @@ func cloneRecord(source *Record) Record {
 	if source.Pressure != nil {
 		snapshot := *source.Pressure
 		result.Pressure = &snapshot
+	}
+
+	if source.OutputVerifiedAt != nil {
+		verifiedAt := *source.OutputVerifiedAt
+		result.OutputVerifiedAt = &verifiedAt
 	}
 
 	return result
