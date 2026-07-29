@@ -201,6 +201,8 @@ func (s *Scheduler) blockEntryLocked(
 	record.DispatchReason =
 		"dependency gate blocked execution: " + reason
 
+	s.emitBlocked(record)
+
 	s.pending.Done()
 	s.cond.Broadcast()
 }

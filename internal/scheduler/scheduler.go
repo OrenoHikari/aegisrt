@@ -116,6 +116,7 @@ type Options struct {
 	ContextRegistry contextstore.Catalog
 	ContextResolver contextstore.Resolver
 	OutputVerifier  OutputVerifier
+	EventPublisher  EventPublisher
 }
 
 type queuedJob struct {
@@ -134,6 +135,7 @@ type Scheduler struct {
 	contexts        contextstore.Catalog
 	contextResolver contextstore.Resolver
 	outputVerifier  OutputVerifier
+	events          EventPublisher
 
 	mu       sync.Mutex
 	cond     *sync.Cond
@@ -203,6 +205,11 @@ func NewWithOptions(
 		options.OutputVerifier = TrustOutputVerifier{}
 	}
 
+	if options.EventPublisher == nil {
+		options.EventPublisher =
+			defaultEventPublisher()
+	}
+
 	scheduler := &Scheduler{
 		executor:        executor,
 		workerCount:     options.WorkerCount,
@@ -212,6 +219,7 @@ func NewWithOptions(
 		contexts:        options.ContextRegistry,
 		contextResolver: options.ContextResolver,
 		outputVerifier:  options.OutputVerifier,
+		events:          options.EventPublisher,
 		records:         make(map[string]*Record),
 	}
 
@@ -326,6 +334,10 @@ func (s *Scheduler) Submit(job Job) error {
 	s.pending.Add(1)
 	s.queue = append(s.queue, entry)
 	s.cond.Signal()
+
+	s.emitSubmitted(
+		s.records[job.Agent.ID],
+	)
 
 	return nil
 }
@@ -527,6 +539,8 @@ func (s *Scheduler) take(workerID int) (queuedJob, bool) {
 
 		_ = s.contexts.Touch(entry.Contexts)
 
+		s.emitDispatched(record)
+
 		return entry, true
 	}
 }
@@ -637,6 +651,8 @@ func (s *Scheduler) execute(entry queuedJob) {
 	if runErr != nil {
 		record.Phase = PhaseFailed
 		record.Error = runErr.Error()
+
+		s.emitFinished(record)
 		return
 	}
 
@@ -645,6 +661,8 @@ func (s *Scheduler) execute(entry queuedJob) {
 	// Successful execution means the requested contexts were loaded
 	// and can benefit later Agents.
 	_ = s.contexts.Add(entry.Contexts)
+
+	s.emitFinished(record)
 }
 
 func cloneRecord(source *Record) Record {

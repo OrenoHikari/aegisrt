@@ -1,0 +1,27 @@
+[Unit]
+Description=AegisRT unified Runtime event demo
+After=local-fs.target
+
+[Service]
+Type=oneshot
+
+User=linya
+Group=linya
+
+WorkingDirectory=/home/linya/workspace/aegisrt
+
+ExecStart=/usr/local/libexec/aegisrt/eventdemo -integrity-worker /home/linya/workspace/aegisrt/worker/python/integrity_dag_agent.py -transaction-worker /home/linya/workspace/aegisrt/worker/python/transaction_agent.py -root /home/linya/workspace/aegisrt/var/event-demo -reset=true
+
+Delegate=cpu memory pids
+
+CPUAccounting=yes
+MemoryAccounting=yes
+TasksAccounting=yes
+
+TimeoutStartSec=90
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
