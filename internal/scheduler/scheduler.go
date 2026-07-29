@@ -142,6 +142,7 @@ type Scheduler struct {
 	queue    []queuedJob
 	records  map[string]*Record
 	sequence uint64
+	started  bool
 	stopped  bool
 
 	startOnce sync.Once
@@ -231,10 +232,21 @@ func NewWithOptions(
 // Start launches the fixed set of execution workers.
 func (s *Scheduler) Start() {
 	s.startOnce.Do(func() {
+		s.mu.Lock()
+
+		if s.stopped {
+			s.mu.Unlock()
+			return
+		}
+
+		s.started = true
+
 		for workerID := 1; workerID <= s.workerCount; workerID++ {
 			s.workers.Add(1)
 			go s.worker(workerID)
 		}
+
+		s.mu.Unlock()
 	})
 }
 

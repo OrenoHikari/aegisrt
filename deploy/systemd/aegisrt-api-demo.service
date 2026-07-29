@@ -1,0 +1,31 @@
+[Unit]
+Description=AegisRT Runtime HTTP query API
+After=network.target local-fs.target
+
+[Service]
+Type=simple
+
+User=linya
+Group=linya
+
+WorkingDirectory=/home/linya/workspace/aegisrt
+
+ExecStart=/usr/local/libexec/aegisrt/apidemo -listen 127.0.0.1:18080 -integrity-worker /home/linya/workspace/aegisrt/worker/python/integrity_dag_agent.py -transaction-worker /home/linya/workspace/aegisrt/worker/python/transaction_agent.py -root /home/linya/workspace/aegisrt/var/api-demo -reset=true
+
+Delegate=cpu memory pids
+
+CPUAccounting=yes
+MemoryAccounting=yes
+TasksAccounting=yes
+
+Restart=on-failure
+RestartSec=2
+
+TimeoutStartSec=30
+TimeoutStopSec=30
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

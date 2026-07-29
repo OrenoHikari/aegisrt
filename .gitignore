@@ -11,3 +11,4 @@ __pycache__/
 /var/output-transaction-demo/
 /var/integrity-dag-demo/
 /var/event-demo/
+/var/api-demo/
