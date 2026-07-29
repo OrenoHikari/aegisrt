@@ -15,9 +15,10 @@ import (
 )
 
 var (
-	ErrSchedulerStopped = errors.New("scheduler has stopped")
-	ErrQueueFull        = errors.New("scheduler queue is full")
-	ErrDuplicateAgent   = errors.New("Agent ID already exists")
+	ErrSchedulerStopped  = errors.New("scheduler has stopped")
+	ErrQueueFull         = errors.New("scheduler queue is full")
+	ErrDuplicateAgent    = errors.New("Agent ID already exists")
+	ErrUnknownDependency = errors.New("dependency Agent does not exist")
 )
 
 // Executor is implemented by runtime.Runner.
@@ -38,14 +39,16 @@ const (
 	PhaseRunning   Phase = "RUNNING"
 	PhaseSucceeded Phase = "SUCCEEDED"
 	PhaseFailed    Phase = "FAILED"
+	PhaseBlocked   Phase = "BLOCKED"
 )
 
 // Job is one Agent execution submitted to the Scheduler.
 type Job struct {
-	Agent    *agent.ACB
-	Timeout  time.Duration
-	Demand   Demand
-	Contexts []contextstore.Ref
+	Agent     *agent.ACB
+	Timeout   time.Duration
+	Demand    Demand
+	Contexts  []contextstore.Ref
+	DependsOn []string
 }
 
 // Record is the Scheduler's observable state for one Agent.
@@ -63,6 +66,9 @@ type Record struct {
 
 	Demand   Demand             `json:"demand"`
 	Contexts []contextstore.Ref `json:"contexts,omitempty"`
+
+	DependsOn         []string                          `json:"depends_on,omitempty"`
+	DependencyOutputs map[string]agent.DependencyOutput `json:"dependency_outputs,omitempty"`
 
 	RequestedContextBytes uint64  `json:"requested_context_bytes,omitempty"`
 	ReusableContextBytes  uint64  `json:"reusable_context_bytes,omitempty"`
@@ -245,6 +251,19 @@ func (s *Scheduler) Submit(job Job) error {
 	job.Contexts = contexts
 	job.Agent.Contexts = contextstore.CloneRefs(contexts)
 
+	dependencies, err := normalizeDependencies(
+		job.Agent.ID,
+		job.DependsOn,
+	)
+	if err != nil {
+		return fmt.Errorf(
+			"invalid Agent dependencies: %w",
+			err,
+		)
+	}
+
+	job.DependsOn = dependencies
+
 	now := time.Now().UTC()
 
 	s.mu.Lock()
@@ -256,6 +275,16 @@ func (s *Scheduler) Submit(job Job) error {
 
 	if _, exists := s.records[job.Agent.ID]; exists {
 		return fmt.Errorf("%w: %s", ErrDuplicateAgent, job.Agent.ID)
+	}
+
+	for _, dependencyID := range job.DependsOn {
+		if _, exists := s.records[dependencyID]; !exists {
+			return fmt.Errorf(
+				"%w: %s",
+				ErrUnknownDependency,
+				dependencyID,
+			)
+		}
 	}
 
 	if len(s.queue) >= s.queueCapacity {
@@ -277,6 +306,7 @@ func (s *Scheduler) Submit(job Job) error {
 		SubmittedAt:  now,
 		Demand:       job.Demand,
 		Contexts:     contextstore.CloneRefs(contexts),
+		DependsOn:    cloneStrings(job.DependsOn),
 		ResourceSpec: job.Agent.Resources,
 	}
 
@@ -339,94 +369,153 @@ func (s *Scheduler) take(workerID int) (queuedJob, bool) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	for len(s.queue) == 0 && !s.stopped {
-		s.cond.Wait()
-	}
-
-	if len(s.queue) == 0 && s.stopped {
-		return queuedJob{}, false
-	}
-
-	now := time.Now().UTC()
-
-	pressureSnapshot, sampleErr := s.pressureSource.Sample()
-	if pressureSnapshot.Timestamp.IsZero() {
-		pressureSnapshot.Timestamp = now
-	}
-
-	contextSnapshot := s.contexts.Snapshot()
-
-	candidates := make([]Candidate, 0, len(s.queue))
-
-	for _, entry := range s.queue {
-		requested :=
-			contextSnapshot.RequestedBytes(entry.Contexts)
-
-		reusable :=
-			contextSnapshot.ReusableBytes(entry.Contexts)
-
-		affinity :=
-			contextSnapshot.Affinity(entry.Contexts)
-
-		candidates = append(candidates, Candidate{
-			ID:                    entry.Agent.ID,
-			SubmittedAt:           entry.submittedAt,
-			Sequence:              entry.sequence,
-			Demand:                entry.Demand,
-			RequestedContextBytes: requested,
-			ReusableContextBytes:  reusable,
-			ContextAffinity:       affinity,
-		})
-	}
-
-	decision := s.policy.Select(
-		now,
-		candidates,
-		pressureSnapshot,
-	)
-
-	if decision.Index < 0 || decision.Index >= len(s.queue) {
-		decision = Decision{
-			Index:  0,
-			Reason: "policy returned invalid index; FIFO fallback",
+	for {
+		// Propagate permanent dependency failures through the DAG.
+		for s.blockUnrunnableLocked() {
 		}
+
+		if len(s.queue) == 0 {
+			if s.stopped {
+				return queuedJob{}, false
+			}
+
+			s.cond.Wait()
+			continue
+		}
+
+		readyQueueIndexes := make([]int, 0, len(s.queue))
+
+		for index, entry := range s.queue {
+			ready, _, _ :=
+				s.dependencyStatusLocked(entry)
+
+			if ready {
+				readyQueueIndexes = append(
+					readyQueueIndexes,
+					index,
+				)
+			}
+		}
+
+		if len(readyQueueIndexes) == 0 {
+			// At least one dependency is still QUEUED or RUNNING.
+			s.cond.Wait()
+			continue
+		}
+
+		now := time.Now().UTC()
+
+		pressureSnapshot, sampleErr :=
+			s.pressureSource.Sample()
+
+		if pressureSnapshot.Timestamp.IsZero() {
+			pressureSnapshot.Timestamp = now
+		}
+
+		contextSnapshot := s.contexts.Snapshot()
+
+		candidates := make(
+			[]Candidate,
+			0,
+			len(readyQueueIndexes),
+		)
+
+		for _, queueIndex := range readyQueueIndexes {
+			entry := s.queue[queueIndex]
+
+			requested :=
+				contextSnapshot.RequestedBytes(entry.Contexts)
+
+			reusable :=
+				contextSnapshot.ReusableBytes(entry.Contexts)
+
+			affinity :=
+				contextSnapshot.Affinity(entry.Contexts)
+
+			candidates = append(candidates, Candidate{
+				ID:                    entry.Agent.ID,
+				SubmittedAt:           entry.submittedAt,
+				Sequence:              entry.sequence,
+				Demand:                entry.Demand,
+				RequestedContextBytes: requested,
+				ReusableContextBytes:  reusable,
+				ContextAffinity:       affinity,
+			})
+		}
+
+		decision := s.policy.Select(
+			now,
+			candidates,
+			pressureSnapshot,
+		)
+
+		if decision.Index < 0 ||
+			decision.Index >= len(readyQueueIndexes) {
+			decision = Decision{
+				Index:  0,
+				Reason: "policy returned invalid index; FIFO fallback",
+			}
+		}
+
+		selectedQueueIndex :=
+			readyQueueIndexes[decision.Index]
+
+		entry := s.queue[selectedQueueIndex]
+
+		_, _, dependencyOutputs :=
+			s.dependencyStatusLocked(entry)
+
+		if err := applyDependencyOutputs(
+			entry.Agent,
+			dependencyOutputs,
+		); err != nil {
+			s.blockEntryLocked(
+				selectedQueueIndex,
+				err.Error(),
+			)
+			continue
+		}
+
+		selectedCandidate := candidates[decision.Index]
+
+		s.queue = append(
+			s.queue[:selectedQueueIndex],
+			s.queue[selectedQueueIndex+1:]...,
+		)
+
+		startedAt := now
+		record := s.records[entry.Agent.ID]
+
+		record.Phase = PhaseRunning
+		record.StartedAt = &startedAt
+		record.WorkerID = workerID
+		record.DispatchScore = decision.Score
+		record.DispatchReason = decision.Reason
+		record.DependencyOutputs =
+			cloneDependencyOutputs(dependencyOutputs)
+
+		record.RequestedContextBytes =
+			selectedCandidate.RequestedContextBytes
+
+		record.ReusableContextBytes =
+			selectedCandidate.ReusableContextBytes
+
+		record.ContextAffinity =
+			selectedCandidate.ContextAffinity
+
+		snapshotCopy := pressureSnapshot
+		record.Pressure = &snapshotCopy
+
+		if sampleErr != nil {
+			record.PressureError = sampleErr.Error()
+			record.DispatchReason +=
+				"; PSI unavailable, zero-pressure fallback"
+		}
+
+		_ = s.contexts.Touch(entry.Contexts)
+
+		return entry, true
 	}
-
-	selectedCandidate := candidates[decision.Index]
-	entry := s.queue[decision.Index]
-
-	s.queue = append(
-		s.queue[:decision.Index],
-		s.queue[decision.Index+1:]...,
-	)
-
-	startedAt := now
-	record := s.records[entry.Agent.ID]
-
-	record.Phase = PhaseRunning
-	record.StartedAt = &startedAt
-	record.WorkerID = workerID
-	record.DispatchScore = decision.Score
-	record.DispatchReason = decision.Reason
-	record.RequestedContextBytes =
-		selectedCandidate.RequestedContextBytes
-	record.ReusableContextBytes =
-		selectedCandidate.ReusableContextBytes
-	record.ContextAffinity =
-		selectedCandidate.ContextAffinity
-
-	snapshotCopy := pressureSnapshot
-	record.Pressure = &snapshotCopy
-
-	if sampleErr != nil {
-		record.PressureError = sampleErr.Error()
-		record.DispatchReason +=
-			"; PSI unavailable, zero-pressure fallback"
-	}
-
-	_ = s.contexts.Touch(entry.Contexts)
-
-	return entry, true
 }
 
 func (s *Scheduler) execute(entry queuedJob) {
@@ -443,6 +532,7 @@ func (s *Scheduler) execute(entry queuedJob) {
 
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	defer s.cond.Broadcast()
 
 	record := s.records[entry.Agent.ID]
 
@@ -482,6 +572,9 @@ func cloneRecord(source *Record) Record {
 	result.ExitCode = cloneInt(source.ExitCode)
 	result.ResourceStats = cloneStats(source.ResourceStats)
 	result.Contexts = contextstore.CloneRefs(source.Contexts)
+	result.DependsOn = cloneStrings(source.DependsOn)
+	result.DependencyOutputs =
+		cloneDependencyOutputs(source.DependencyOutputs)
 
 	if source.Pressure != nil {
 		snapshot := *source.Pressure

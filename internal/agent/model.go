@@ -63,6 +63,9 @@ type ACB struct {
 	OutputFileCount     int         `json:"output_file_count,omitempty"`
 	OutputBytes         uint64      `json:"output_bytes,omitempty"`
 	OutputError         string      `json:"output_error,omitempty"`
+
+	// DependencyOutputs contains committed results from upstream Agents.
+	DependencyOutputs map[string]DependencyOutput `json:"dependency_outputs,omitempty"`
 }
 
 // New creates a new Agent Control Block.
