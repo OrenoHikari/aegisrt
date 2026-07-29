@@ -6,3 +6,4 @@ __pycache__/
 .vscode/
 /var/contextfs-demo/
 /var/contextfs-bridge-demo/
+/var/contextfs-workspace-demo/
