@@ -51,6 +51,18 @@ type ACB struct {
 	// workspace has already been cleaned.
 	WorkspacePath     string `json:"workspace_path,omitempty"`
 	WorkspaceRetained bool   `json:"workspace_retained"`
+
+	// Transactional Agent output state.
+	OutputState         OutputState `json:"output_state,omitempty"`
+	OutputTransactionID string      `json:"output_transaction_id,omitempty"`
+	OutputStagingPath   string      `json:"output_staging_path,omitempty"`
+	OutputCommitPath    string      `json:"output_commit_path,omitempty"`
+	OutputManifestPath  string      `json:"output_manifest_path,omitempty"`
+	OutputCommitted     bool        `json:"output_committed"`
+	OutputRetained      bool        `json:"output_retained"`
+	OutputFileCount     int         `json:"output_file_count,omitempty"`
+	OutputBytes         uint64      `json:"output_bytes,omitempty"`
+	OutputError         string      `json:"output_error,omitempty"`
 }
 
 // New creates a new Agent Control Block.

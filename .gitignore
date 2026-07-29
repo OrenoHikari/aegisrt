@@ -8,3 +8,4 @@ __pycache__/
 /var/contextfs-bridge-demo/
 /var/contextfs-workspace-demo/
 /var/contextfs-execution-demo/
+/var/output-transaction-demo/

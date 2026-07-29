@@ -1,0 +1,27 @@
+[Unit]
+Description=AegisRT transactional Agent output demo
+After=local-fs.target
+
+[Service]
+Type=oneshot
+
+User=linya
+Group=linya
+
+WorkingDirectory=/home/linya/workspace/aegisrt
+
+ExecStart=/usr/local/libexec/aegisrt/transactiondemo -worker /home/linya/workspace/aegisrt/worker/python/transaction_agent.py -root /home/linya/workspace/aegisrt/var/output-transaction-demo -reset=true
+
+Delegate=cpu memory pids
+
+CPUAccounting=yes
+MemoryAccounting=yes
+TasksAccounting=yes
+
+TimeoutStartSec=45
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
