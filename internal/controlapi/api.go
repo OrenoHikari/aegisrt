@@ -73,6 +73,8 @@ func New(
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/healthz", api.handleHealth)
+	mux.HandleFunc("/readyz", api.handleReady)
+	mux.HandleFunc("/metrics", api.handleMetrics)
 	mux.HandleFunc(
 		"/v1/runtime/status",
 		api.handleRuntimeStatus,

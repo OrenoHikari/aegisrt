@@ -333,7 +333,6 @@ func main() {
 
 	go func() {
 		s.Wait()
-		s.Stop()
 		close(workDone)
 	}()
 
@@ -379,6 +378,8 @@ func main() {
 	}
 
 	<-workDone
+
+	s.Stop()
 
 	if err := eventBus.Close(
 		shutdownContext,
