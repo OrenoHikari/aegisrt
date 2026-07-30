@@ -1,5 +1,5 @@
 [Unit]
-Description=AegisRT transactional Agent output demo
+Description=CAPSuleRT transactional Agent output demo
 After=local-fs.target
 
 [Service]

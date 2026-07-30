@@ -5,7 +5,7 @@ run:
 
 build:
 	mkdir -p bin
-	go build -o bin/aegisd ./cmd/aegisd
+	go build -o bin/capsulertd ./cmd/aegisd
 
 test:
 	go test ./...

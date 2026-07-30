@@ -1,5 +1,5 @@
 [Unit]
-Description=AegisRT Runtime HTTP query API
+Description=CAPSuleRT Runtime HTTP query API
 After=network.target local-fs.target
 
 [Service]

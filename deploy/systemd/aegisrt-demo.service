@@ -1,5 +1,5 @@
 [Unit]
-Description=AegisRT integrated Agent resource demo
+Description=CAPSuleRT integrated Agent resource demo
 After=local-fs.target
 
 [Service]

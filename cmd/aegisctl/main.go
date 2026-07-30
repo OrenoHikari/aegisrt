@@ -30,10 +30,13 @@ func main() {
 	server := flag.String(
 		"server",
 		environmentOrDefault(
-			"AEGISRT_SERVER",
-			defaultServer,
+			"CAPSULERT_SERVER",
+			environmentOrDefault(
+				"AEGISRT_SERVER",
+				defaultServer,
+			),
 		),
-		"AegisRT Runtime API URL",
+		"CAPSuleRT Runtime API URL",
 	)
 
 	timeout := flag.Duration(
@@ -160,7 +163,7 @@ func runAgent(
 	if len(arguments) != 1 {
 		fatal(
 			errors.New(
-				"usage: aegisctl agent <agent-id>",
+				"usage: capsulectl agent <agent-id>",
 			),
 		)
 	}
@@ -540,7 +543,7 @@ func usage() {
 	fmt.Fprintln(
 		os.Stderr,
 		`Usage:
-  aegisctl [global options] <command> [command options]
+  capsulectl [global options] <command> [command options]
 
 Global options:
   -server URL       Runtime API URL
@@ -557,19 +560,20 @@ Commands:
   metrics
 
 Environment:
-  AEGISRT_SERVER    Default Runtime API URL
+  CAPSULERT_SERVER  Default Runtime API URL
+  AEGISRT_SERVER    Legacy compatibility alias
 
 Examples:
-  aegisctl status
-  aegisctl agents -phase FAILED
-  aegisctl agent api-producer-success
-  aegisctl events -since 10
-  aegisctl watch -agent-id api-producer-success
-  aegisctl metrics`,
+  capsulectl status
+  capsulectl agents -phase FAILED
+  capsulectl agent api-producer-success
+  capsulectl events -since 10
+  capsulectl watch -agent-id api-producer-success
+  capsulectl metrics`,
 	)
 }
 
 func fatal(err error) {
-	fmt.Fprintln(os.Stderr, "aegisctl:", err)
+	fmt.Fprintln(os.Stderr, "capsulectl:", err)
 	os.Exit(1)
 }

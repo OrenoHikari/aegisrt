@@ -1,5 +1,5 @@
 [Unit]
-Description=AegisRT FIFO scheduling policy demo
+Description=CAPSuleRT FIFO scheduling policy demo
 After=local-fs.target
 
 [Service]

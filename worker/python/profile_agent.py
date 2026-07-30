@@ -72,7 +72,7 @@ def io_workload(seconds: float) -> dict[str, object]:
     deadline = time.monotonic() + seconds
 
     temporary = tempfile.NamedTemporaryFile(
-        prefix="aegisrt-io-",
+        prefix="capsulert-io-",
         suffix=".tmp",
         dir="/tmp",
         delete=False,

@@ -132,12 +132,12 @@ func TestMetricsEndpoint(t *testing.T) {
 	body := response.Body.String()
 
 	required := []string{
-		"aegisrt_up 1",
-		"aegisrt_ready 1",
-		`aegisrt_scheduler_agents{phase="SUCCEEDED"} 3`,
-		`aegisrt_scheduler_agents{phase="FAILED"} 1`,
-		"aegisrt_event_bus_published_total 10",
-		"aegisrt_event_sequence 10",
+		"capsulert_up 1",
+		"capsulert_ready 1",
+		`capsulert_scheduler_agents{phase="SUCCEEDED"} 3`,
+		`capsulert_scheduler_agents{phase="FAILED"} 1`,
+		"capsulert_event_bus_published_total 10",
+		"capsulert_event_sequence 10",
 	}
 
 	for _, value := range required {

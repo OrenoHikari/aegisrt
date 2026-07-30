@@ -36,7 +36,7 @@ func (e *HTTPError) Error() string {
 	)
 }
 
-// Client is a small AegisRT Runtime API client.
+// Client is a small CAPSuleRT Runtime API client.
 type Client struct {
 	baseURL    *url.URL
 	httpClient *http.Client

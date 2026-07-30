@@ -1,13 +1,15 @@
-# AegisRT
+# CAPSuleRT
+
+> **Compatibility note:** CAPSuleRT v0.1 retains the legacy `aegisrt` Go module, source-directory and deployment paths for compatibility. Public binaries and documentation use the CAPSuleRT name.
 
 > 面向多智能体系统的 AI-Native Agent Runtime
 > **统一调度 · 资源隔离 · 上下文复用 · 事务输出 · 系统级可观测性**
 
-AegisRT 是一个面向多 Agent 系统设计的用户态 Runtime。它将 Agent 视为系统级一等执行实体，为 Agent 提供统一的生命周期管理、资源隔离、上下文管理、任务调度、可靠输出和运行状态观测能力。
+CAPSuleRT 是一个面向多 Agent 系统设计的用户态 Runtime。它将 Agent 视为系统级一等执行实体，为 Agent 提供统一的生命周期管理、资源隔离、上下文管理、任务调度、可靠输出和运行状态观测能力。
 
-与传统 Agent 工作流框架不同，AegisRT 关注多 Agent 系统运行过程中的系统级问题，包括资源竞争、上下文冗余、任务依赖、故障传播以及执行结果一致性。
+与传统 Agent 工作流框架不同，CAPSuleRT 关注多 Agent 系统运行过程中的系统级问题，包括资源竞争、上下文冗余、任务依赖、故障传播以及执行结果一致性。
 
-AegisRT 基于 Linux 内核能力构建，结合 cgroup v2、PSI、内容寻址存储和事务化执行机制，为智能体应用提供稳定、可控、可扩展的运行环境。
+CAPSuleRT 基于 Linux 内核能力构建，结合 cgroup v2、PSI、内容寻址存储和事务化执行机制，为智能体应用提供稳定、可控、可扩展的运行环境。
 
 ---
 
@@ -15,7 +17,7 @@ AegisRT 基于 Linux 内核能力构建，结合 cgroup v2、PSI、内容寻址�
 
 ### Agent 一等公民模型
 
-AegisRT 使用 Agent Control Block（ACB）统一描述 Agent 状态，包括：
+CAPSuleRT 使用 Agent Control Block（ACB）统一描述 Agent 状态，包括：
 
 * Agent 身份与生命周期；
 * 资源预算；
@@ -40,7 +42,7 @@ CREATED → READY → RUNNING → SUCCEEDED
 
 ### 1. 资源隔离与故障域管理
 
-AegisRT 基于 Linux cgroup v2 实现 Agent 级资源治理：
+CAPSuleRT 基于 Linux cgroup v2 实现 Agent 级资源治理：
 
 * CPU 配额限制；
 * 内存限制；
@@ -63,7 +65,7 @@ Agent
 
 ### 2. 压力感知调度
 
-AegisRT 提出 CAPS（Context-Affinity and Pressure-aware Scheduling）调度策略。
+CAPSuleRT 提出 CAPS（Context-Affinity and Pressure-aware Scheduling）调度策略。
 
 调度过程综合考虑：
 
@@ -80,7 +82,7 @@ AegisRT 提出 CAPS（Context-Affinity and Pressure-aware Scheduling）调度策
 
 ### 3. ContextFS 上下文管理
 
-AegisRT 提供基于内容寻址的 ContextFS。
+CAPSuleRT 提供基于内容寻址的 ContextFS。
 
 核心机制：
 
@@ -129,7 +131,7 @@ workspace/
 
 ### 5. 事务化输出机制
 
-AegisRT 不允许 Agent 直接修改共享结果。
+CAPSuleRT 不允许 Agent 直接修改共享结果。
 
 执行流程：
 
@@ -166,7 +168,7 @@ Verified Output
 
 ### 6. DAG 依赖与故障传播
 
-AegisRT 支持 Agent 间依赖管理。
+CAPSuleRT 支持 Agent 间依赖管理。
 
 下游任务只有在上游：
 
@@ -194,7 +196,7 @@ BLOCKED
 
 ### 7. 系统级可观测性
 
-AegisRT 提供统一事件流和运行状态接口。
+CAPSuleRT 提供统一事件流和运行状态接口。
 
 支持：
 
@@ -207,10 +209,10 @@ AegisRT 提供统一事件流和运行状态接口。
 示例：
 
 ```bash
-aegisctl status
-aegisctl agents
-aegisctl events
-aegisctl metrics
+capsulectl status
+capsulectl agents
+capsulectl events
+capsulectl metrics
 ```
 
 ---
@@ -224,7 +226,7 @@ aegisctl metrics
 
                     ▼
 
-              AegisRT Runtime
+              CAPSuleRT Runtime
 
  ┌─────────────────────────────────┐
  │ Scheduler                        │
@@ -249,11 +251,11 @@ aegisctl metrics
 # 项目结构
 
 ```
-aegisrt/
+capsulert/
 
 ├── cmd/
-│   ├── aegisd/          # Runtime daemon
-│   ├── aegisctl/        # CLI tool
+│   ├── aegisd/          # legacy source path; builds capsulertd
+│   ├── capsulectl/        # CLI tool
 │   ├── apidemo/         # HTTP API demo
 │   └── demos/           # Feature demonstrations
 │
@@ -307,8 +309,8 @@ go build ./cmd/...
 ```bash
 mkdir -p bin
 
-go build -o bin/aegisd ./cmd/aegisd
-go build -o bin/aegisctl ./cmd/aegisctl
+go build -o bin/capsulertd ./cmd/aegisd
+go build -o bin/capsulectl ./cmd/capsulectl
 ```
 
 ---
@@ -324,13 +326,13 @@ go build -o bin/aegisctl ./cmd/aegisctl
 查询 Runtime：
 
 ```bash
-./bin/aegisctl status
+./bin/capsulectl status
 
-./bin/aegisctl agents
+./bin/capsulectl agents
 
-./bin/aegisctl events
+./bin/capsulectl events
 
-./bin/aegisctl metrics
+./bin/capsulectl metrics
 ```
 
 ---
@@ -358,7 +360,7 @@ http://127.0.0.1:18080
 
 # 技术亮点总结
 
-AegisRT 构建了一套面向未来多 Agent 系统的运行时基础设施：
+CAPSuleRT 构建了一套面向未来多 Agent 系统的运行时基础设施：
 
 * 将 Agent 从应用层对象提升为系统级执行实体；
 * 利用 Linux 原生能力实现资源隔离；
@@ -384,5 +386,5 @@ AegisRT 构建了一套面向未来多 Agent 系统的运行时基础设施：
 ---
 
 <p align="center">
-<b>AegisRT — Making Agents First-Class Runtime Citizens.</b>
+<b>CAPSuleRT — Making Agents First-Class Runtime Citizens.</b>
 </p>

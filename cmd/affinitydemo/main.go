@@ -106,14 +106,14 @@ func main() {
 
 	sharedContext := []contextstore.Ref{
 		{
-			Key:       "dataset://aegisrt/shared-corpus",
+			Key:       "dataset://capsulert/shared-corpus",
 			SizeBytes: 64 * 1024 * 1024,
 		},
 	}
 
 	coldContext := []contextstore.Ref{
 		{
-			Key:       "dataset://aegisrt/unrelated-corpus",
+			Key:       "dataset://capsulert/unrelated-corpus",
 			SizeBytes: 64 * 1024 * 1024,
 		},
 	}

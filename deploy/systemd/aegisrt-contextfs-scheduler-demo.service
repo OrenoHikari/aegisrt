@@ -1,5 +1,5 @@
 [Unit]
-Description=AegisRT ContextFS-backed scheduling demo
+Description=CAPSuleRT ContextFS-backed scheduling demo
 After=local-fs.target
 
 [Service]

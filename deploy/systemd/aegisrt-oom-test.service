@@ -1,5 +1,5 @@
 [Unit]
-Description=AegisRT Agent OOM fault-domain test
+Description=CAPSuleRT Agent OOM fault-domain test
 After=local-fs.target
 
 [Service]

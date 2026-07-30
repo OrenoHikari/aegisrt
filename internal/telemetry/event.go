@@ -22,7 +22,7 @@ const (
 	KindAgentFinished Kind = "runtime.agent.finished"
 )
 
-// Event is the common observable record emitted by AegisRT.
+// Event is the common observable record emitted by CAPSuleRT.
 type Event struct {
 	ID        string    `json:"id"`
 	Sequence  uint64    `json:"sequence"`
@@ -50,7 +50,7 @@ func NewEvent(
 	}
 
 	if source == "" {
-		source = "aegisrt"
+		source = "capsulert"
 	}
 
 	var data json.RawMessage

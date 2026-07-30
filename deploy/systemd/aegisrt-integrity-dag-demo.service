@@ -1,5 +1,5 @@
 [Unit]
-Description=AegisRT verified-output DAG demo
+Description=CAPSuleRT verified-output DAG demo
 After=local-fs.target
 
 [Service]

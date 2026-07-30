@@ -36,7 +36,7 @@ type BusView interface {
 	Stats() telemetry.BusStats
 }
 
-// API implements the AegisRT HTTP query plane.
+// API implements the CAPSuleRT HTTP query plane.
 type API struct {
 	scheduler SchedulerView
 	events    EventView

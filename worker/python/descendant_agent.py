@@ -45,7 +45,7 @@ time.sleep(300)
             sys.executable,
             "-c",
             child_code,
-            "aegisrt-descendant-marker",
+            "capsulert-descendant-marker",
         ]
     )
 

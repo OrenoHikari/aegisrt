@@ -1,5 +1,5 @@
 [Unit]
-Description=AegisRT descendant fault-domain cleanup test
+Description=CAPSuleRT descendant fault-domain cleanup test
 After=local-fs.target
 
 [Service]

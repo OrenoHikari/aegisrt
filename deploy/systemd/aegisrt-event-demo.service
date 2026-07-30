@@ -1,5 +1,5 @@
 [Unit]
-Description=AegisRT unified Runtime event demo
+Description=CAPSuleRT unified Runtime event demo
 After=local-fs.target
 
 [Service]

@@ -1,5 +1,5 @@
 [Unit]
-Description=AegisRT ContextFS workspace execution demo
+Description=CAPSuleRT ContextFS workspace execution demo
 After=local-fs.target
 
 [Service]

@@ -1,5 +1,5 @@
 [Unit]
-Description=AegisRT cgroup v2 resource demo
+Description=CAPSuleRT cgroup v2 resource demo
 After=local-fs.target
 
 [Service]

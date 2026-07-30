@@ -17,7 +17,7 @@ def emit(event: str, **fields: object) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="AegisRT hello Agent")
+    parser = argparse.ArgumentParser(description="CAPSuleRT hello Agent")
     parser.add_argument(
         "--seconds",
         type=int,
@@ -39,7 +39,7 @@ def main() -> None:
     emit(
         "result",
         status="ok",
-        output="hello from the first AegisRT Agent",
+        output="hello from the first CAPSuleRT Agent",
     )
 
 
