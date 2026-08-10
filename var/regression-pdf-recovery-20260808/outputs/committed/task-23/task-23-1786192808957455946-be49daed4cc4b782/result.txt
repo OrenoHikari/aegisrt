@@ -1,0 +1,5 @@
+Papers: 4
+Evidence: 28
+Directions: 3
+Datasets: Document understanding data covers general document images, and more, charts, diagrams, encompassing diverse visual Q&A tasks., flowcharts
+Metrics: 

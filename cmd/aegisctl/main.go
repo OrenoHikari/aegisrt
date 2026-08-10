@@ -16,6 +16,8 @@ import (
 	"time"
 
 	"aegisrt/internal/controlclient"
+	"aegisrt/internal/experiment"
+	"aegisrt/internal/research"
 )
 
 const defaultServer = "http://127.0.0.1:18080"
@@ -55,6 +57,64 @@ func main() {
 		os.Exit(2)
 	}
 
+	command := arguments[0]
+	commandArgs := arguments[1:]
+	if command == "internal-experiment-worker" {
+		if err := experiment.RunWorker(context.Background(), commandArgs); err != nil {
+			fatal(err)
+		}
+		return
+	}
+	if command == "internal-research-worker" {
+		if err := research.RunWorker(context.Background(), commandArgs); err != nil {
+			fatal(err)
+		}
+		return
+	}
+	if command == "dashboard" {
+		if err := runDashboard(commandArgs); err != nil {
+			fatal(err)
+		}
+		return
+	}
+	if command == "experiment" && len(commandArgs) > 0 && commandArgs[0] == "demo" {
+		if err := runExperimentDemo(commandArgs[1:]); err != nil {
+			fatal(err)
+		}
+		return
+	}
+
+	if command == "agent" && len(commandArgs) > 0 && commandArgs[0] == "run" {
+		if err := runCognitiveAgent(commandArgs[1:]); err != nil {
+			fatal(err)
+		}
+		return
+	}
+	if command == "agent" && len(commandArgs) > 0 && commandArgs[0] == "research" {
+		if err := runResearchAgent(commandArgs[1:]); err != nil {
+			fatal(err)
+		}
+		return
+	}
+	if command == "agent" && len(commandArgs) > 0 && commandArgs[0] == "research-eval" {
+		if err := runResearchEval(commandArgs[1:]); err != nil {
+			fatal(err)
+		}
+		return
+	}
+	if command == "agent" && len(commandArgs) > 0 && commandArgs[0] == "llm-check" {
+		if err := runLLMCheck(commandArgs[1:]); err != nil {
+			fatal(err)
+		}
+		return
+	}
+	if command == "agent" && len(commandArgs) > 0 && commandArgs[0] == "research-smoke" {
+		if err := runResearchSmoke(commandArgs[1:]); err != nil {
+			fatal(err)
+		}
+		return
+	}
+
 	client, err := controlclient.New(
 		*server,
 		*timeout,
@@ -62,9 +122,6 @@ func main() {
 	if err != nil {
 		fatal(err)
 	}
-
-	command := arguments[0]
-	commandArgs := arguments[1:]
 
 	ctx := context.Background()
 
@@ -550,11 +607,18 @@ Global options:
   -timeout DURATION HTTP timeout
 
 Commands:
+  dashboard [-listen 127.0.0.1:8080] [-mock]
+  experiment demo [-task TEXT] [-root PATH] [-max-replans N]
   health
   ready
   status
   agents [-phase PHASE] [-limit N]
   agent <agent-id>
+  agent run -task TEXT [-mock] [-mock-scenario normal|replan|failure] [-max-replans N]
+  agent research -task TEXT [-mock] [-provider multi|arxiv|crossref] [-mock-scenario normal|search-replan|unavailable|evidence-rejection]
+  agent research-eval [-suite fixture|real-small] [-provider arxiv|multi|crossref] [-output eval-results]
+  agent llm-check [-timeout 30s]
+  agent research-smoke [-python .venv-research/bin/python]
   events [-since N] [-limit N] [-kind KIND] [-agent-id ID] [-phase PHASE]
   watch [-since N] [-interval 1s] [-kind KIND] [-agent-id ID] [-phase PHASE] [-json]
   metrics
@@ -564,9 +628,16 @@ Environment:
   AEGISRT_SERVER    Legacy compatibility alias
 
 Examples:
+  capsulectl dashboard -mock
+  capsulectl experiment demo
   capsulectl status
   capsulectl agents -phase FAILED
   capsulectl agent api-producer-success
+  capsulectl agent run -mock -input examples/sales.txt -task "读取 examples/sales.txt，分析并总结"
+  capsulectl agent research -mock -task "调研 referring expression counting 并设计实验"
+  capsulectl agent research-eval -output var/research-eval
+  capsulectl agent research-eval -suite real-small -output var/research-real-eval
+  capsulectl agent llm-check
   capsulectl events -since 10
   capsulectl watch -agent-id api-producer-success
   capsulectl metrics`,

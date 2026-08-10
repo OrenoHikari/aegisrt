@@ -1,0 +1,50 @@
+[
+  {
+    "id": "mock.0001",
+    "title": "Grounded Region Counting for Referring Expressions",
+    "authors": ["Ada Chen", "Borin Li"],
+    "year": 2022,
+    "abstract": "A region-grounding architecture connects referring expressions to countable visual regions.",
+    "venue": "MockVision 2022",
+    "doi": "10.0000/mock.0001",
+    "url": "https://arxiv.org/abs/mock.0001",
+    "pdf_url": "https://arxiv.org/pdf/mock.0001",
+    "provider": "mock",
+    "full_text_available": true
+  },
+  {
+    "id": "mock.0002",
+    "title": "Language-Guided Density Estimation for Visual Counting",
+    "authors": ["Carla Singh", "Dae Park"],
+    "year": 2023,
+    "abstract": "Language-conditioned density maps support open-vocabulary object counting.",
+    "venue": "MockML 2023",
+    "url": "https://arxiv.org/abs/mock.0002",
+    "pdf_url": "https://arxiv.org/pdf/mock.0002",
+    "provider": "mock",
+    "full_text_available": true
+  },
+  {
+    "id": "mock.0003",
+    "title": "REC-Bench: Evaluating Referring Expression Counting",
+    "authors": ["Elena Rao", "Farid Musa"],
+    "year": 2024,
+    "abstract": "A benchmark studies compositional language and counting under distribution shift.",
+    "venue": "MockData 2024",
+    "url": "https://arxiv.org/abs/mock.0003",
+    "pdf_url": "https://arxiv.org/pdf/mock.0003",
+    "provider": "mock",
+    "full_text_available": true
+  },
+  {
+    "id": "mock.unavailable",
+    "title": "A Closed Full-Text Study of Referring Expression Counting",
+    "authors": ["Grace Novak"],
+    "year": 2024,
+    "abstract": "Metadata is public, but the mock full text is intentionally unavailable.",
+    "venue": "MockClosed 2024",
+    "url": "https://arxiv.org/abs/mock.unavailable",
+    "provider": "mock",
+    "full_text_available": false
+  }
+]

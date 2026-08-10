@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "dataset": "classification.csv",
+  "methods": [
+    {
+      "method": "logistic_regression"
+    },
+    {
+      "method": "random_forest",
+      "n_estimators": 1000
+    },
+    {
+      "method": "svm"
+    }
+  ]
+}

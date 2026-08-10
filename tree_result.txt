@@ -1,0 +1,79 @@
+.
+├── bin
+│   ├── aegisctl
+│   ├── aegisd
+│   ├── affinitydemo
+│   ├── apidemo
+│   ├── capsdemo
+│   ├── capsulectl
+│   ├── capsulertd
+│   ├── cgroupdemo
+│   ├── contextbridgedemo
+│   ├── contextfsdemo
+│   ├── eventdemo
+│   ├── integritydagdemo
+│   ├── schedulerdemo
+│   ├── transactiondemo
+│   ├── workspacedemo
+│   └── workspaceexecdemo
+├── cmd
+│   ├── aegisctl
+│   ├── aegisd
+│   ├── affinitydemo
+│   ├── apidemo
+│   ├── capsdemo
+│   ├── cgroupdemo
+│   ├── contextbridgedemo
+│   ├── contextfsdemo
+│   ├── eventdemo
+│   ├── integritydagdemo
+│   ├── psidemo
+│   ├── schedulerdemo
+│   ├── transactiondemo
+│   ├── workspacedemo
+│   └── workspaceexecdemo
+├── deploy
+│   └── systemd
+├── docs
+├── go.mod
+├── grep_result.md
+├── internal
+│   ├── agent
+│   ├── contextfs
+│   ├── contextstore
+│   ├── controlapi
+│   ├── controlclient
+│   ├── outputtxn
+│   ├── pressure
+│   ├── resource
+│   ├── runtime
+│   ├── scheduler
+│   └── telemetry
+├── logs
+│   ├── affinity-events.jsonl
+│   ├── caps-events.jsonl
+│   ├── contextfs-scheduler-events.jsonl
+│   ├── events.jsonl
+│   ├── fifo-events.jsonl
+│   ├── integrity-dag-events.jsonl
+│   ├── scheduler-events.jsonl
+│   ├── transaction-events.jsonl
+│   └── workspace-execution-events.jsonl
+├── Makefile
+├── mkdir
+├── README.md
+├── tests
+├── tree_result.txt
+├── var
+│   ├── api-demo
+│   ├── contextfs-bridge-demo
+│   ├── contextfs-demo
+│   ├── contextfs-execution-demo
+│   ├── contextfs-workspace-demo
+│   ├── event-demo
+│   ├── integrity-dag-demo
+│   └── output-transaction-demo
+└── worker
+    └── python
+
+47 directories, 30 files

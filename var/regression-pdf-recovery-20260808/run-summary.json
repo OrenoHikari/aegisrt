@@ -1,0 +1,122 @@
+{
+  "run_id": "agent-1786192700755259063-1",
+  "goal": "调研 2023 至 2026 年视觉语言模型在文档理解中的轻量化方法，比较代表性模型、数据集、评估指标和主要局限，并设计一个可以在单张消费级 GPU 上执行的后续实验。",
+  "mode": "real",
+  "budget": {
+    "max_papers": 10,
+    "max_llm_calls": 50,
+    "max_analysis_calls_per_paper": 1,
+    "max_replans": 3,
+    "max_runtime": "10m0s",
+    "max_context_bytes": 61440,
+    "max_pdf_bytes": 20971520
+  },
+  "planning": {
+    "plans_generated": 2,
+    "replans": 1
+  },
+  "search": {
+    "queries": 1,
+    "papers_retrieved": 10,
+    "papers_deduplicated": 0
+  },
+  "paper": {
+    "pdfs_requested": 6,
+    "pdfs_available": 5,
+    "parsed_successfully": 5,
+    "parse_failures": 1,
+    "diagnostics": [
+      {
+        "selected": "python-pypdf",
+        "attempted": [
+          "python-pypdf"
+        ],
+        "page_count": 7,
+        "extracted_characters": 20914,
+        "detected_sections": 21,
+        "duration_ms": 256,
+        "fallback_used": false,
+        "truncated": false,
+        "warning_count": 0
+      },
+      {
+        "selected": "python-pypdf",
+        "attempted": [
+          "python-pypdf"
+        ],
+        "page_count": 26,
+        "extracted_characters": 44986,
+        "detected_sections": 32,
+        "duration_ms": 1190,
+        "fallback_used": false,
+        "truncated": false,
+        "warning_count": 0
+      },
+      {
+        "selected": "python-pypdf",
+        "attempted": [
+          "python-pypdf"
+        ],
+        "page_count": 22,
+        "extracted_characters": 80750,
+        "detected_sections": 28,
+        "duration_ms": 529,
+        "fallback_used": false,
+        "truncated": false,
+        "warning_count": 0
+      },
+      {
+        "selected": "python-pypdf",
+        "attempted": [
+          "python-pypdf"
+        ],
+        "page_count": 20,
+        "extracted_characters": 26329,
+        "detected_sections": 32,
+        "duration_ms": 552,
+        "fallback_used": false,
+        "truncated": false,
+        "warning_count": 0
+      },
+      {
+        "selected": "python-pypdf",
+        "attempted": [
+          "python-pypdf"
+        ],
+        "page_count": 19,
+        "extracted_characters": 28631,
+        "detected_sections": 32,
+        "duration_ms": 369,
+        "fallback_used": false,
+        "truncated": false,
+        "warning_count": 0
+      }
+    ]
+  },
+  "llm": {
+    "calls": 10,
+    "failures": 0,
+    "input_tokens": 152564,
+    "output_tokens": 14125
+  },
+  "evidence": {
+    "candidates": 66,
+    "source_verified": 35,
+    "supported": 28,
+    "rejected": 33
+  },
+  "report": {
+    "facts": 28,
+    "inferences": 2,
+    "proposals": 19,
+    "references": 4,
+    "retrieved_references": 10,
+    "valid_metadata_references": 4,
+    "hallucinated_references": 0,
+    "duplicated_references": 0,
+    "citation_closure": true
+  },
+  "duration": "1m59.397772211s",
+  "duration_ms": 119397,
+  "failure_count": 12
+}

@@ -1,0 +1,35 @@
+{
+  "paper": {
+    "id": "2603.15409",
+    "title": "SEA-Vision: A Multilingual Benchmark for Comprehensive Document and Scene Text Understanding in Southeast Asia",
+    "authors": [
+      "Pengfei Yue",
+      "Xingran Zhao",
+      "Juntao Chen",
+      "Peng Hou",
+      "Wang Longchao",
+      "Jianghang Lin",
+      "Shengchuan Zhang",
+      "Anxiang Zeng",
+      "Liujuan Cao"
+    ],
+    "year": 2026,
+    "abstract": "Multilingual document and scene text understanding plays an important role in applications such as search, finance, and public services. However, most existing benchmarks focus on high-resource languages and fail to evaluate models in realistic multilingual environments. In Southeast Asia, the diversity of languages, complex writing systems, and highly varied document types make this challenge even greater. We introduce SEA-Vision, a benchmark that jointly evaluates Document Parsing and Text-Centric Visual Question Answering (TEC-VQA) across 11 Southeast Asian languages. SEA-Vision contains 15,234 document parsing pages from nine representative document types, annotated with hierarchical page-, block-, and line-level labels. It also provides 7,496 TEC-VQA question-answer pairs that probe text recognition, numerical calculation, comparative analysis, logical reasoning, and spatial understanding. To make such multilingual, multi-task annotation feasible, we design a hybrid pipeline for Document Parsing and TEC-VQA. It combines automated filtering and scoring with MLLM-assisted labeling and lightweight native-speaker verification, greatly reducing manual labeling while maintaining high quality. We evaluate several leading multimodal models and observe pronounced performance degradation on low-resource Southeast Asian languages, highlighting substantial remaining gaps in multilingual document and scene text understanding. We believe SEA-Vision will help drive global progress in document and scene text understanding.",
+    "arxiv_id": "2603.15409",
+    "url": "https://arxiv.org/abs/2603.15409",
+    "pdf_url": "https://arxiv.org/pdf/2603.15409v1",
+    "provider": "arxiv",
+    "metadata_sources": [
+      "arxiv"
+    ],
+    "full_text_available": true
+  },
+  "query": "lightweight vision language model document understanding",
+  "rank": 4,
+  "available": true,
+  "retryable": false,
+  "content_type": "application/pdf",
+  "bytes": 17033560,
+  "source_url": "https://arxiv.org/pdf/2603.15409v1",
+  "artifact": "paper.pdf"
+}

@@ -1,0 +1,286 @@
+{
+  "query": "lightweight vision language model document understanding",
+  "from_year": 2023,
+  "to_year": 2026,
+  "total_results": 10,
+  "papers": [
+    {
+      "id": "2509.06415",
+      "title": "Index-Preserving Lightweight Token Pruning for Efficient Document Understanding in Vision-Language Models",
+      "authors": [
+        "Jaemin Son",
+        "Sujin Choi",
+        "Inyong Yun"
+      ],
+      "year": 2025,
+      "abstract": "Recent progress in vision-language models (VLMs) has led to impressive results in document understanding tasks, but their high computational demands remain a challenge. To mitigate the compute burdens, we propose a lightweight token pruning framework that filters out non-informative background regions from document images prior to VLM processing. A binary patch-level classifier removes non-text areas, and a max-pooling refinement step recovers fragmented text regions to enhance spatial coherence. Experiments on real-world document datasets demonstrate that our approach substantially lowers computational costs, while maintaining comparable accuracy.",
+      "arxiv_id": "2509.06415",
+      "url": "https://arxiv.org/abs/2509.06415",
+      "pdf_url": "https://arxiv.org/pdf/2509.06415v2",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    },
+    {
+      "id": "2502.09927",
+      "title": "Granite Vision: a lightweight, open-source multimodal model for enterprise Intelligence",
+      "authors": [
+        "Granite Vision Team",
+        "Leonid Karlinsky",
+        "Assaf Arbelle",
+        "Abraham Daniels",
+        "Ahmed Nassar",
+        "Amit Alfassi",
+        "Bo Wu",
+        "Eli Schwartz",
+        "Dhiraj Joshi",
+        "Jovana Kondic",
+        "Nimrod Shabtay",
+        "Pengyuan Li",
+        "Roei Herzig",
+        "Shafiq Abedin",
+        "Shaked Perek",
+        "Sivan Harary",
+        "Udi Barzelay",
+        "Adi Raz Goldfarb",
+        "Aude Oliva",
+        "Ben Wieles",
+        "Bishwaranjan Bhattacharjee",
+        "Brandon Huang",
+        "Christoph Auer",
+        "Dan Gutfreund",
+        "David Beymer",
+        "David Wood",
+        "Hilde Kuehne",
+        "Jacob Hansen",
+        "Joseph Shtok",
+        "Ken Wong",
+        "Luis Angel Bathen",
+        "Mayank Mishra",
+        "Maksym Lysak",
+        "Michele Dolfi",
+        "Mikhail Yurochkin",
+        "Nikolaos Livathinos",
+        "Nimrod Harel",
+        "Ophir Azulai",
+        "Oshri Naparstek",
+        "Rafael Teixeira de Lima",
+        "Rameswar Panda",
+        "Sivan Doveh",
+        "Shubham Gupta",
+        "Subhro Das",
+        "Syed Zawad",
+        "Yusik Kim",
+        "Zexue He",
+        "Alexander Brooks",
+        "Gabe Goodhart",
+        "Anita Govindjee",
+        "Derek Leist",
+        "Ibrahim Ibrahim",
+        "Aya Soffer",
+        "David Cox",
+        "Kate Soule",
+        "Luis Lastras",
+        "Nirmit Desai",
+        "Shila Ofek-koifman",
+        "Sriram Raghavan",
+        "Tanveer Syeda-Mahmood",
+        "Peter Staar",
+        "Tal Drory",
+        "Rogerio Feris"
+      ],
+      "year": 2025,
+      "abstract": "We introduce Granite Vision, a lightweight large language model with vision capabilities, specifically designed to excel in enterprise use cases, particularly in visual document understanding. Our model is trained on a comprehensive instruction-following dataset, including document-related tasks, such as content extraction from tables, charts, diagrams, sketches, and infographics, as well as general image tasks. The architecture of Granite Vision is centered around visual modality alignment with a decoder-only, 2 billion parameter Granite large language model. Additionally, we introduce a dedicated safety classification approach in test-time that leverages a sparse set of attention vectors to identify potential harmful inputs. Despite its lightweight architecture, Granite Vision achieves strong results in standard benchmarks related to visual document understanding, as well as on the LiveXiv benchmark, which is designed to avoid test set contamination by using a constantly updated corpus of recently published Arxiv papers. We are releasing the model under the Apache-2 license, allowing for both research and commercial use, while offering complete visibility into the training data and other relevant details. See https://huggingface.co/ibm-granite/ for model weights.",
+      "arxiv_id": "2502.09927",
+      "url": "https://arxiv.org/abs/2502.09927",
+      "pdf_url": "https://arxiv.org/pdf/2502.09927v1",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    },
+    {
+      "id": "2511.11313",
+      "title": "DocSLM: A Small Vision-Language Model for Long Multimodal Document Understanding",
+      "authors": [
+        "Tanveer Hannan",
+        "Dimitrios Mallios",
+        "Parth Pathak",
+        "Faegheh Sardari",
+        "Thomas Seidl",
+        "Gedas Bertasius",
+        "Mohsen Fayyaz",
+        "Sunando Sengupta"
+      ],
+      "year": 2025,
+      "abstract": "Large Vision-Language Models (LVLMs) have demonstrated strong multimodal reasoning capabilities on long and complex documents. However, their high memory footprint makes them impractical for deployment on resource-constrained edge devices. We present DocSLM, an efficient Small Vision-Language Model designed for long-document understanding under constrained memory resources. DocSLM incorporates a Hierarchical Multimodal Compressor that jointly encodes visual, textual, and layout information from each page into a fixed-length sequence, greatly reducing memory consumption while preserving both local and global semantics. To enable scalable processing over arbitrarily long inputs, we introduce a Streaming Abstention mechanism that operates on document segments sequentially and filters low-confidence responses using an entropy-based uncertainty calibrator. Across multiple long multimodal document benchmarks, DocSLM matches or surpasses state-of-the-art methods while using 82\\% fewer visual tokens, 75\\% fewer parameters, and 71\\% lower latency, delivering reliable multimodal document understanding on lightweight edge devices. Code and Model are available in https://github.com/Tanveer81/DocSLM.git.",
+      "arxiv_id": "2511.11313",
+      "url": "https://arxiv.org/abs/2511.11313",
+      "pdf_url": "https://arxiv.org/pdf/2511.11313v3",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    },
+    {
+      "id": "2603.15409",
+      "title": "SEA-Vision: A Multilingual Benchmark for Comprehensive Document and Scene Text Understanding in Southeast Asia",
+      "authors": [
+        "Pengfei Yue",
+        "Xingran Zhao",
+        "Juntao Chen",
+        "Peng Hou",
+        "Wang Longchao",
+        "Jianghang Lin",
+        "Shengchuan Zhang",
+        "Anxiang Zeng",
+        "Liujuan Cao"
+      ],
+      "year": 2026,
+      "abstract": "Multilingual document and scene text understanding plays an important role in applications such as search, finance, and public services. However, most existing benchmarks focus on high-resource languages and fail to evaluate models in realistic multilingual environments. In Southeast Asia, the diversity of languages, complex writing systems, and highly varied document types make this challenge even greater. We introduce SEA-Vision, a benchmark that jointly evaluates Document Parsing and Text-Centric Visual Question Answering (TEC-VQA) across 11 Southeast Asian languages. SEA-Vision contains 15,234 document parsing pages from nine representative document types, annotated with hierarchical page-, block-, and line-level labels. It also provides 7,496 TEC-VQA question-answer pairs that probe text recognition, numerical calculation, comparative analysis, logical reasoning, and spatial understanding. To make such multilingual, multi-task annotation feasible, we design a hybrid pipeline for Document Parsing and TEC-VQA. It combines automated filtering and scoring with MLLM-assisted labeling and lightweight native-speaker verification, greatly reducing manual labeling while maintaining high quality. We evaluate several leading multimodal models and observe pronounced performance degradation on low-resource Southeast Asian languages, highlighting substantial remaining gaps in multilingual document and scene text understanding. We believe SEA-Vision will help drive global progress in document and scene text understanding.",
+      "arxiv_id": "2603.15409",
+      "url": "https://arxiv.org/abs/2603.15409",
+      "pdf_url": "https://arxiv.org/pdf/2603.15409v1",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    },
+    {
+      "id": "2509.26235",
+      "title": "Interpret, prune and distill Donut : towards lightweight VLMs for VQA on document",
+      "authors": [
+        "Adnan Ben Mansour",
+        "Ayoub Karine",
+        "David Naccache"
+      ],
+      "year": 2025,
+      "abstract": "Recent advances in Visually-rich Document Understanding rely on large Vision-Language Models like Donut, which perform document-level Visual Question Answering without Optical Character Recognition. Despite their effectiveness, these models are too costly for real-time or resource-constrained applications. We investigate model compression through knowledge distillation, training compact student models from a larger teacher. We leverage mechanistic interpretability to drive student architecture design within this framework. By analyzing internal computations, we identify essential subcomponents to retain, while having a clear view of which subcomponents should be approximated, skipped, or reparametrized based on their function. This approach yields Donut-MINT (Mechanistic Interpretability-based Network Trimming), a pruned Donut variant that reduces inference time and memory usage while maintaining strong performance on DocVQA, a standard benchmark for document Visual Question Answering. Our method reframes compression as circuit discovery, bridging interpretability research and practical Vision-Language Model deployment.",
+      "arxiv_id": "2509.26235",
+      "url": "https://arxiv.org/abs/2509.26235",
+      "pdf_url": "https://arxiv.org/pdf/2509.26235v1",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    },
+    {
+      "id": "2509.10105",
+      "title": "VARCO-VISION-2.0 Technical Report",
+      "authors": [
+        "Young-rok Cha",
+        "Jeongho Ju",
+        "SunYoung Park",
+        "Jong-Hyeon Lee",
+        "Younghyun Yu",
+        "Youngjune Kim"
+      ],
+      "year": 2025,
+      "abstract": "We introduce VARCO-VISION-2.0, an open-weight bilingual vision-language model (VLM) for Korean and English with improved capabilities compared to the previous model VARCO-VISION-14B. The model supports multi-image understanding for complex inputs such as documents, charts, and tables, and delivers layoutaware OCR by predicting both textual content and its spatial location. Trained with a four-stage curriculum with memory-efficient techniques, the model achieves enhanced multimodal alignment, while preserving core language abilities and improving safety via preference optimization. Extensive benchmark evaluations demonstrate strong spatial grounding and competitive results for both languages, with the 14B model achieving 8th place on the OpenCompass VLM leaderboard among models of comparable scale. Alongside the 14B-scale model, we release a 1.7B version optimized for on-device deployment. We believe these models advance the development of bilingual VLMs and their practical applications. Two variants of VARCO-VISION-2.0 are available at Hugging Face: a full-scale 14B model and a lightweight 1.7B model.",
+      "arxiv_id": "2509.10105",
+      "url": "https://arxiv.org/abs/2509.10105",
+      "pdf_url": "https://arxiv.org/pdf/2509.10105v2",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    },
+    {
+      "id": "2604.04579",
+      "title": "Firebolt-VL: Efficient Vision-Language Understanding with Cross-Modality Modulation",
+      "authors": [
+        "Quoc-Huy Trinh",
+        "Mustapha Abdullahi",
+        "Bo Zhao",
+        "Debesh Jha"
+      ],
+      "year": 2026,
+      "abstract": "Recent advances in multimodal large language models (MLLMs) have enabled impressive progress in vision-language understanding, yet their high computational cost limits deployment in resource-constrained scenarios such as personal assistants, document understanding, and smart cameras. Most existing methods rely on Transformer-based cross-attention, whose quadratic complexity hinders efficiency. Moreover, small vision-language models often struggle to precisely capture fine-grained, task-relevant visual regions, leading to degraded performance on fine-grained reasoning tasks that limit their effectiveness in the real world. To address these issues, we introduce Firebolt-VL, an efficient vision-language model that replaces the Transformer-based decoder with a Liquid Foundation Model (LFM) decoder. To further enhance visual grounding, we propose a Token-Grid Correlation Module, which computes lightweight correlations between text tokens and image patches and modulates via the state-space model with FiLM conditioning. This enables the model to selectively emphasize visual regions relevant to the textual prompt while maintaining linear-time inference. Experimental results across multiple benchmarks demonstrate that Firebolt-VL achieves accurate, fine-grained understanding with significantly improved efficiency. Our model and code are available at: https://fireboltvl.github.io",
+      "arxiv_id": "2604.04579",
+      "url": "https://arxiv.org/abs/2604.04579",
+      "pdf_url": "https://arxiv.org/pdf/2604.04579v2",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    },
+    {
+      "id": "2603.06569",
+      "title": "Penguin-VL: Exploring the Efficiency Limits of VLM with LLM-based Vision Encoders",
+      "authors": [
+        "Boqiang Zhang",
+        "Lei Ke",
+        "Ruihan Yang",
+        "Qi Gao",
+        "Tianyuan Qu",
+        "Rossell Chen",
+        "Dong Yu",
+        "Leoweiliang"
+      ],
+      "year": 2026,
+      "abstract": "Vision Language Model (VLM) development has largely relied on scaling model size, which hinders deployment on compute-constrained mobile and edge devices such as smartphones and robots. In this work, we explore the performance limits of compact (e.g., 2B and 8B) VLMs. We challenge the prevailing practice that state-of-the-art VLMs must rely on vision encoders initialized via massive contrastive pretraining (e.g., CLIP/SigLIP). We identify an objective mismatch: contrastive learning, optimized for discrimination, enforces coarse and category-level invariances that suppress fine-grained visual cues needed for dense captioning and complex VLM reasoning. To address this issue, we present Penguin-VL, whose vision encoder is initialized from a text-only LLM. Our experiments reveal that Penguin-Encoder serves as a superior alternative to traditional contrastive pretraining, unlocking a higher degree of visual fidelity and data efficiency for multimodal understanding. Across various image and video benchmarks, Penguin-VL achieves performance comparable to leading VLMs (e.g., Qwen3-VL) in mathematical reasoning and surpasses them in tasks such as document understanding, visual knowledge, and multi-perspective video understanding. Notably, these gains are achieved with a lightweight architecture, demonstrating that improved visual representation rather than model scaling is the primary driver of performance. Our ablations show that Penguin-Encoder consistently outperforms contrastive-pretrained encoders, preserving fine-grained spatial and temporal cues that are critical for dense perception and complex reasoning. This makes it a strong drop-in alternative for compute-efficient VLMs and enables high performance in resource-constrained settings. Code: https://github.com/tencent-ailab/Penguin-VL",
+      "arxiv_id": "2603.06569",
+      "url": "https://arxiv.org/abs/2603.06569",
+      "pdf_url": "https://arxiv.org/pdf/2603.06569v2",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    },
+    {
+      "id": "2408.15045",
+      "title": "DocLayLLM: An Efficient Multi-modal Extension of Large Language Models for Text-rich Document Understanding",
+      "authors": [
+        "Wenhui Liao",
+        "Jiapeng Wang",
+        "Hongliang Li",
+        "Chengyu Wang",
+        "Jun Huang",
+        "Lianwen Jin"
+      ],
+      "year": 2024,
+      "abstract": "Text-rich document understanding (TDU) requires comprehensive analysis of documents containing substantial textual content and complex layouts. While Multimodal Large Language Models (MLLMs) have achieved fast progress in this domain, existing approaches either demand significant computational resources or struggle with effective multi-modal integration. In this paper, we introduce DocLayLLM, an efficient multi-modal extension of LLMs specifically designed for TDU. By lightly integrating visual patch tokens and 2D positional tokens into LLMs' input and encoding the document content using the LLMs themselves, we fully take advantage of the document comprehension capability of LLMs and enhance their perception of OCR information. We have also deeply considered the role of chain-of-thought (CoT) and innovatively proposed the techniques of CoT Pre-training and CoT Annealing. Our DocLayLLM can achieve remarkable performances with lightweight training settings, showcasing its efficiency and effectiveness. Experimental results demonstrate that our DocLayLLM outperforms existing OCR-dependent methods and OCR-free competitors. Code and model are available at https://github.com/whlscut/DocLayLLM.",
+      "arxiv_id": "2408.15045",
+      "url": "https://arxiv.org/abs/2408.15045",
+      "pdf_url": "https://arxiv.org/pdf/2408.15045v3",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    },
+    {
+      "id": "2509.07666",
+      "title": "MoLoRAG: Bootstrapping Document Understanding via Multi-modal Logic-aware Retrieval",
+      "authors": [
+        "Xixi Wu",
+        "Yanchao Tan",
+        "Nan Hou",
+        "Ruiyang Zhang",
+        "Hong Cheng"
+      ],
+      "year": 2025,
+      "abstract": "Document Understanding is a foundational AI capability with broad applications, and Document Question Answering (DocQA) is a key evaluation task. Traditional methods convert the document into text for processing by Large Language Models (LLMs), but this process strips away critical multi-modal information like figures. While Large Vision-Language Models (LVLMs) address this limitation, their constrained input size makes multi-page document comprehension infeasible. Retrieval-augmented generation (RAG) methods mitigate this by selecting relevant pages, but they rely solely on semantic relevance, ignoring logical connections between pages and the query, which is essential for reasoning. To this end, we propose MoLoRAG, a logic-aware retrieval framework for multi-modal, multi-page document understanding. By constructing a page graph that captures contextual relationships between pages, a lightweight VLM performs graph traversal to retrieve relevant pages, including those with logical connections often overlooked. This approach combines semantic and logical relevance to deliver more accurate retrieval. After retrieval, the top-$K$ pages are fed into arbitrary LVLMs for question answering. To enhance flexibility, MoLoRAG offers two variants: a training-free solution for easy deployment and a fine-tuned version to improve logical relevance checking. Experiments on four DocQA datasets demonstrate average improvements of 9.68% in accuracy over LVLM direct inference and 7.44% in retrieval precision over baselines. Codes and datasets are released at https://github.com/WxxShirley/MoLoRAG.",
+      "arxiv_id": "2509.07666",
+      "url": "https://arxiv.org/abs/2509.07666",
+      "pdf_url": "https://arxiv.org/pdf/2509.07666v1",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    }
+  ],
+  "provider": "arxiv",
+  "cached": false,
+  "completed_at": "2026-08-08T12:38:42.985990244Z"
+}

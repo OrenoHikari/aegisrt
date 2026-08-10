@@ -1,0 +1,6 @@
+Paper: VARCO-VISION-2.0 Technical Report
+Problem: 
+Method: The model is trained with a four-stage curriculum with memory-efficient techniques.
+Datasets: 
+Metrics: 
+Evidence: 10

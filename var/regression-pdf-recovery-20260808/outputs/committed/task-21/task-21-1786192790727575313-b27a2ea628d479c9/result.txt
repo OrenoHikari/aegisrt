@@ -1,0 +1,41 @@
+Paper: VARCO-VISION-2.0 Technical Report
+Parser: python-pypdf
+Pages: 19
+Sections: 32
+Characters: 28631
+Duration: 369ms
+Fallback: false
+Truncated: false
+Warnings: 0
+- Unknown (124 chars)
+- Nc ai (73 chars)
+- Abstract (1125 chars)
+- Introduction (3076 chars)
+- Architecture (1212 chars)
+- Training Strategies and Datasets (720 chars)
+- Stage 1. Feature Alignment Pre-training (1014 chars)
+- Stage 2. Basic Supervised Fine-tuning (1534 chars)
+- Stage 3. Advanced Supervised Fine-tuning (3394 chars)
+- Stage 4. Preference Optimization (1638 chars)
+- 61M 93M 154M (687 chars)
+- Initialization Strategy for VARCO-VISION-2.0-1.7B (533 chars)
+- Model Merging (1263 chars)
+- Training Infrastructure and Efficiency Optimizations (1935 chars)
+- English Benchmarks (1536 chars)
+- Korean Benchmarks (2404 chars)
+- Text-only Benchmarks (1475 chars)
+- Korean Cultural Benchmarks (618 chars)
+- Mmmu_v al [28]64.860.7 58.0 56.3 61.9 (70 chars)
+- Ai2d [30] 86.0 86.384.3 83.9 85.7 (191 chars)
+- Pope [34]89.487.5 85.9 87.9 89.2 (81 chars)
+- Blink [36]59.959.0 55.3 50.3 54.5 (381 chars)
+- Mmmu_v al48.745.6 44.1 (45 chars)
+- Ai2d 78.6 82.776.0 (127 chars)
+- Pope90.187.8 88.6 (56 chars)
+- Blink53.147.9 47.2 (372 chars)
+- K-seed78.273.2 75.7 75.4 77.2 (249 chars)
+- K-seed 69.2 34.570.7 (358 chars)
+- OCR Benchmarks (1538 chars)
+- Ablation Study (286 chars)
+- Vision Encoder Sharing (417 chars)
+- Mmlu78.578.4 4.6 4.9 77.9 (37 chars)

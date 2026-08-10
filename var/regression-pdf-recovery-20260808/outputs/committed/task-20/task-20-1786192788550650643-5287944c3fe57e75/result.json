@@ -1,0 +1,32 @@
+{
+  "paper": {
+    "id": "2509.10105",
+    "title": "VARCO-VISION-2.0 Technical Report",
+    "authors": [
+      "Young-rok Cha",
+      "Jeongho Ju",
+      "SunYoung Park",
+      "Jong-Hyeon Lee",
+      "Younghyun Yu",
+      "Youngjune Kim"
+    ],
+    "year": 2025,
+    "abstract": "We introduce VARCO-VISION-2.0, an open-weight bilingual vision-language model (VLM) for Korean and English with improved capabilities compared to the previous model VARCO-VISION-14B. The model supports multi-image understanding for complex inputs such as documents, charts, and tables, and delivers layoutaware OCR by predicting both textual content and its spatial location. Trained with a four-stage curriculum with memory-efficient techniques, the model achieves enhanced multimodal alignment, while preserving core language abilities and improving safety via preference optimization. Extensive benchmark evaluations demonstrate strong spatial grounding and competitive results for both languages, with the 14B model achieving 8th place on the OpenCompass VLM leaderboard among models of comparable scale. Alongside the 14B-scale model, we release a 1.7B version optimized for on-device deployment. We believe these models advance the development of bilingual VLMs and their practical applications. Two variants of VARCO-VISION-2.0 are available at Hugging Face: a full-scale 14B model and a lightweight 1.7B model.",
+    "arxiv_id": "2509.10105",
+    "url": "https://arxiv.org/abs/2509.10105",
+    "pdf_url": "https://arxiv.org/pdf/2509.10105v2",
+    "provider": "arxiv",
+    "metadata_sources": [
+      "arxiv"
+    ],
+    "full_text_available": true
+  },
+  "query": "lightweight vision language model document understanding",
+  "rank": 6,
+  "available": true,
+  "retryable": false,
+  "content_type": "application/pdf",
+  "bytes": 426920,
+  "source_url": "https://arxiv.org/pdf/2509.10105v2",
+  "artifact": "paper.pdf"
+}

@@ -1,0 +1,6 @@
+[
+  {"product": "Capsule-A", "region": "North", "sales": 128, "quarter": "2026-Q1"},
+  {"product": "Capsule-B", "region": "East", "sales": 176, "quarter": "2026-Q1"},
+  {"product": "Capsule-C", "region": "South", "sales": 149, "quarter": "2026-Q1"},
+  {"product": "Capsule-D", "region": "West", "sales": 97, "quarter": "2026-Q1"}
+]

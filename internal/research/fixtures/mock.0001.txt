@@ -1,0 +1,20 @@
+# Abstract
+A region-grounding architecture connects referring expressions to countable visual regions.
+
+# Introduction
+PROBLEM: Existing visual counting systems do not reliably bind compositional referring expressions to the intended object regions.
+
+# Method
+METHOD: Grounded Region Counting first predicts language-aligned regions and then aggregates region-level count estimates.
+CONTRIBUTION: The method separates linguistic grounding from numerical aggregation so that each stage can be inspected.
+DATASET: REC-Count, RefCOCO-Count
+METRIC: MAE, RMSE
+
+# Results
+RESULT: Grounded Region Counting reduces MAE from 12.4 to 9.1 on REC-Count under the paper's evaluation protocol.
+
+# Limitations
+LIMITATION: Region proposal errors propagate directly into the final count.
+
+# References
+[1] RefCOCO benchmark.

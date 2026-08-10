@@ -1,0 +1,6 @@
+Paper: Interpret, prune and distill Donut : towards lightweight VLMs for VQA on document
+Problem: 
+Method: 
+Datasets: 
+Metrics: 
+Evidence: 6

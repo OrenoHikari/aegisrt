@@ -1,0 +1,727 @@
+{
+  "paper": {
+    "id": "2502.09927",
+    "title": "Granite Vision: a lightweight, open-source multimodal model for enterprise Intelligence",
+    "authors": [
+      "Granite Vision Team",
+      "Leonid Karlinsky",
+      "Assaf Arbelle",
+      "Abraham Daniels",
+      "Ahmed Nassar",
+      "Amit Alfassi",
+      "Bo Wu",
+      "Eli Schwartz",
+      "Dhiraj Joshi",
+      "Jovana Kondic",
+      "Nimrod Shabtay",
+      "Pengyuan Li",
+      "Roei Herzig",
+      "Shafiq Abedin",
+      "Shaked Perek",
+      "Sivan Harary",
+      "Udi Barzelay",
+      "Adi Raz Goldfarb",
+      "Aude Oliva",
+      "Ben Wieles",
+      "Bishwaranjan Bhattacharjee",
+      "Brandon Huang",
+      "Christoph Auer",
+      "Dan Gutfreund",
+      "David Beymer",
+      "David Wood",
+      "Hilde Kuehne",
+      "Jacob Hansen",
+      "Joseph Shtok",
+      "Ken Wong",
+      "Luis Angel Bathen",
+      "Mayank Mishra",
+      "Maksym Lysak",
+      "Michele Dolfi",
+      "Mikhail Yurochkin",
+      "Nikolaos Livathinos",
+      "Nimrod Harel",
+      "Ophir Azulai",
+      "Oshri Naparstek",
+      "Rafael Teixeira de Lima",
+      "Rameswar Panda",
+      "Sivan Doveh",
+      "Shubham Gupta",
+      "Subhro Das",
+      "Syed Zawad",
+      "Yusik Kim",
+      "Zexue He",
+      "Alexander Brooks",
+      "Gabe Goodhart",
+      "Anita Govindjee",
+      "Derek Leist",
+      "Ibrahim Ibrahim",
+      "Aya Soffer",
+      "David Cox",
+      "Kate Soule",
+      "Luis Lastras",
+      "Nirmit Desai",
+      "Shila Ofek-koifman",
+      "Sriram Raghavan",
+      "Tanveer Syeda-Mahmood",
+      "Peter Staar",
+      "Tal Drory",
+      "Rogerio Feris"
+    ],
+    "year": 2025,
+    "abstract": "We introduce Granite Vision, a lightweight large language model with vision capabilities, specifically designed to excel in enterprise use cases, particularly in visual document understanding. Our model is trained on a comprehensive instruction-following dataset, including document-related tasks, such as content extraction from tables, charts, diagrams, sketches, and infographics, as well as general image tasks. The architecture of Granite Vision is centered around visual modality alignment with a decoder-only, 2 billion parameter Granite large language model. Additionally, we introduce a dedicated safety classification approach in test-time that leverages a sparse set of attention vectors to identify potential harmful inputs. Despite its lightweight architecture, Granite Vision achieves strong results in standard benchmarks related to visual document understanding, as well as on the LiveXiv benchmark, which is designed to avoid test set contamination by using a constantly updated corpus of recently published Arxiv papers. We are releasing the model under the Apache-2 license, allowing for both research and commercial use, while offering complete visibility into the training data and other relevant details. See https://huggingface.co/ibm-granite/ for model weights.",
+    "arxiv_id": "2502.09927",
+    "url": "https://arxiv.org/abs/2502.09927",
+    "pdf_url": "https://arxiv.org/pdf/2502.09927v1",
+    "provider": "arxiv",
+    "metadata_sources": [
+      "arxiv"
+    ],
+    "full_text_available": true
+  },
+  "query": "lightweight vision language model document understanding",
+  "research_question": "What lightweight methods for vision-language models in document understanding are proposed? What models, datasets, evaluation metrics, and limitations are discussed?",
+  "problem": "Existing models are predominantly trained on natural images, limiting performance in visual document understanding.",
+  "method": "Granite Vision extends the Granite family of LLMs trained on more than 12 trillion tokens.",
+  "key_contributions": [
+    "A comprehensive instruction-following dataset for visual document understanding was curated, comprising around 13 million images and 80 million instructions.",
+    "Granite Vision is a compact vision-language model with approximately 3 billion parameters, tailored to excel in enterprise use cases.",
+    "The first version of Granite Vision is particularly focused on visual document understanding.",
+    "The model is publicly available under the Apache-2 license, allowing visibility into training data and procedures."
+  ],
+  "datasets": [
+    "Document understanding data covers general document images",
+    "and more",
+    "charts",
+    "diagrams",
+    "encompassing diverse visual Q\u0026A tasks.",
+    "flowcharts"
+  ],
+  "metrics": null,
+  "experiments": null,
+  "main_results": [
+    "Granite Vision uniquely achieves state-of-the-art results on standard document and other benchmarks at a significantly reduced scale (~3B parameters).",
+    "The highest scoring model on ChartQA is Granite Vision 3.1 with a score of 0.86.",
+    "The model demonstrates competitive results on standard vision-language benchmarks."
+  ],
+  "limitations": null,
+  "candidate_findings": [
+    {
+      "claim": "Smaller models (1-4B parameters) consistently fall short of performance comparable to larger counterparts.",
+      "claim_type": "problem",
+      "paper_id": "2502.09927",
+      "section_id": "section-004",
+      "evidence_text": "While this progress is exciting, a notable disparity remains: smaller models, typically with 1-4 billion parameters, have consistently fallen short of achieving performance comparable to their larger counterparts containing tens of billions of parameters.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "Existing models are predominantly trained on natural images, limiting performance in visual document understanding.",
+      "claim_type": "problem",
+      "paper_id": "2502.09927",
+      "section_id": "section-004",
+      "evidence_text": "In addition, existing models are predominantly trained on natural images, which can limit their performance in other domains, such as visual document understanding, where the unique visual characteristics, such as layouts, fonts, and graphics, significantly differ from natural images and require a more fine-grained comprehension of the visual content.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "Granite Vision is a compact vision-language model with approximately 3 billion parameters, tailored to excel in enterprise use cases.",
+      "claim_type": "contribution",
+      "paper_id": "2502.09927",
+      "section_id": "section-004",
+      "evidence_text": "In this work, we introduce Granite Vision, a compact vision-language model with approximately 3 billion parameters1, tailored to excel in enterprise use cases.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The first version of Granite Vision is particularly focused on visual document understanding.",
+      "claim_type": "contribution",
+      "paper_id": "2502.09927",
+      "section_id": "section-004",
+      "evidence_text": "Although our model can process general images, the first version of Granite Vision is particularly focused on visual document understanding, enabling automated content extraction from tables, charts, infographics, plots, diagrams, sketches, and more.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "Granite Vision extends the Granite family of LLMs trained on more than 12 trillion tokens.",
+      "claim_type": "method",
+      "paper_id": "2502.09927",
+      "section_id": "section-004",
+      "evidence_text": "Granite Vision extends the Granite family of large language models ( Granite Team (2024)), which have been trained on more than 12 trillion tokens, achieving state-of-the-art performance for their size, while being designed for enterprise usage, with full visibility into the training data.",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "The model uses a projector to connect the visual encoder and the Granite LLM, similar to LLaVA.",
+      "claim_type": "method",
+      "paper_id": "2502.09927",
+      "section_id": "section-005",
+      "evidence_text": "Similar to LLaV A (Liu et al., 2023c), our approach uses a projector to establish a connection between the visual encoder and a Granite large language model.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "Training protocol consists of multiple stages, progressing from training the projector in isolation to jointly fine-tuning both the projector and the LLM, using denser image resolution grids at the latest stages.",
+      "claim_type": "method",
+      "paper_id": "2502.09927",
+      "section_id": "section-005",
+      "evidence_text": "Our training protocol consists of multiple stages, progressing from training the projector in isolation to jointly fine-tuning both the projector and the large language model, using denser image resolution grids at the latest stages.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "Multi-layer features are extracted from the encoder to better capture fine-grained details important for visual document understanding.",
+      "claim_type": "method",
+      "paper_id": "2502.09927",
+      "section_id": "section-005",
+      "evidence_text": "We also extract multi-layer features from the encoder, allowing us to better capture fine-grained details that are important for visual document understanding.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "A novel safety classification method is proposed as a separate module to identify harmful inputs based on a sparse set of attention vectors.",
+      "claim_type": "method",
+      "paper_id": "2502.09927",
+      "section_id": "section-005",
+      "evidence_text": "Finally, we propose a novel method for safety classification as a separate module to identify harmful inputs based on a sparse set of attention vectors, which are selectively chosen to maximize safety classification performance.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "A comprehensive instruction-following dataset for visual document understanding was curated, comprising around 13 million images and 80 million instructions.",
+      "claim_type": "contribution",
+      "paper_id": "2502.09927",
+      "section_id": "section-005",
+      "evidence_text": "As a key contribution of our work, we meticulously curate a comprehensive instruction-following dataset for visual document understanding, comprising around 13 million images and 80 million instructions, which span a diverse set of of tasks, including document question-answering , scene text understanding, key-value extraction, text grounding, layout parsing, captioning, UI understanding, and code (see Figure 2).",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The dataset was constructed by mining documents from the web and synthesizing instructions, and unifying multiple public datasets.",
+      "claim_type": "method",
+      "paper_id": "2502.09927",
+      "section_id": "section-005",
+      "evidence_text": "We constructed this dataset by (i) mining documents from the web and synthesizing instructions as described in Section 3.1, and (ii) unifying multiple public datasets into a single format.",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "Training data is enriched by instruction-following data for general images from public datasets.",
+      "claim_type": "method",
+      "paper_id": "2502.09927",
+      "section_id": "section-005",
+      "evidence_text": "In addition to documents, our training data is further enriched by the inclusion of instruction-following data for general images from public datasets (Tong et al., 2024; Li et al., 2024b; Laurenc ¸on et al., 2024b; Liu et al., 2023b).",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "Granite Vision achieves state-of-the-art results on established benchmarks for visual document understanding compared to other models of similar parameter size.",
+      "claim_type": "result",
+      "paper_id": "2502.09927",
+      "section_id": "section-005",
+      "evidence_text": "Compared to other models of similar parameter size, Granite Vision achieves state-of-the-art results on established benchmarks for visual document understanding, conversion of tables and charts to structured formats, and the LiveXiv benchmark (Shabtay et al., 2024), which evaluates the model on recently published Arxiv papers, helping to mitigate the risk of test set contamination that can arise when models are trained on web-scraped data.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The model demonstrates competitive results on standard vision-language benchmarks.",
+      "claim_type": "result",
+      "paper_id": "2502.09927",
+      "section_id": "section-005",
+      "evidence_text": "In addition to its strong performance in enterprise settings, our model demonstrates competitive results on standard vision-language benchmarks.",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "The model is publicly available under the Apache-2 license, allowing visibility into training data and procedures.",
+      "claim_type": "contribution",
+      "paper_id": "2502.09927",
+      "section_id": "section-005",
+      "evidence_text": "To promote openness and collaboration, we make the model publicly available under the Apache-2 license, allowing visibility into the training data and procedures.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "Granite Vision uniquely achieves state-of-the-art results on standard document and other benchmarks at a significantly reduced scale (~3B parameters).",
+      "claim_type": "result",
+      "paper_id": "2502.09927",
+      "section_id": "section-006",
+      "evidence_text": "Building on these insights, our model uniquely achieves state-of-the-art results on standard document and other benchmarks, all while operating at a significantly reduced scale (around 3 billion parameters).",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The model leverages a comprehensive instruction-following dataset for visual document understanding, incorporating both synthetic data and public datasets.",
+      "claim_type": "method",
+      "paper_id": "2502.09927",
+      "section_id": "section-007",
+      "evidence_text": "Our approach builds upon this foundation by leveraging a comprehensive instruction-following dataset for visual document understanding, incorporating both synthetic data and public datasets.",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "The training data consists of pre-curated public vision datasets, common-crawl PDFs, and in-house synthesized data.",
+      "claim_type": "dataset",
+      "paper_id": "2502.09927",
+      "section_id": "section-008",
+      "evidence_text": "The training data consists of a combination of pre-curated public vision datasets, common-crawl PDFs, and data that is synthesized in-house.",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "Document understanding data covers general document images, charts, flowcharts, diagrams, and more, encompassing diverse visual Q\u0026A tasks.",
+      "claim_type": "dataset",
+      "paper_id": "2502.09927",
+      "section_id": "section-008",
+      "evidence_text": "Our document understanding data (Figure 2) covers a variety of document classes such as general document images, charts, flowcharts, diagrams and several more encompassing a diverse set of visual Q\u0026A tasks.",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "The highest scoring model on ChartQA is Granite Vision 3.1 with a score of 0.86.",
+      "claim_type": "result",
+      "paper_id": "2502.09927",
+      "section_id": "section-005",
+      "evidence_text": "What is the highest scoring model on ChartQA and what is the score? The highest scoring model on ChartQA is Granite Vision 3.1 with a score of 0.86.",
+      "importance": "high",
+      "confidence": 0.95
+    }
+  ],
+  "findings": [
+    {
+      "candidate": {
+        "claim": "Smaller models (1-4B parameters) consistently fall short of performance comparable to larger counterparts.",
+        "claim_type": "problem",
+        "paper_id": "2502.09927",
+        "section_id": "section-004",
+        "evidence_text": "While this progress is exciting, a notable disparity remains: smaller models, typically with 1-4 billion parameters, have consistently fallen short of achieving performance comparable to their larger counterparts containing tens of billions of parameters.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Existing models are predominantly trained on natural images, limiting performance in visual document understanding.",
+        "claim_type": "problem",
+        "paper_id": "2502.09927",
+        "section_id": "section-004",
+        "evidence_text": "In addition, existing models are predominantly trained on natural images, which can limit their performance in other domains, such as visual document understanding, where the unique visual characteristics, such as layouts, fonts, and graphics, significantly differ from natural images and require a more fine-grained comprehension of the visual content.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2502.09927-e1",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "Granite Vision is a compact vision-language model with approximately 3 billion parameters, tailored to excel in enterprise use cases.",
+        "claim_type": "contribution",
+        "paper_id": "2502.09927",
+        "section_id": "section-004",
+        "evidence_text": "In this work, we introduce Granite Vision, a compact vision-language model with approximately 3 billion parameters1, tailored to excel in enterprise use cases.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2502.09927-e2",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The first version of Granite Vision is particularly focused on visual document understanding.",
+        "claim_type": "contribution",
+        "paper_id": "2502.09927",
+        "section_id": "section-004",
+        "evidence_text": "Although our model can process general images, the first version of Granite Vision is particularly focused on visual document understanding, enabling automated content extraction from tables, charts, infographics, plots, diagrams, sketches, and more.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2502.09927-e3",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "Granite Vision extends the Granite family of LLMs trained on more than 12 trillion tokens.",
+        "claim_type": "method",
+        "paper_id": "2502.09927",
+        "section_id": "section-004",
+        "evidence_text": "Granite Vision extends the Granite family of large language models ( Granite Team (2024)), which have been trained on more than 12 trillion tokens, achieving state-of-the-art performance for their size, while being designed for enterprise usage, with full visibility into the training data.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2502.09927-e4",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The model uses a projector to connect the visual encoder and the Granite LLM, similar to LLaVA.",
+        "claim_type": "method",
+        "paper_id": "2502.09927",
+        "section_id": "section-005",
+        "evidence_text": "Similar to LLaV A (Liu et al., 2023c), our approach uses a projector to establish a connection between the visual encoder and a Granite large language model.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "VERIFIED_SOURCE",
+      "evidence_id": "2502.09927-e5",
+      "reason": "evidence exists but deterministic entailment is inconclusive"
+    },
+    {
+      "candidate": {
+        "claim": "Training protocol consists of multiple stages, progressing from training the projector in isolation to jointly fine-tuning both the projector and the LLM, using denser image resolution grids at the latest stages.",
+        "claim_type": "method",
+        "paper_id": "2502.09927",
+        "section_id": "section-005",
+        "evidence_text": "Our training protocol consists of multiple stages, progressing from training the projector in isolation to jointly fine-tuning both the projector and the large language model, using denser image resolution grids at the latest stages.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Multi-layer features are extracted from the encoder to better capture fine-grained details important for visual document understanding.",
+        "claim_type": "method",
+        "paper_id": "2502.09927",
+        "section_id": "section-005",
+        "evidence_text": "We also extract multi-layer features from the encoder, allowing us to better capture fine-grained details that are important for visual document understanding.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "A novel safety classification method is proposed as a separate module to identify harmful inputs based on a sparse set of attention vectors.",
+        "claim_type": "method",
+        "paper_id": "2502.09927",
+        "section_id": "section-005",
+        "evidence_text": "Finally, we propose a novel method for safety classification as a separate module to identify harmful inputs based on a sparse set of attention vectors, which are selectively chosen to maximize safety classification performance.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "A comprehensive instruction-following dataset for visual document understanding was curated, comprising around 13 million images and 80 million instructions.",
+        "claim_type": "contribution",
+        "paper_id": "2502.09927",
+        "section_id": "section-005",
+        "evidence_text": "As a key contribution of our work, we meticulously curate a comprehensive instruction-following dataset for visual document understanding, comprising around 13 million images and 80 million instructions, which span a diverse set of of tasks, including document question-answering , scene text understanding, key-value extraction, text grounding, layout parsing, captioning, UI understanding, and code (see Figure 2).",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2502.09927-e6",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The dataset was constructed by mining documents from the web and synthesizing instructions, and unifying multiple public datasets.",
+        "claim_type": "method",
+        "paper_id": "2502.09927",
+        "section_id": "section-005",
+        "evidence_text": "We constructed this dataset by (i) mining documents from the web and synthesizing instructions as described in Section 3.1, and (ii) unifying multiple public datasets into a single format.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Training data is enriched by instruction-following data for general images from public datasets.",
+        "claim_type": "method",
+        "paper_id": "2502.09927",
+        "section_id": "section-005",
+        "evidence_text": "In addition to documents, our training data is further enriched by the inclusion of instruction-following data for general images from public datasets (Tong et al., 2024; Li et al., 2024b; Laurenc ¸on et al., 2024b; Liu et al., 2023b).",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2502.09927-e7",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "Granite Vision achieves state-of-the-art results on established benchmarks for visual document understanding compared to other models of similar parameter size.",
+        "claim_type": "result",
+        "paper_id": "2502.09927",
+        "section_id": "section-005",
+        "evidence_text": "Compared to other models of similar parameter size, Granite Vision achieves state-of-the-art results on established benchmarks for visual document understanding, conversion of tables and charts to structured formats, and the LiveXiv benchmark (Shabtay et al., 2024), which evaluates the model on recently published Arxiv papers, helping to mitigate the risk of test set contamination that can arise when models are trained on web-scraped data.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "The model demonstrates competitive results on standard vision-language benchmarks.",
+        "claim_type": "result",
+        "paper_id": "2502.09927",
+        "section_id": "section-005",
+        "evidence_text": "In addition to its strong performance in enterprise settings, our model demonstrates competitive results on standard vision-language benchmarks.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2502.09927-e8",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The model is publicly available under the Apache-2 license, allowing visibility into training data and procedures.",
+        "claim_type": "contribution",
+        "paper_id": "2502.09927",
+        "section_id": "section-005",
+        "evidence_text": "To promote openness and collaboration, we make the model publicly available under the Apache-2 license, allowing visibility into the training data and procedures.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2502.09927-e9",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "Granite Vision uniquely achieves state-of-the-art results on standard document and other benchmarks at a significantly reduced scale (~3B parameters).",
+        "claim_type": "result",
+        "paper_id": "2502.09927",
+        "section_id": "section-006",
+        "evidence_text": "Building on these insights, our model uniquely achieves state-of-the-art results on standard document and other benchmarks, all while operating at a significantly reduced scale (around 3 billion parameters).",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2502.09927-e10",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The model leverages a comprehensive instruction-following dataset for visual document understanding, incorporating both synthetic data and public datasets.",
+        "claim_type": "method",
+        "paper_id": "2502.09927",
+        "section_id": "section-007",
+        "evidence_text": "Our approach builds upon this foundation by leveraging a comprehensive instruction-following dataset for visual document understanding, incorporating both synthetic data and public datasets.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "The training data consists of pre-curated public vision datasets, common-crawl PDFs, and in-house synthesized data.",
+        "claim_type": "dataset",
+        "paper_id": "2502.09927",
+        "section_id": "section-008",
+        "evidence_text": "The training data consists of a combination of pre-curated public vision datasets, common-crawl PDFs, and data that is synthesized in-house.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Document understanding data covers general document images, charts, flowcharts, diagrams, and more, encompassing diverse visual Q\u0026A tasks.",
+        "claim_type": "dataset",
+        "paper_id": "2502.09927",
+        "section_id": "section-008",
+        "evidence_text": "Our document understanding data (Figure 2) covers a variety of document classes such as general document images, charts, flowcharts, diagrams and several more encompassing a diverse set of visual Q\u0026A tasks.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2502.09927-e11",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The highest scoring model on ChartQA is Granite Vision 3.1 with a score of 0.86.",
+        "claim_type": "result",
+        "paper_id": "2502.09927",
+        "section_id": "section-005",
+        "evidence_text": "What is the highest scoring model on ChartQA and what is the score? The highest scoring model on ChartQA is Granite Vision 3.1 with a score of 0.86.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2502.09927-e12",
+      "reason": "the canonical evidence contains the claim text"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "2502.09927-e1",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "Existing models are predominantly trained on natural images, limiting performance in visual document understanding.",
+      "section": "I NTRODUCTION",
+      "section_id": "section-004",
+      "start": 954,
+      "end": 1307,
+      "snippet": "In addition, existing models are predominantly trained on natural\nimages, which can limit their performance in other domains, such as visual document understanding, where\nthe unique visual characteristics, such as layouts, fonts, and graphics, significantly differ from natural images\nand require a more fine-grained comprehension of the visual content.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e2",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "Granite Vision is a compact vision-language model with approximately 3 billion parameters, tailored to excel in enterprise use cases.",
+      "section": "I NTRODUCTION",
+      "section_id": "section-004",
+      "start": 1308,
+      "end": 1467,
+      "snippet": "In this work, we introduce Granite Vision, a compact vision-language model with approximately 3 billion\nparameters1, tailored to excel in enterprise use cases.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e3",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "The first version of Granite Vision is particularly focused on visual document understanding.",
+      "section": "I NTRODUCTION",
+      "section_id": "section-004",
+      "start": 1468,
+      "end": 1718,
+      "snippet": "Although our model can process general images, the\nfirst version of Granite Vision is particularly focused on visual document understanding, enabling automated\ncontent extraction from tables, charts, infographics, plots, diagrams, sketches, and more.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e4",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "Granite Vision extends the Granite family of LLMs trained on more than 12 trillion tokens.",
+      "section": "I NTRODUCTION",
+      "section_id": "section-004",
+      "start": 1852,
+      "end": 2142,
+      "snippet": "Granite Vision extends the Granite family of large language models ( Granite Team (2024)), which\nhave been trained on more than 12 trillion tokens, achieving state-of-the-art performance for their size, while\nbeing designed for enterprise usage, with full visibility into the training data.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e5",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "The model uses a projector to connect the visual encoder and the Granite LLM, similar to LLaVA.",
+      "section": "Barque steak",
+      "section_id": "section-005",
+      "start": 1362,
+      "end": 1519,
+      "snippet": "Similar to LLaV A (Liu et al., 2023c), our approach uses a projector to establish a connection between the\nvisual encoder and a Granite large language model.",
+      "producing_task": "task-13",
+      "status": "VERIFIED_SOURCE"
+    },
+    {
+      "id": "2502.09927-e6",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "A comprehensive instruction-following dataset for visual document understanding was curated, comprising around 13 million images and 80 million instructions.",
+      "section": "Barque steak",
+      "section_id": "section-005",
+      "start": 517,
+      "end": 933,
+      "snippet": "As a key contribution of our work, we meticulously curate a comprehensive instruction-following dataset\nfor visual document understanding, comprising around 13 million images and 80 million instructions, which\nspan a diverse set of of tasks, including document question-answering , scene text understanding, key-value\nextraction, text grounding, layout parsing, captioning, UI understanding, and code (see Figure 2).",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e7",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "Training data is enriched by instruction-following data for general images from public datasets.",
+      "section": "Barque steak",
+      "section_id": "section-005",
+      "start": 1125,
+      "end": 1361,
+      "snippet": "In addition to documents, our\ntraining data is further enriched by the inclusion of instruction-following data for general images from public\ndatasets (Tong et al., 2024; Li et al., 2024b; Laurenc ¸on et al., 2024b; Liu et al., 2023b).",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e8",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "The model demonstrates competitive results on standard vision-language benchmarks.",
+      "section": "Barque steak",
+      "section_id": "section-005",
+      "start": 2596,
+      "end": 2740,
+      "snippet": "In addition to its strong performance in enterprise settings, our model demonstrates competitive\nresults on standard vision-language benchmarks.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e9",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "The model is publicly available under the Apache-2 license, allowing visibility into training data and procedures.",
+      "section": "Barque steak",
+      "section_id": "section-005",
+      "start": 2741,
+      "end": 2903,
+      "snippet": "To promote openness and collaboration, we make the model\npublicly available under the Apache-2 license, allowing visibility into the training data and procedures.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e10",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "Granite Vision uniquely achieves state-of-the-art results on standard document and other benchmarks at a significantly reduced scale (~3B parameters).",
+      "section": "M ULTIMODAL LARGE LANGUAGE MODELS",
+      "section_id": "section-006",
+      "start": 1812,
+      "end": 2019,
+      "snippet": "Building on these insights, our model uniquely achieves state-of-the-art results on standard document and\nother benchmarks, all while operating at a significantly reduced scale (around 3 billion parameters).",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e11",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "Document understanding data covers general document images, charts, flowcharts, diagrams, and more, encompassing diverse visual Q\u0026A tasks.",
+      "section": "D ATA",
+      "section_id": "section-008",
+      "start": 479,
+      "end": 685,
+      "snippet": "Our document understanding data (Figure 2) covers a\nvariety of document classes such as general document images, charts, flowcharts, diagrams and several more\nencompassing a diverse set of visual Q\u0026A tasks.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e12",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "The highest scoring model on ChartQA is Granite Vision 3.1 with a score of 0.86.",
+      "section": "Barque steak",
+      "section_id": "section-005",
+      "start": 30,
+      "end": 178,
+      "snippet": "What is the highest scoring model on\nChartQA and what is the score?\nThe highest scoring model on ChartQA is\nGranite Vision 3.1 with a score of 0.86.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    }
+  ],
+  "usage": {
+    "input_tokens": 3944,
+    "output_tokens": 3145
+  },
+  "llm_calls": 1,
+  "llm_failures": 0
+}

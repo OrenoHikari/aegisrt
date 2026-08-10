@@ -1,0 +1,90 @@
+{
+  "goal": "设计一个可以在单张消费级 GPU 上执行的后续实验，基于视觉语言模型在文档理解中的轻量化方法调研。",
+  "hypothesis": {
+    "kind": "PROPOSAL",
+    "statement": "Combining complementary components from the reviewed routes \"Granite Vision extends the Granite family of LLMs trained on more than 12 trillion tokens.\" and \"The model is trained with a four-stage curriculum with memory-efficient techniques.\" will improve the primary evaluation metrics for the research goal \"设计一个可以在单张消费级 GPU 上执行的后续实验，基于视觉语言模型在文档理解中的轻量化方法调研。\" under a common protocol."
+  },
+  "baseline_suggestions": [
+    {
+      "kind": "PROPOSAL",
+      "statement": "Reproduce the The proposed method is a lightweight pre-encoder token pruning framework that removes non-informative background patches using a binary text-region classifier with a max-pooling refinement step. route from 2509.06415 as a separately reported baseline."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "Reproduce the Granite Vision extends the Granite family of LLMs trained on more than 12 trillion tokens. route from 2502.09927 as a separately reported baseline."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "Reproduce the  route from 2509.26235 as a separately reported baseline."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "Reproduce the The model is trained with a four-stage curriculum with memory-efficient techniques. route from 2509.10105 as a separately reported baseline."
+    }
+  ],
+  "datasets": [
+    {
+      "kind": "PROPOSAL",
+      "statement": "Evaluate on Document understanding data covers general document images with the original paper split and a documented common split where licensing permits."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "Evaluate on and more with the original paper split and a documented common split where licensing permits."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "Evaluate on charts with the original paper split and a documented common split where licensing permits."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "Evaluate on diagrams with the original paper split and a documented common split where licensing permits."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "Evaluate on encompassing diverse visual Q\u0026A tasks. with the original paper split and a documented common split where licensing permits."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "Evaluate on flowcharts with the original paper split and a documented common split where licensing permits."
+    }
+  ],
+  "metrics": null,
+  "ablation_plan": [
+    {
+      "kind": "PROPOSAL",
+      "statement": "Remove each proposed component one at a time while holding data, optimization, and evaluation settings fixed."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "Evaluate the two selected research-route components separately and then in combination."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "Repeat the comparison without auxiliary or cross-dataset pretraining to measure transfer dependence."
+    }
+  ],
+  "evaluation_protocol": [
+    {
+      "kind": "PROPOSAL",
+      "statement": "Use identical train/validation/test identities for all baselines within each dataset."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "Report dataset-specific results separately before any macro average because published results are not directly comparable."
+    }
+  ],
+  "expected_risks": [
+    {
+      "kind": "PROPOSAL",
+      "statement": "Dataset licensing or unavailable annotations may prevent an exact reproduction."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "The reviewed datasets and benchmark definitions may not represent deployment conditions outside the available evidence."
+    },
+    {
+      "kind": "PROPOSAL",
+      "statement": "Apply the stated experimental constraint: 单张消费级 GPU，如 NVIDIA RTX 3060 12GB，内存有限，需考虑模型大小和训练效率。"
+    }
+  ]
+}

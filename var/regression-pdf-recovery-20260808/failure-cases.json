@@ -1,0 +1,110 @@
+[
+  {
+    "run_id": "agent-1786192700755259063-1",
+    "iteration": 1,
+    "task_id": "task-12",
+    "capability": "paper.analyze",
+    "category": "EVIDENCE_REJECTED",
+    "reason": "candidate evidence_text does not exist in the selected section",
+    "recovered": true
+  },
+  {
+    "run_id": "agent-1786192700755259063-1",
+    "iteration": 1,
+    "task_id": "task-13",
+    "capability": "paper.analyze",
+    "category": "EVIDENCE_REJECTED",
+    "reason": "candidate evidence_text does not exist in the selected section",
+    "recovered": true
+  },
+  {
+    "run_id": "agent-1786192700755259063-1",
+    "iteration": 1,
+    "task_id": "task-14",
+    "capability": "paper.analyze",
+    "category": "LLM_ANALYSIS_FAILURE",
+    "reason": "dependency task-9 failed: wait for Agent: exit status 1",
+    "recovered": true
+  },
+  {
+    "run_id": "agent-1786192700755259063-1",
+    "iteration": 1,
+    "task_id": "task-15",
+    "capability": "paper.analyze",
+    "category": "EVIDENCE_REJECTED",
+    "reason": "candidate evidence_text does not exist in the selected section",
+    "recovered": true
+  },
+  {
+    "run_id": "agent-1786192700755259063-1",
+    "iteration": 1,
+    "task_id": "task-16",
+    "capability": "paper.analyze",
+    "category": "EVIDENCE_REJECTED",
+    "reason": "candidate evidence_text does not exist in the selected section",
+    "recovered": true
+  },
+  {
+    "run_id": "agent-1786192700755259063-1",
+    "iteration": 1,
+    "task_id": "task-17",
+    "capability": "research.synthesize",
+    "category": "UNKNOWN",
+    "reason": "dependency task-14 is blocked",
+    "recovered": true
+  },
+  {
+    "run_id": "agent-1786192700755259063-1",
+    "iteration": 1,
+    "task_id": "task-18",
+    "capability": "experiment.design",
+    "category": "UNKNOWN",
+    "reason": "dependency task-17 is blocked",
+    "recovered": true
+  },
+  {
+    "run_id": "agent-1786192700755259063-1",
+    "iteration": 1,
+    "task_id": "task-19",
+    "capability": "research.report",
+    "category": "CITATION_REJECTED",
+    "reason": "dependency task-17 is blocked",
+    "recovered": true
+  },
+  {
+    "run_id": "agent-1786192700755259063-1",
+    "iteration": 1,
+    "task_id": "task-4",
+    "capability": "paper.fetch",
+    "category": "PDF_LIMIT_EXCEEDED",
+    "reason": "paper download exceeds the configured limit: content length 22682393 exceeds limit 20971520",
+    "recovered": true
+  },
+  {
+    "run_id": "agent-1786192700755259063-1",
+    "iteration": 1,
+    "task_id": "task-9",
+    "capability": "paper.parse",
+    "category": "PDF_PARSE_FAILURE",
+    "reason": "wait for Agent: exit status 1",
+    "recovered": true
+  },
+  {
+    "run_id": "agent-1786192700755259063-1",
+    "iteration": 2,
+    "task_id": "task-22",
+    "capability": "paper.analyze",
+    "category": "CLAIM_UNSUPPORTED",
+    "reason": "a quantitative value in the claim is absent from the evidence",
+    "recovered": true
+  },
+  {
+    "run_id": "agent-1786192700755259063-1",
+    "iteration": 2,
+    "task_id": "task-22",
+    "capability": "paper.analyze",
+    "category": "EVIDENCE_REJECTED",
+    "reason": "candidate evidence_text does not exist in the selected section",
+    "recovered": true
+  }
+]

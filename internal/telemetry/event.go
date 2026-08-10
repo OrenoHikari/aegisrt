@@ -10,6 +10,28 @@ import (
 type Kind string
 
 const (
+	KindPlanCreated           Kind = "cognitive.plan.created"
+	KindObservationCreated    Kind = "cognitive.observation.created"
+	KindDecisionMade          Kind = "cognitive.decision.made"
+	KindReplanRequested       Kind = "cognitive.replan.requested"
+	KindPlanRevised           Kind = "cognitive.plan.revised"
+	KindGoalCompleted         Kind = "cognitive.goal.completed"
+	KindAgentLoopAborted      Kind = "cognitive.loop.aborted"
+	KindPaperParsed           Kind = "research.paper.parsed"
+	KindPaperAnalysisStarted  Kind = "research.paper.analysis.started"
+	KindPaperAnalysisDone     Kind = "research.paper.analysis.completed"
+	KindCandidateFinding      Kind = "research.candidate_finding.created"
+	KindEvidenceVerified      Kind = "research.evidence.verified"
+	KindEvidenceRejected      Kind = "research.evidence.rejected"
+	KindClaimSupported        Kind = "research.claim.supported"
+	KindClaimUnsupported      Kind = "research.claim.unsupported"
+	KindReportValidationStart Kind = "research.report.validation.started"
+	KindReportValidationFail  Kind = "research.report.validation.failed"
+	KindReportValidated       Kind = "research.report.validated"
+	KindEvalCompleted         Kind = "research.eval.completed"
+	KindOrchestrationStarted  Kind = "orchestrator.execution.started"
+	KindOrchestrationFinished Kind = "orchestrator.execution.finished"
+
 	KindAgentSubmitted  Kind = "runtime.agent.submitted"
 	KindPressureSampled Kind = "runtime.pressure.sampled"
 	KindAgentDispatched Kind = "runtime.agent.dispatched"

@@ -1,0 +1,14 @@
+Query: lightweight vision language model document understanding
+Provider: arxiv
+Cached: false
+Results: 10
+1. Index-Preserving Lightweight Token Pruning for Efficient Document Understanding in Vision-Language Models (2025) [2509.06415] full_text=true
+2. Granite Vision: a lightweight, open-source multimodal model for enterprise Intelligence (2025) [2502.09927] full_text=true
+3. DocSLM: A Small Vision-Language Model for Long Multimodal Document Understanding (2025) [2511.11313] full_text=true
+4. SEA-Vision: A Multilingual Benchmark for Comprehensive Document and Scene Text Understanding in Southeast Asia (2026) [2603.15409] full_text=true
+5. Interpret, prune and distill Donut : towards lightweight VLMs for VQA on document (2025) [2509.26235] full_text=true
+6. VARCO-VISION-2.0 Technical Report (2025) [2509.10105] full_text=true
+7. Firebolt-VL: Efficient Vision-Language Understanding with Cross-Modality Modulation (2026) [2604.04579] full_text=true
+8. Penguin-VL: Exploring the Efficiency Limits of VLM with LLM-based Vision Encoders (2026) [2603.06569] full_text=true
+9. DocLayLLM: An Efficient Multi-modal Extension of Large Language Models for Text-rich Document Understanding (2024) [2408.15045] full_text=true
+10. MoLoRAG: Bootstrapping Document Understanding via Multi-modal Logic-aware Retrieval (2025) [2509.07666] full_text=true

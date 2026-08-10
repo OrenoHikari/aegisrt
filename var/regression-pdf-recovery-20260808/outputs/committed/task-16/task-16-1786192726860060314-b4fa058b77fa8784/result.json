@@ -1,0 +1,397 @@
+{
+  "paper": {
+    "id": "2509.26235",
+    "title": "Interpret, prune and distill Donut : towards lightweight VLMs for VQA on document",
+    "authors": [
+      "Adnan Ben Mansour",
+      "Ayoub Karine",
+      "David Naccache"
+    ],
+    "year": 2025,
+    "abstract": "Recent advances in Visually-rich Document Understanding rely on large Vision-Language Models like Donut, which perform document-level Visual Question Answering without Optical Character Recognition. Despite their effectiveness, these models are too costly for real-time or resource-constrained applications. We investigate model compression through knowledge distillation, training compact student models from a larger teacher. We leverage mechanistic interpretability to drive student architecture design within this framework. By analyzing internal computations, we identify essential subcomponents to retain, while having a clear view of which subcomponents should be approximated, skipped, or reparametrized based on their function. This approach yields Donut-MINT (Mechanistic Interpretability-based Network Trimming), a pruned Donut variant that reduces inference time and memory usage while maintaining strong performance on DocVQA, a standard benchmark for document Visual Question Answering. Our method reframes compression as circuit discovery, bridging interpretability research and practical Vision-Language Model deployment.",
+    "arxiv_id": "2509.26235",
+    "url": "https://arxiv.org/abs/2509.26235",
+    "pdf_url": "https://arxiv.org/pdf/2509.26235v1",
+    "provider": "arxiv",
+    "metadata_sources": [
+      "arxiv"
+    ],
+    "full_text_available": true
+  },
+  "query": "lightweight vision language model document understanding",
+  "research_question": "What lightweight methods for vision-language models in document understanding are proposed? What models, datasets, evaluation metrics, and limitations are discussed?",
+  "problem": "",
+  "method": "",
+  "key_contributions": [
+    "Donut-MINT is a lightweight model that achieves competitive performance on DocVQA."
+  ],
+  "datasets": null,
+  "metrics": null,
+  "experiments": null,
+  "main_results": [
+    "Donut-MINT achieves significant reductions in parameters and computation while closely matching teacher accuracy on DocVQA."
+  ],
+  "limitations": [
+    "The study centers on Donut as a proof of concept for a broader class of VLMs."
+  ],
+  "candidate_findings": [
+    {
+      "claim": "Large VLMs are computationally expensive and difficult to deploy in real-world environments with latency or resource constraints.",
+      "claim_type": "problem",
+      "paper_id": "2509.26235",
+      "section_id": "section-004",
+      "evidence_text": "Despite strong performance, these models are computationally expensive and difficult to deploy in real-world environments with latency or resource constraints.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "Existing pruning and distillation methods treat the teacher model as a black box, lacking transparency and principled guidance.",
+      "claim_type": "problem",
+      "paper_id": "2509.26235",
+      "section_id": "section-004",
+      "evidence_text": "However, such approaches treat the teacher model as a black box. This lack of transparency limits our ability to guide compression using internal signals.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "Mechanistic interpretability can identify functionally important components to inform pruning and student design.",
+      "claim_type": "method",
+      "paper_id": "2509.26235",
+      "section_id": "section-004",
+      "evidence_text": "We apply MI tools to Donut’s attention patterns and activations to identify functionally important components and remove others in a targeted fashion.",
+      "importance": "high",
+      "confidence": 0.9
+    },
+    {
+      "claim": "Donut-MINT uses mechanistic interpretability to guide structured pruning and knowledge distillation.",
+      "claim_type": "method",
+      "paper_id": "2509.26235",
+      "section_id": "section-007",
+      "evidence_text": "These guide a structured pruning process to obtain a distilled student model.",
+      "importance": "high",
+      "confidence": 0.9
+    },
+    {
+      "claim": "Donut-MINT achieves significant reductions in parameters and computation while closely matching teacher accuracy on DocVQA.",
+      "claim_type": "result",
+      "paper_id": "2509.26235",
+      "section_id": "section-004",
+      "evidence_text": "Our experiments show that our pruned model, Donut-MINT (Mechanistic Interpretability-guided Network Trimming), achieves significant reductions in both parameters and computation, while closely matching the teacher model’s accuracy on DocVQA after distillation.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The study provides a high-level interpretation of how an end-to-end VLM solves VQA on documents.",
+      "claim_type": "contribution",
+      "paper_id": "2509.26235",
+      "section_id": "section-004",
+      "evidence_text": "We provide a high-level interpretation of how an end-to-end VLM solves VQA on documents, identifying the computational patterns and representations most critical to the task.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "Interpretability insights can inform student model design, outperforming baseline pruning or blind distillation strategies.",
+      "claim_type": "contribution",
+      "paper_id": "2509.26235",
+      "section_id": "section-004",
+      "evidence_text": "We demonstrate that these insights can inform the design of a student model, outperforming baseline pruning or blind distillation strategies.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "Donut-MINT is a lightweight model that achieves competitive performance on DocVQA.",
+      "claim_type": "contribution",
+      "paper_id": "2509.26235",
+      "section_id": "section-004",
+      "evidence_text": "We introduce Donut-MINT, a lightweight model that achieves competitive performance on the DocVQA dataset [31], thereby validating our methodology and illustrating how interpretability can drive principled model compression.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The study centers on Donut as a proof of concept for a broader class of VLMs.",
+      "claim_type": "limitation",
+      "paper_id": "2509.26235",
+      "section_id": "section-004",
+      "evidence_text": "While our study centers on Donut, we view it as a proof of concept for a broader class of VLMs.",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "Token pruning is challenging in VrDU because most patches in document images are crucial.",
+      "claim_type": "limitation",
+      "paper_id": "2509.26235",
+      "section_id": "section-006",
+      "evidence_text": "However, this approach is inherently challenging to apply in VrDU, as most of the patches in document images are crucial for understanding and contain valuable information.",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "Donut uses explicit cross-attention between visual features and decoder tokens, making modality fusion interpretable.",
+      "claim_type": "relevant",
+      "paper_id": "2509.26235",
+      "section_id": "section-004",
+      "evidence_text": "Second, Donut uses explicit cross-attention between visual features and decoder tokens, making its modality fusion interpretable and structurally disentangled.",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "Donut is trained to copy text spans from the image rather than generate free-form answers, making attribution of internal mechanisms more tractable.",
+      "claim_type": "relevant",
+      "paper_id": "2509.26235",
+      "section_id": "section-004",
+      "evidence_text": "Third, it is trained to copy text spans from the image rather than generate free-form answers, which makes attribution of internal mechanisms more tractable.",
+      "importance": "medium",
+      "confidence": 0.9
+    }
+  ],
+  "findings": [
+    {
+      "candidate": {
+        "claim": "Large VLMs are computationally expensive and difficult to deploy in real-world environments with latency or resource constraints.",
+        "claim_type": "problem",
+        "paper_id": "2509.26235",
+        "section_id": "section-004",
+        "evidence_text": "Despite strong performance, these models are computationally expensive and difficult to deploy in real-world environments with latency or resource constraints.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Existing pruning and distillation methods treat the teacher model as a black box, lacking transparency and principled guidance.",
+        "claim_type": "problem",
+        "paper_id": "2509.26235",
+        "section_id": "section-004",
+        "evidence_text": "However, such approaches treat the teacher model as a black box. This lack of transparency limits our ability to guide compression using internal signals.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "VERIFIED_SOURCE",
+      "evidence_id": "2509.26235-e1",
+      "reason": "evidence exists but deterministic entailment is inconclusive"
+    },
+    {
+      "candidate": {
+        "claim": "Mechanistic interpretability can identify functionally important components to inform pruning and student design.",
+        "claim_type": "method",
+        "paper_id": "2509.26235",
+        "section_id": "section-004",
+        "evidence_text": "We apply MI tools to Donut’s attention patterns and activations to identify functionally important components and remove others in a targeted fashion.",
+        "importance": "high",
+        "confidence": 0.9
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Donut-MINT uses mechanistic interpretability to guide structured pruning and knowledge distillation.",
+        "claim_type": "method",
+        "paper_id": "2509.26235",
+        "section_id": "section-007",
+        "evidence_text": "These guide a structured pruning process to obtain a distilled student model.",
+        "importance": "high",
+        "confidence": 0.9
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Donut-MINT achieves significant reductions in parameters and computation while closely matching teacher accuracy on DocVQA.",
+        "claim_type": "result",
+        "paper_id": "2509.26235",
+        "section_id": "section-004",
+        "evidence_text": "Our experiments show that our pruned model, Donut-MINT (Mechanistic Interpretability-guided Network Trimming), achieves significant reductions in both parameters and computation, while closely matching the teacher model’s accuracy on DocVQA after distillation.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2509.26235-e2",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The study provides a high-level interpretation of how an end-to-end VLM solves VQA on documents.",
+        "claim_type": "contribution",
+        "paper_id": "2509.26235",
+        "section_id": "section-004",
+        "evidence_text": "We provide a high-level interpretation of how an end-to-end VLM solves VQA on documents, identifying the computational patterns and representations most critical to the task.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Interpretability insights can inform student model design, outperforming baseline pruning or blind distillation strategies.",
+        "claim_type": "contribution",
+        "paper_id": "2509.26235",
+        "section_id": "section-004",
+        "evidence_text": "We demonstrate that these insights can inform the design of a student model, outperforming baseline pruning or blind distillation strategies.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Donut-MINT is a lightweight model that achieves competitive performance on DocVQA.",
+        "claim_type": "contribution",
+        "paper_id": "2509.26235",
+        "section_id": "section-004",
+        "evidence_text": "We introduce Donut-MINT, a lightweight model that achieves competitive performance on the DocVQA dataset [31], thereby validating our methodology and illustrating how interpretability can drive principled model compression.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2509.26235-e3",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The study centers on Donut as a proof of concept for a broader class of VLMs.",
+        "claim_type": "limitation",
+        "paper_id": "2509.26235",
+        "section_id": "section-004",
+        "evidence_text": "While our study centers on Donut, we view it as a proof of concept for a broader class of VLMs.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2509.26235-e4",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "Token pruning is challenging in VrDU because most patches in document images are crucial.",
+        "claim_type": "limitation",
+        "paper_id": "2509.26235",
+        "section_id": "section-006",
+        "evidence_text": "However, this approach is inherently challenging to apply in VrDU, as most of the patches in document images are crucial for understanding and contain valuable information.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Donut uses explicit cross-attention between visual features and decoder tokens, making modality fusion interpretable.",
+        "claim_type": "relevant",
+        "paper_id": "2509.26235",
+        "section_id": "section-004",
+        "evidence_text": "Second, Donut uses explicit cross-attention between visual features and decoder tokens, making its modality fusion interpretable and structurally disentangled.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2509.26235-e5",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "Donut is trained to copy text spans from the image rather than generate free-form answers, making attribution of internal mechanisms more tractable.",
+        "claim_type": "relevant",
+        "paper_id": "2509.26235",
+        "section_id": "section-004",
+        "evidence_text": "Third, it is trained to copy text spans from the image rather than generate free-form answers, which makes attribution of internal mechanisms more tractable.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2509.26235-e6",
+      "reason": "high-precision lexical support passed"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "2509.26235-e1",
+      "source": "https://arxiv.org/abs/2509.26235",
+      "paper_id": "2509.26235",
+      "claim": "Existing pruning and distillation methods treat the teacher model as a black box, lacking transparency and principled guidance.",
+      "section": "Introduction",
+      "section_id": "section-004",
+      "start": 1681,
+      "end": 1835,
+      "snippet": "However, such approaches treat the teacher model as a black box. This lack\nof transparency limits our ability to guide compression using internal signals.",
+      "producing_task": "task-16",
+      "status": "VERIFIED_SOURCE"
+    },
+    {
+      "id": "2509.26235-e2",
+      "source": "https://arxiv.org/abs/2509.26235",
+      "paper_id": "2509.26235",
+      "claim": "Donut-MINT achieves significant reductions in parameters and computation while closely matching teacher accuracy on DocVQA.",
+      "section": "Introduction",
+      "section_id": "section-004",
+      "start": 3165,
+      "end": 3427,
+      "snippet": "Our experiments show that our pruned model, Donut-MINT (Mechanistic\nInterpretability-guided Network Trimming), achieves significant reductions in\nboth parameters and computation, while closely matching the teacher model’s\naccuracy on DocVQA after distillation.",
+      "producing_task": "task-16",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.26235-e3",
+      "source": "https://arxiv.org/abs/2509.26235",
+      "paper_id": "2509.26235",
+      "claim": "Donut-MINT is a lightweight model that achieves competitive performance on DocVQA.",
+      "section": "Introduction",
+      "section_id": "section-004",
+      "start": 4429,
+      "end": 4652,
+      "snippet": "We introduce\nDonut-MINT, a lightweight model that achieves competitive performance on\nthe DocVQA dataset [31], thereby validating our methodology and illustrating\nhow interpretability can drive principled model compression.",
+      "producing_task": "task-16",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.26235-e4",
+      "source": "https://arxiv.org/abs/2509.26235",
+      "paper_id": "2509.26235",
+      "claim": "The study centers on Donut as a proof of concept for a broader class of VLMs.",
+      "section": "Introduction",
+      "section_id": "section-004",
+      "start": 3069,
+      "end": 3164,
+      "snippet": "While\nour study centers on Donut, we view it as a proof of concept for a broader class\nof VLMs.",
+      "producing_task": "task-16",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.26235-e5",
+      "source": "https://arxiv.org/abs/2509.26235",
+      "paper_id": "2509.26235",
+      "claim": "Donut uses explicit cross-attention between visual features and decoder tokens, making modality fusion interpretable.",
+      "section": "Introduction",
+      "section_id": "section-004",
+      "start": 2751,
+      "end": 2910,
+      "snippet": "Second,\nDonut uses explicit cross-attention between visual features and decoder tokens,\nmaking its modality fusion interpretable and structurally disentangled.",
+      "producing_task": "task-16",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.26235-e6",
+      "source": "https://arxiv.org/abs/2509.26235",
+      "paper_id": "2509.26235",
+      "claim": "Donut is trained to copy text spans from the image rather than generate free-form answers, making attribution of internal mechanisms more tractable.",
+      "section": "Introduction",
+      "section_id": "section-004",
+      "start": 2911,
+      "end": 3068,
+      "snippet": "Third,\nit is trained to copy text spans from the image rather than generate free-form\nanswers, which makes attribution of internal mechanisms more tractable.",
+      "producing_task": "task-16",
+      "status": "SUPPORTED"
+    }
+  ],
+  "usage": {
+    "input_tokens": 3678,
+    "output_tokens": 1642
+  },
+  "llm_calls": 1,
+  "llm_failures": 0
+}

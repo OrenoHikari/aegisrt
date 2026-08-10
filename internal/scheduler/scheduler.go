@@ -45,6 +45,8 @@ const (
 // Job is one Agent execution submitted to the Scheduler.
 type Job struct {
 	Agent     *agent.ACB
+	Context   context.Context
+	Metadata  map[string]string
 	Timeout   time.Duration
 	Demand    Demand
 	Contexts  []contextstore.Ref
@@ -56,7 +58,8 @@ type Record struct {
 	ID   string `json:"id"`
 	Role string `json:"role"`
 
-	Phase Phase `json:"phase"`
+	Phase    Phase             `json:"phase"`
+	Metadata map[string]string `json:"metadata,omitempty"`
 
 	SubmittedAt time.Time  `json:"submitted_at"`
 	StartedAt   *time.Time `json:"started_at,omitempty"`
@@ -336,6 +339,7 @@ func (s *Scheduler) Submit(job Job) error {
 		ID:           job.Agent.ID,
 		Role:         job.Agent.Role,
 		Phase:        PhaseQueued,
+		Metadata:     cloneStringMap(job.Metadata),
 		SubmittedAt:  now,
 		Demand:       job.Demand,
 		Contexts:     contextstore.CloneRefs(contexts),
@@ -560,8 +564,12 @@ func (s *Scheduler) take(workerID int) (queuedJob, bool) {
 func (s *Scheduler) execute(entry queuedJob) {
 	defer s.pending.Done()
 
+	parent := entry.Context
+	if parent == nil {
+		parent = context.Background()
+	}
 	ctx, cancel := context.WithTimeout(
-		context.Background(),
+		parent,
 		entry.Timeout,
 	)
 	defer cancel()
@@ -685,6 +693,7 @@ func cloneRecord(source *Record) Record {
 	result.DependsOn = cloneStrings(source.DependsOn)
 	result.DependencyOutputs =
 		cloneDependencyOutputs(source.DependencyOutputs)
+	result.Metadata = cloneStringMap(source.Metadata)
 
 	if source.Pressure != nil {
 		snapshot := *source.Pressure
@@ -696,6 +705,17 @@ func cloneRecord(source *Record) Record {
 		result.OutputVerifiedAt = &verifiedAt
 	}
 
+	return result
+}
+
+func cloneStringMap(source map[string]string) map[string]string {
+	if source == nil {
+		return nil
+	}
+	result := make(map[string]string, len(source))
+	for key, value := range source {
+		result[key] = value
+	}
 	return result
 }
 

@@ -1,0 +1,476 @@
+{
+  "paper": {
+    "id": "2509.10105",
+    "title": "VARCO-VISION-2.0 Technical Report",
+    "authors": [
+      "Young-rok Cha",
+      "Jeongho Ju",
+      "SunYoung Park",
+      "Jong-Hyeon Lee",
+      "Younghyun Yu",
+      "Youngjune Kim"
+    ],
+    "year": 2025,
+    "abstract": "We introduce VARCO-VISION-2.0, an open-weight bilingual vision-language model (VLM) for Korean and English with improved capabilities compared to the previous model VARCO-VISION-14B. The model supports multi-image understanding for complex inputs such as documents, charts, and tables, and delivers layoutaware OCR by predicting both textual content and its spatial location. Trained with a four-stage curriculum with memory-efficient techniques, the model achieves enhanced multimodal alignment, while preserving core language abilities and improving safety via preference optimization. Extensive benchmark evaluations demonstrate strong spatial grounding and competitive results for both languages, with the 14B model achieving 8th place on the OpenCompass VLM leaderboard among models of comparable scale. Alongside the 14B-scale model, we release a 1.7B version optimized for on-device deployment. We believe these models advance the development of bilingual VLMs and their practical applications. Two variants of VARCO-VISION-2.0 are available at Hugging Face: a full-scale 14B model and a lightweight 1.7B model.",
+    "arxiv_id": "2509.10105",
+    "url": "https://arxiv.org/abs/2509.10105",
+    "pdf_url": "https://arxiv.org/pdf/2509.10105v2",
+    "provider": "arxiv",
+    "metadata_sources": [
+      "arxiv"
+    ],
+    "full_text_available": true
+  },
+  "query": "lightweight vision language model document understanding",
+  "research_question": "What lightweight methods for vision-language models in document understanding are proposed? What models, datasets, evaluation metrics, and limitations are discussed?",
+  "problem": "",
+  "method": "The model is trained with a four-stage curriculum with memory-efficient techniques.",
+  "key_contributions": [
+    "A 1.7B version optimized for on-device deployment is released."
+  ],
+  "datasets": null,
+  "metrics": null,
+  "experiments": [
+    "The model is trained on approximately 6.5 billion text tokens and 30.4 billion image tokens."
+  ],
+  "main_results": null,
+  "limitations": null,
+  "candidate_findings": [
+    {
+      "claim": "VARCO-VISION-2.0 supports multi-image understanding for complex inputs such as documents, charts, and tables.",
+      "claim_type": "method",
+      "paper_id": "2509.10105",
+      "section_id": "section-003",
+      "evidence_text": "The model supports multi-image understanding for complex inputs such as documents, charts, and tables, and delivers layout-aware OCR by predicting both textual content and its spatial location.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The model is trained with a four-stage curriculum with memory-efficient techniques.",
+      "claim_type": "method",
+      "paper_id": "2509.10105",
+      "section_id": "section-003",
+      "evidence_text": "Trained with a four-stage curriculum with memory-efficient techniques, the model achieves enhanced multimodal alignment, while preserving core language abilities and improving safety via preference optimization.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The 14B model achieved 8th place on the OpenCompass VLM leaderboard among models of comparable scale.",
+      "claim_type": "result",
+      "paper_id": "2509.10105",
+      "section_id": "section-003",
+      "evidence_text": "the 14B model achieving 8th place on the OpenCompass VLM leaderboard among models of comparable scale.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "A 1.7B version optimized for on-device deployment is released.",
+      "claim_type": "contribution",
+      "paper_id": "2509.10105",
+      "section_id": "section-003",
+      "evidence_text": "Alongside the 14B-scale model, we release a 1.7B version optimized for on-device deployment.",
+      "importance": "medium",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The previous model VARCO-VISION-14B showed limitations in handling multi-image scenarios and Korean-localized tasks.",
+      "claim_type": "problem",
+      "paper_id": "2509.10105",
+      "section_id": "section-004",
+      "evidence_text": "While it achieved strong performance on many benchmarks compared to models of a similar size, it showed limitations in handling multi-image scenarios and Korean-localized tasks.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "VARCO-VISION-2.0 is built on the LLaVA-OneVision architecture, combining a large language model, a vision encoder, and a two-layer MLP connector.",
+      "claim_type": "method",
+      "paper_id": "2509.10105",
+      "section_id": "section-005",
+      "evidence_text": "VARCO-VISION-2.0 is built on the LLaV A-OneVision [2] architecture, combining a large language model (LLM), a vision encoder, and a two-layer MLP connector that projects image features into the LLM’s embedding space.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The model adopts Qwen3 as the LLM and SigLIP2 as the vision encoder.",
+      "claim_type": "method",
+      "paper_id": "2509.10105",
+      "section_id": "section-005",
+      "evidence_text": "We adopt Qwen3 [4] as the LLM and SigLIP2 [5] as the vision encoder.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The patch-16 setting reduces the number of visual tokens compared to patch-14.",
+      "claim_type": "method",
+      "paper_id": "2509.10105",
+      "section_id": "section-005",
+      "evidence_text": "The patch-16 setting reduces the number of visual tokens compared to patch-14; for example, a 384×384 input produces 242 = 576tokens with patch-16, considerably fewer than the 272 = 729tokens produced by patch-14.",
+      "importance": "medium",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The training pipeline follows a four-stage curriculum designed to progressively build multimodal capability.",
+      "claim_type": "method",
+      "paper_id": "2509.10105",
+      "section_id": "section-006",
+      "evidence_text": "Our training pipeline follows a four-stage curriculum [6, 7] designed to progressively build multimodal capability.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "The model is trained on approximately 6.5 billion text tokens and 30.4 billion image tokens.",
+      "claim_type": "experiment",
+      "paper_id": "2509.10105",
+      "section_id": "section-006",
+      "evidence_text": "The model is trained on approximately 6.5 billion text tokens and 30.4 billion image tokens.",
+      "importance": "medium",
+      "confidence": 0.95
+    },
+    {
+      "claim": "In Stage 1, only the MLP connector is trained to project visual features into the language embedding space.",
+      "claim_type": "method",
+      "paper_id": "2509.10105",
+      "section_id": "section-007",
+      "evidence_text": "To bridge the inherent mismatch between the separately pre-trained vision encoder and language model, we train only the MLP connector to project visual features into the language embedding space.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "In Stage 2, all model components are jointly trained in single-image settings using the AnyRes training strategy.",
+      "claim_type": "method",
+      "paper_id": "2509.10105",
+      "section_id": "section-008",
+      "evidence_text": "In Stage 2, images are processed at relatively low resolutions to reduce computational overhead, and all model components are jointly trained in single-image settings.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "A bilingual text-recognition dataset containing Korean and English text in diverse fonts and styles is constructed.",
+      "claim_type": "dataset",
+      "paper_id": "2509.10105",
+      "section_id": "section-008",
+      "evidence_text": "We construct a bilingual text-recognition dataset containing Korean and English text in diverse fonts and styles, composed of both collected samples and synthetically generated images with embedded text.",
+      "importance": "medium",
+      "confidence": 0.95
+    }
+  ],
+  "findings": [
+    {
+      "candidate": {
+        "claim": "VARCO-VISION-2.0 supports multi-image understanding for complex inputs such as documents, charts, and tables.",
+        "claim_type": "method",
+        "paper_id": "2509.10105",
+        "section_id": "section-003",
+        "evidence_text": "The model supports multi-image understanding for complex inputs such as documents, charts, and tables, and delivers layout-aware OCR by predicting both textual content and its spatial location.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "The model is trained with a four-stage curriculum with memory-efficient techniques.",
+        "claim_type": "method",
+        "paper_id": "2509.10105",
+        "section_id": "section-003",
+        "evidence_text": "Trained with a four-stage curriculum with memory-efficient techniques, the model achieves enhanced multimodal alignment, while preserving core language abilities and improving safety via preference optimization.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2509.10105-e1",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The 14B model achieved 8th place on the OpenCompass VLM leaderboard among models of comparable scale.",
+        "claim_type": "result",
+        "paper_id": "2509.10105",
+        "section_id": "section-003",
+        "evidence_text": "the 14B model achieving 8th place on the OpenCompass VLM leaderboard among models of comparable scale.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "A 1.7B version optimized for on-device deployment is released.",
+        "claim_type": "contribution",
+        "paper_id": "2509.10105",
+        "section_id": "section-003",
+        "evidence_text": "Alongside the 14B-scale model, we release a 1.7B version optimized for on-device deployment.",
+        "importance": "medium",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2509.10105-e2",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The previous model VARCO-VISION-14B showed limitations in handling multi-image scenarios and Korean-localized tasks.",
+        "claim_type": "problem",
+        "paper_id": "2509.10105",
+        "section_id": "section-004",
+        "evidence_text": "While it achieved strong performance on many benchmarks compared to models of a similar size, it showed limitations in handling multi-image scenarios and Korean-localized tasks.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "evidence_id": "2509.10105-e3",
+      "reason": "a quantitative value in the claim is absent from the evidence"
+    },
+    {
+      "candidate": {
+        "claim": "VARCO-VISION-2.0 is built on the LLaVA-OneVision architecture, combining a large language model, a vision encoder, and a two-layer MLP connector.",
+        "claim_type": "method",
+        "paper_id": "2509.10105",
+        "section_id": "section-005",
+        "evidence_text": "VARCO-VISION-2.0 is built on the LLaV A-OneVision [2] architecture, combining a large language model (LLM), a vision encoder, and a two-layer MLP connector that projects image features into the LLM’s embedding space.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2509.10105-e4",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The model adopts Qwen3 as the LLM and SigLIP2 as the vision encoder.",
+        "claim_type": "method",
+        "paper_id": "2509.10105",
+        "section_id": "section-005",
+        "evidence_text": "We adopt Qwen3 [4] as the LLM and SigLIP2 [5] as the vision encoder.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "VERIFIED_SOURCE",
+      "evidence_id": "2509.10105-e5",
+      "reason": "evidence exists but deterministic entailment is inconclusive"
+    },
+    {
+      "candidate": {
+        "claim": "The patch-16 setting reduces the number of visual tokens compared to patch-14.",
+        "claim_type": "method",
+        "paper_id": "2509.10105",
+        "section_id": "section-005",
+        "evidence_text": "The patch-16 setting reduces the number of visual tokens compared to patch-14; for example, a 384×384 input produces 242 = 576tokens with patch-16, considerably fewer than the 272 = 729tokens produced by patch-14.",
+        "importance": "medium",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2509.10105-e6",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The training pipeline follows a four-stage curriculum designed to progressively build multimodal capability.",
+        "claim_type": "method",
+        "paper_id": "2509.10105",
+        "section_id": "section-006",
+        "evidence_text": "Our training pipeline follows a four-stage curriculum [6, 7] designed to progressively build multimodal capability.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2509.10105-e7",
+      "reason": "high-precision lexical support passed"
+    },
+    {
+      "candidate": {
+        "claim": "The model is trained on approximately 6.5 billion text tokens and 30.4 billion image tokens.",
+        "claim_type": "experiment",
+        "paper_id": "2509.10105",
+        "section_id": "section-006",
+        "evidence_text": "The model is trained on approximately 6.5 billion text tokens and 30.4 billion image tokens.",
+        "importance": "medium",
+        "confidence": 0.95
+      },
+      "status": "SUPPORTED",
+      "evidence_id": "2509.10105-e8",
+      "reason": "the canonical evidence contains the claim text"
+    },
+    {
+      "candidate": {
+        "claim": "In Stage 1, only the MLP connector is trained to project visual features into the language embedding space.",
+        "claim_type": "method",
+        "paper_id": "2509.10105",
+        "section_id": "section-007",
+        "evidence_text": "To bridge the inherent mismatch between the separately pre-trained vision encoder and language model, we train only the MLP connector to project visual features into the language embedding space.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "evidence_id": "2509.10105-e9",
+      "reason": "a quantitative value in the claim is absent from the evidence"
+    },
+    {
+      "candidate": {
+        "claim": "In Stage 2, all model components are jointly trained in single-image settings using the AnyRes training strategy.",
+        "claim_type": "method",
+        "paper_id": "2509.10105",
+        "section_id": "section-008",
+        "evidence_text": "In Stage 2, images are processed at relatively low resolutions to reduce computational overhead, and all model components are jointly trained in single-image settings.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "VERIFIED_SOURCE",
+      "evidence_id": "2509.10105-e10",
+      "reason": "evidence exists but deterministic entailment is inconclusive"
+    },
+    {
+      "candidate": {
+        "claim": "A bilingual text-recognition dataset containing Korean and English text in diverse fonts and styles is constructed.",
+        "claim_type": "dataset",
+        "paper_id": "2509.10105",
+        "section_id": "section-008",
+        "evidence_text": "We construct a bilingual text-recognition dataset containing Korean and English text in diverse fonts and styles, composed of both collected samples and synthetically generated images with embedded text.",
+        "importance": "medium",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "2509.10105-e1",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "The model is trained with a four-stage curriculum with memory-efficient techniques.",
+      "section": "Abstract",
+      "section_id": "section-003",
+      "start": 380,
+      "end": 591,
+      "snippet": "Trained\nwith a four-stage curriculum with memory-efficient techniques, the model achieves\nenhanced multimodal alignment, while preserving core language abilities and\nimproving safety via preference optimization.",
+      "producing_task": "task-22",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.10105-e2",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "A 1.7B version optimized for on-device deployment is released.",
+      "section": "Abstract",
+      "section_id": "section-003",
+      "start": 814,
+      "end": 906,
+      "snippet": "Alongside the 14B-scale model, we release\na 1.7B version optimized for on-device deployment.",
+      "producing_task": "task-22",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.10105-e3",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "The previous model VARCO-VISION-14B showed limitations in handling multi-image scenarios and Korean-localized tasks.",
+      "section": "Introduction",
+      "section_id": "section-004",
+      "start": 91,
+      "end": 268,
+      "snippet": "While it achieved strong performance on many benchmarks compared to models of a similar size, it\nshowed limitations in handling multi-image scenarios and Korean-localized tasks.",
+      "producing_task": "task-22",
+      "status": "VERIFIED_SOURCE"
+    },
+    {
+      "id": "2509.10105-e4",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "VARCO-VISION-2.0 is built on the LLaVA-OneVision architecture, combining a large language model, a vision encoder, and a two-layer MLP connector.",
+      "section": "Architecture",
+      "section_id": "section-005",
+      "start": 0,
+      "end": 218,
+      "snippet": "VARCO-VISION-2.0 is built on the LLaV A-OneVision [2] architecture, combining a large language\nmodel (LLM), a vision encoder, and a two-layer MLP connector that projects image features into the\nLLM’s embedding space.",
+      "producing_task": "task-22",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.10105-e5",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "The model adopts Qwen3 as the LLM and SigLIP2 as the vision encoder.",
+      "section": "Architecture",
+      "section_id": "section-005",
+      "start": 475,
+      "end": 543,
+      "snippet": "We adopt Qwen3 [4] as the LLM and SigLIP2 [5] as the vision encoder.",
+      "producing_task": "task-22",
+      "status": "VERIFIED_SOURCE"
+    },
+    {
+      "id": "2509.10105-e6",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "The patch-16 setting reduces the number of visual tokens compared to patch-14.",
+      "section": "Architecture",
+      "section_id": "section-005",
+      "start": 816,
+      "end": 1030,
+      "snippet": "The patch-16 setting reduces the number\nof visual tokens compared to patch-14; for example, a 384×384 input produces 242 = 576tokens\nwith patch-16, considerably fewer than the 272 = 729tokens produced by patch-14.",
+      "producing_task": "task-22",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.10105-e7",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "The training pipeline follows a four-stage curriculum designed to progressively build multimodal capability.",
+      "section": "Training Strategies and Datasets",
+      "section_id": "section-006",
+      "start": 0,
+      "end": 115,
+      "snippet": "Our training pipeline follows a four-stage curriculum [6, 7] designed to progressively build multimodal\ncapability.",
+      "producing_task": "task-22",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.10105-e8",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "The model is trained on approximately 6.5 billion text tokens and 30.4 billion image tokens.",
+      "section": "Training Strategies and Datasets",
+      "section_id": "section-006",
+      "start": 510,
+      "end": 602,
+      "snippet": "The model is trained on approximately 6.5 billion text tokens and 30.4 billion image tokens.",
+      "producing_task": "task-22",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.10105-e9",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "In Stage 1, only the MLP connector is trained to project visual features into the language embedding space.",
+      "section": "Stage 1. Feature Alignment Pre-training",
+      "section_id": "section-007",
+      "start": 0,
+      "end": 195,
+      "snippet": "To bridge the inherent mismatch between the separately pre-trained vision encoder and language\nmodel, we train only the MLP connector to project visual features into the language embedding space.",
+      "producing_task": "task-22",
+      "status": "VERIFIED_SOURCE"
+    },
+    {
+      "id": "2509.10105-e10",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "In Stage 2, all model components are jointly trained in single-image settings using the AnyRes training strategy.",
+      "section": "Stage 2. Basic Supervised Fine-tuning",
+      "section_id": "section-008",
+      "start": 160,
+      "end": 327,
+      "snippet": "In Stage 2, images are processed at\nrelatively low resolutions to reduce computational overhead, and all model components are jointly\ntrained in single-image settings.",
+      "producing_task": "task-22",
+      "status": "VERIFIED_SOURCE"
+    }
+  ],
+  "usage": {
+    "input_tokens": 2571,
+    "output_tokens": 1756
+  },
+  "llm_calls": 1,
+  "llm_failures": 0
+}

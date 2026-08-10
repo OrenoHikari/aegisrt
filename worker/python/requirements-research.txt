@@ -1,0 +1,2 @@
+# Optional Stage 5 real-paper parser dependency. The Go parser remains the offline fallback.
+pypdf==6.14.2

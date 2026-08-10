@@ -1,0 +1,41 @@
+Paper: Granite Vision: a lightweight, open-source multimodal model for enterprise Intelligence
+Parser: python-pypdf
+Pages: 26
+Sections: 32
+Characters: 44986
+Duration: 1190ms
+Fallback: false
+Truncated: false
+Warnings: 0
+- Unknown (64 chars)
+- Multimodal model for enterprise intelligence (127 chars)
+- ABSTRACT (1296 chars)
+- I NTRODUCTION (4172 chars)
+- Barque steak (2903 chars)
+- M ULTIMODAL LARGE LANGUAGE MODELS (2019 chars)
+- V ISUAL DOCUMENT UNDERSTANDING (1715 chars)
+- D ATA (1191 chars)
+- IBM C URATED DATASETS (1669 chars)
+- D OCFM - D ATA COLLECTION & FILTERING (658 chars)
+- ■ hme100k (74.5 k) (113 chars)
+- ■ iam (5.7 k) (516 chars)
+- ■ tqa (27.3 k) (33 chars)
+- ■ ai2d gpt4v (4.9 k) (25 chars)
+- ■ ai2d (2.4 k) (251 chars)
+- ■ kvp10k (8.0 k) (37 chars)
+- ■ ocr-vqa (165.7 k) (86 chars)
+- ■ st-vqa (16.4 k) (25 chars)
+- ■ iiit5k (2.0 k) (167 chars)
+- ■ ocr-cc (1.0 m) (79 chars)
+- ■ turl (200.0 k) (23 chars)
+- ■ due (104.5 k) (2807 chars)
+- IBM S YNTHETIC VISUAL Q&A D ATASETS (8638 chars)
+- P UBLIC DATASETS (1133 chars)
+- D ATA PREPROCESSING (1253 chars)
+- G RANITE VISION MODEL (264 chars)
+- A RCHITECTURE (3667 chars)
+- T RAINING PROCEDURE (3199 chars)
+- S PARSE ATTENTION VECTORS FOR SAFETY (2830 chars)
+- S TANDARD BENCHMARKS (3889 chars)
+- Ai2d (47 chars)
+- Mmmu (28 chars)

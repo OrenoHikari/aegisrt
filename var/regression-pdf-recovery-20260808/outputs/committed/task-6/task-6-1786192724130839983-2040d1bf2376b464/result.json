@@ -1,0 +1,29 @@
+{
+  "paper": {
+    "id": "2509.26235",
+    "title": "Interpret, prune and distill Donut : towards lightweight VLMs for VQA on document",
+    "authors": [
+      "Adnan Ben Mansour",
+      "Ayoub Karine",
+      "David Naccache"
+    ],
+    "year": 2025,
+    "abstract": "Recent advances in Visually-rich Document Understanding rely on large Vision-Language Models like Donut, which perform document-level Visual Question Answering without Optical Character Recognition. Despite their effectiveness, these models are too costly for real-time or resource-constrained applications. We investigate model compression through knowledge distillation, training compact student models from a larger teacher. We leverage mechanistic interpretability to drive student architecture design within this framework. By analyzing internal computations, we identify essential subcomponents to retain, while having a clear view of which subcomponents should be approximated, skipped, or reparametrized based on their function. This approach yields Donut-MINT (Mechanistic Interpretability-based Network Trimming), a pruned Donut variant that reduces inference time and memory usage while maintaining strong performance on DocVQA, a standard benchmark for document Visual Question Answering. Our method reframes compression as circuit discovery, bridging interpretability research and practical Vision-Language Model deployment.",
+    "arxiv_id": "2509.26235",
+    "url": "https://arxiv.org/abs/2509.26235",
+    "pdf_url": "https://arxiv.org/pdf/2509.26235v1",
+    "provider": "arxiv",
+    "metadata_sources": [
+      "arxiv"
+    ],
+    "full_text_available": true
+  },
+  "query": "lightweight vision language model document understanding",
+  "rank": 5,
+  "available": true,
+  "retryable": false,
+  "content_type": "application/pdf",
+  "bytes": 7572346,
+  "source_url": "https://arxiv.org/pdf/2509.26235v1",
+  "artifact": "paper.pdf"
+}

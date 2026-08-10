@@ -1,0 +1,246 @@
+{
+  "paper": {
+    "id": "2603.15409",
+    "title": "SEA-Vision: A Multilingual Benchmark for Comprehensive Document and Scene Text Understanding in Southeast Asia",
+    "authors": [
+      "Pengfei Yue",
+      "Xingran Zhao",
+      "Juntao Chen",
+      "Peng Hou",
+      "Wang Longchao",
+      "Jianghang Lin",
+      "Shengchuan Zhang",
+      "Anxiang Zeng",
+      "Liujuan Cao"
+    ],
+    "year": 2026,
+    "abstract": "Multilingual document and scene text understanding plays an important role in applications such as search, finance, and public services. However, most existing benchmarks focus on high-resource languages and fail to evaluate models in realistic multilingual environments. In Southeast Asia, the diversity of languages, complex writing systems, and highly varied document types make this challenge even greater. We introduce SEA-Vision, a benchmark that jointly evaluates Document Parsing and Text-Centric Visual Question Answering (TEC-VQA) across 11 Southeast Asian languages. SEA-Vision contains 15,234 document parsing pages from nine representative document types, annotated with hierarchical page-, block-, and line-level labels. It also provides 7,496 TEC-VQA question-answer pairs that probe text recognition, numerical calculation, comparative analysis, logical reasoning, and spatial understanding. To make such multilingual, multi-task annotation feasible, we design a hybrid pipeline for Document Parsing and TEC-VQA. It combines automated filtering and scoring with MLLM-assisted labeling and lightweight native-speaker verification, greatly reducing manual labeling while maintaining high quality. We evaluate several leading multimodal models and observe pronounced performance degradation on low-resource Southeast Asian languages, highlighting substantial remaining gaps in multilingual document and scene text understanding. We believe SEA-Vision will help drive global progress in document and scene text understanding.",
+    "arxiv_id": "2603.15409",
+    "url": "https://arxiv.org/abs/2603.15409",
+    "pdf_url": "https://arxiv.org/pdf/2603.15409v1",
+    "provider": "arxiv",
+    "metadata_sources": [
+      "arxiv"
+    ],
+    "full_text_available": true
+  },
+  "query": "lightweight vision language model document understanding",
+  "research_question": "What lightweight methods for vision-language models in document understanding are proposed? What models, datasets, evaluation metrics, and limitations are discussed?",
+  "problem": "",
+  "method": "",
+  "key_contributions": null,
+  "datasets": null,
+  "metrics": null,
+  "experiments": null,
+  "main_results": null,
+  "limitations": null,
+  "candidate_findings": [
+    {
+      "claim": "Existing benchmarks focus on high-resource languages and fail to evaluate models in realistic multilingual environments.",
+      "claim_type": "problem",
+      "paper_id": "2603.15409",
+      "section_id": "section-003",
+      "evidence_text": "Despite progress, existing benchmarks fall short of realistic multilingual conditions. Most datasets center on English or other high-resource languages, offering limited evidence of generalization to low-resource scripts.",
+      "importance": "high",
+      "confidence": 0.9
+    },
+    {
+      "claim": "SEA-Vision jointly evaluates Document Parsing and TEC-VQA across 11 Southeast Asian languages.",
+      "claim_type": "contribution",
+      "paper_id": "2603.15409",
+      "section_id": "section-003",
+      "evidence_text": "Unified benchmark and coverage. SEA-Vision jointly evaluates Document Parsing and TEC-VQA under a single framework, spanning 11 SEA languages and multiple scripts with data from real-world sources.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "SEA-Vision contains 15,234 document parsing samples and 7,496 TEC-VQA question-answer pairs.",
+      "claim_type": "dataset",
+      "paper_id": "2603.15409",
+      "section_id": "section-003",
+      "evidence_text": "We release 15,234 document samples and 7,496 scene text question–answer pairs constructed via automated pipelines and native-speaker verification to ensure visual–semantic alignment and consistent annotations.",
+      "importance": "high",
+      "confidence": 0.95
+    },
+    {
+      "claim": "Document Parsing evaluation uses NED, TEDS, BLEU, and CDM metrics.",
+      "claim_type": "metric",
+      "paper_id": "2603.15409",
+      "section_id": "section-014",
+      "evidence_text": "Pure Text. ... we compute the Normalized Edit Distance (NED) ... Tables. ... evaluated using TEDS and NED. Formulas. ... CDM, NED, and BLEU. Reading Order. ... NED metric.",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "TEC-VQA evaluation uses accuracy with a containment criterion.",
+      "claim_type": "metric",
+      "paper_id": "2603.15409",
+      "section_id": "section-015",
+      "evidence_text": "Evaluation for TEC-VQA is primarily conducted using accuracy. ... the predicted answer is deemed correct if it precisely encompasses at least one of the reference answers.",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "Models show 3-5x higher NED for Document Parsing on low-resource SEA scripts.",
+      "claim_type": "result",
+      "paper_id": "2603.15409",
+      "section_id": "section-003",
+      "evidence_text": "Benchmarking shows 3–5× higher NED for Document Parsing and 5–7× lower accuracy for TEC-VQA on low-resource SEA scripts.",
+      "importance": "high",
+      "confidence": 0.9
+    },
+    {
+      "claim": "Models show 5-7x lower accuracy for TEC-VQA on low-resource SEA scripts.",
+      "claim_type": "result",
+      "paper_id": "2603.15409",
+      "section_id": "section-003",
+      "evidence_text": "Benchmarking shows 3–5× higher NED for Document Parsing and 5–7× lower accuracy for TEC-VQA on low-resource SEA scripts.",
+      "importance": "high",
+      "confidence": 0.9
+    },
+    {
+      "claim": "The hybrid annotation pipeline combines automated filtering, MLLM-assisted labeling, and native-speaker verification.",
+      "claim_type": "method",
+      "paper_id": "2603.15409",
+      "section_id": "section-003",
+      "evidence_text": "To make multilingual, multi-task annotation feasible at scale, we designed a hybrid pipeline that integrates automatic processing, MLLM-assisted labeling, and native-speaker verification, significantly reducing manual annotation costs and improving overall efficiency.",
+      "importance": "medium",
+      "confidence": 0.9
+    },
+    {
+      "claim": "Document parsing approaches are grouped into pipeline models, general models, and expert models.",
+      "claim_type": "method",
+      "paper_id": "2603.15409",
+      "section_id": "section-004",
+      "evidence_text": "Existing approaches to document parsing can be broadly grouped into three categories. (1) Pipeline Models ... (2) General Models ... (3) Expert Models ...",
+      "importance": "low",
+      "confidence": 0.85
+    }
+  ],
+  "findings": [
+    {
+      "candidate": {
+        "claim": "Existing benchmarks focus on high-resource languages and fail to evaluate models in realistic multilingual environments.",
+        "claim_type": "problem",
+        "paper_id": "2603.15409",
+        "section_id": "section-003",
+        "evidence_text": "Despite progress, existing benchmarks fall short of realistic multilingual conditions. Most datasets center on English or other high-resource languages, offering limited evidence of generalization to low-resource scripts.",
+        "importance": "high",
+        "confidence": 0.9
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "SEA-Vision jointly evaluates Document Parsing and TEC-VQA across 11 Southeast Asian languages.",
+        "claim_type": "contribution",
+        "paper_id": "2603.15409",
+        "section_id": "section-003",
+        "evidence_text": "Unified benchmark and coverage. SEA-Vision jointly evaluates Document Parsing and TEC-VQA under a single framework, spanning 11 SEA languages and multiple scripts with data from real-world sources.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "SEA-Vision contains 15,234 document parsing samples and 7,496 TEC-VQA question-answer pairs.",
+        "claim_type": "dataset",
+        "paper_id": "2603.15409",
+        "section_id": "section-003",
+        "evidence_text": "We release 15,234 document samples and 7,496 scene text question–answer pairs constructed via automated pipelines and native-speaker verification to ensure visual–semantic alignment and consistent annotations.",
+        "importance": "high",
+        "confidence": 0.95
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Document Parsing evaluation uses NED, TEDS, BLEU, and CDM metrics.",
+        "claim_type": "metric",
+        "paper_id": "2603.15409",
+        "section_id": "section-014",
+        "evidence_text": "Pure Text. ... we compute the Normalized Edit Distance (NED) ... Tables. ... evaluated using TEDS and NED. Formulas. ... CDM, NED, and BLEU. Reading Order. ... NED metric.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "TEC-VQA evaluation uses accuracy with a containment criterion.",
+        "claim_type": "metric",
+        "paper_id": "2603.15409",
+        "section_id": "section-015",
+        "evidence_text": "Evaluation for TEC-VQA is primarily conducted using accuracy. ... the predicted answer is deemed correct if it precisely encompasses at least one of the reference answers.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Models show 3-5x higher NED for Document Parsing on low-resource SEA scripts.",
+        "claim_type": "result",
+        "paper_id": "2603.15409",
+        "section_id": "section-003",
+        "evidence_text": "Benchmarking shows 3–5× higher NED for Document Parsing and 5–7× lower accuracy for TEC-VQA on low-resource SEA scripts.",
+        "importance": "high",
+        "confidence": 0.9
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Models show 5-7x lower accuracy for TEC-VQA on low-resource SEA scripts.",
+        "claim_type": "result",
+        "paper_id": "2603.15409",
+        "section_id": "section-003",
+        "evidence_text": "Benchmarking shows 3–5× higher NED for Document Parsing and 5–7× lower accuracy for TEC-VQA on low-resource SEA scripts.",
+        "importance": "high",
+        "confidence": 0.9
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "The hybrid annotation pipeline combines automated filtering, MLLM-assisted labeling, and native-speaker verification.",
+        "claim_type": "method",
+        "paper_id": "2603.15409",
+        "section_id": "section-003",
+        "evidence_text": "To make multilingual, multi-task annotation feasible at scale, we designed a hybrid pipeline that integrates automatic processing, MLLM-assisted labeling, and native-speaker verification, significantly reducing manual annotation costs and improving overall efficiency.",
+        "importance": "medium",
+        "confidence": 0.9
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    },
+    {
+      "candidate": {
+        "claim": "Document parsing approaches are grouped into pipeline models, general models, and expert models.",
+        "claim_type": "method",
+        "paper_id": "2603.15409",
+        "section_id": "section-004",
+        "evidence_text": "Existing approaches to document parsing can be broadly grouped into three categories. (1) Pipeline Models ... (2) General Models ... (3) Expert Models ...",
+        "importance": "low",
+        "confidence": 0.85
+      },
+      "status": "UNSUPPORTED",
+      "reason": "candidate evidence_text does not exist in the selected section"
+    }
+  ],
+  "evidence": null,
+  "usage": {
+    "input_tokens": 3133,
+    "output_tokens": 1486
+  },
+  "llm_calls": 1,
+  "llm_failures": 0
+}

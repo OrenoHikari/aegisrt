@@ -4,6 +4,8 @@ __pycache__/
 *.pyc
 *.db
 .vscode/
+.venv-research/
+/config/llm.local.json
 /var/contextfs-demo/
 /var/contextfs-bridge-demo/
 /var/contextfs-workspace-demo/
@@ -12,3 +14,4 @@ __pycache__/
 /var/integrity-dag-demo/
 /var/event-demo/
 /var/api-demo/
+/var/dashboard/

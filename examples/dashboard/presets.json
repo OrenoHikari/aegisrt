@@ -1,0 +1,35 @@
+[
+  {
+    "id": "autonomous-experiment",
+    "name": "Autonomous Experiment Demo",
+    "description": "Local real CPU workers, resource failure, observation, re-plan, retry, and verified comparison report.",
+    "goal": "比较三种机器学习方法在给定数据集上的分类性能，分析准确率、运行时间和资源消耗。如果实验过程中出现资源不足或参数不适合导致的失败，请自主调整实验配置并重新执行，最终选择综合表现最佳的方法并生成实验报告。",
+    "workload": "experiment",
+    "mode": "local",
+    "scenario": "resource-replan",
+    "experiment_directory": "examples/experiment"
+  },
+  {
+    "id": "rec-research",
+    "name": "REC Research",
+    "description": "Full DeepSeek, arXiv, PDF, evidence, and report path.",
+    "goal": "调研 Referring Expression Counting 领域的代表性工作，比较主要方法、数据集和评估指标，总结当前研究问题，并设计一个后续实验方案。",
+    "mode": "real"
+  },
+  {
+    "id": "replan-demo",
+    "name": "Re-plan Demo",
+    "description": "Offline deterministic Plan v1 to Plan v2 recovery.",
+    "goal": "调研 Referring Expression Counting；当初始证据不足时扩展检索，比较方法并设计实验。",
+    "mode": "mock",
+    "scenario": "search-replan"
+  },
+  {
+    "id": "evidence-guard",
+    "name": "Evidence Guard",
+    "description": "Offline deterministic unsupported-claim rejection.",
+    "goal": "验证 Referring Expression Counting 研究结论，明确展示被拒绝的无证据候选，并生成干净报告。",
+    "mode": "mock",
+    "scenario": "evidence-rejection"
+  }
+]

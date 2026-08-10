@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f5f7">
+  <title>CAPSuleAgent · Competition Demo</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="presentation-mode">
+  <header class="topbar">
+    <a class="identity" href="/" aria-label="CAPSuleAgent home">
+      <span class="brand-mark" aria-hidden="true">C</span>
+      <span><strong class="brand">CAPSuleAgent</strong><small id="brand-subtitle" class="subtitle" data-i18n="brandSubtitle">Autonomous execution on CAPSuleRT</small></span>
+    </a>
+    <div class="innovation-line" aria-label="Cognitive and execution plane boundary">
+      <span data-i18n="innovationThink">LLM decides</span><i aria-hidden="true">→</i><strong data-i18n="innovationExecute">CAPSuleRT executes</strong><i aria-hidden="true">→</i><span id="innovation-verify" data-i18n="innovationVerify">Results verify</span>
+    </div>
+    <div class="header-tools">
+      <div class="system-status">
+        <span id="runtime-status" class="chip muted">Runtime · checking</span>
+        <span id="header-mode" class="mode-badge">NO RUN</span>
+      </div>
+      <div class="header-actions">
+        <label class="sr-only" for="history-select" data-i18n="recentRuns">Recent runs</label>
+        <select id="history-select" class="history-select" aria-label="Restore a persisted run"><option value="">Recent runs</option></select>
+        <label class="sr-only" for="language-select">Language</label>
+        <select id="language-select" class="language-select" aria-label="Language"><option value="zh-CN">中文</option><option value="en">EN</option></select>
+        <label class="detail-switch"><input id="presentation-toggle" type="checkbox" checked> <span data-i18n="simpleView">Simple</span></label>
+        <button id="help-button" class="icon-button" type="button" aria-label="How CAPSuleAgent works">?</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="productEyebrow">AUTONOMY, WITH AN EXECUTION PLANE</p>
+        <h1 data-i18n="productTitle">Agents should do the work—not just describe it.</h1>
+        <p data-i18n="productDescription">The model decides what to do. CAPSuleRT schedules real workers, enforces boundaries, verifies outputs, and turns failures into observations.</p>
+        <div class="hero-facts" aria-label="System guarantees">
+          <span data-i18n="registeredOnly">Registered actions only</span>
+          <span data-i18n="realWorkers">Real local workers</span>
+          <span data-i18n="boundedRecovery">Bounded recovery</span>
+        </div>
+      </div>
+      <aside class="plane-card" aria-label="CAPSuleAgent architecture">
+        <div class="plane cognitive-plane"><small data-i18n="cognitivePlane">COGNITIVE PLANE</small><strong data-i18n="cognitiveActions">Plan · Observe · Re-plan</strong><span>LLM / Policy</span></div>
+        <div class="plane-bridge"><span></span><b data-i18n="validatedBridge">Validated DAG</b><span></span></div>
+        <div class="plane execution-plane"><small data-i18n="executionPlane">EXECUTION PLANE</small><strong data-i18n="executionActions">Schedule · Isolate · Verify</strong><span>CAPSuleRT</span></div>
+      </aside>
+    </section>
+
+    <section class="goal-panel panel">
+      <div class="composer-heading">
+        <div><p class="eyebrow" data-i18n="newRun">NEW RUN</p><label class="field-label" for="goal-input" data-i18n="goalLabel">What should the agent accomplish?</label></div>
+        <span id="composer-note" class="composer-note" data-i18n="safeBoundary">Every action stays inside a registered capability.</span>
+      </div>
+      <textarea id="goal-input" maxlength="4096" rows="3" placeholder="Describe a goal, comparison, and desired output…" data-i18n-placeholder="goalPlaceholder"></textarea>
+      <label id="experiment-directory-control" class="experiment-directory-control hidden" for="experiment-directory-input">
+        <span><strong data-i18n="experimentDirectory">Experiment directory</strong><small data-i18n="experimentDirectoryHelp">Relative to the configured workspace root and must contain capsule-experiment.json. Parent traversal and absolute paths are rejected.</small></span>
+        <input id="experiment-directory-input" type="text" maxlength="512" value="examples/experiment" autocomplete="off" spellcheck="false" placeholder="examples/experiment" data-i18n-placeholder="experimentDirectoryPlaceholder">
+      </label>
+      <div class="goal-bottom-row">
+        <div id="preset-buttons" class="preset-buttons"></div>
+        <div class="action-buttons">
+          <button id="cancel-button" class="button danger hidden" type="button" data-i18n="cancel">Cancel</button>
+          <button id="run-button" class="button primary" type="button"><span id="run-button-label" data-i18n="runResearch">Run</span><span aria-hidden="true">↗</span></button>
+        </div>
+      </div>
+      <details id="run-settings" class="run-settings">
+        <summary><span data-i18n="runSettings">Advanced settings</span><small id="budget-summary">32 MiB / PDF</small></summary>
+        <div class="settings-grid">
+          <div class="mode-control">
+            <span class="field-label" data-i18n="executionMode">Execution mode</span>
+            <label><input type="radio" name="mode" value="mock"> MOCK</label>
+            <label><input type="radio" name="mode" value="real"> REAL</label>
+            <select id="scenario-select" aria-label="Mock scenario"><option value="normal">Normal</option><option value="search-replan">Re-plan</option><option value="evidence-rejection">Evidence guard</option><option value="unavailable">Failure</option></select>
+          </div>
+          <label class="budget-control" for="pdf-limit-select">
+            <span class="field-label" data-i18n="pdfBudget">Per-paper PDF budget</span>
+            <select id="pdf-limit-select"><option value="20">20 MiB</option><option value="32" selected>32 MiB</option><option value="48">48 MiB</option><option value="64">64 MiB</option></select>
+            <small data-i18n="pdfBudgetHelp">Raise this only when you choose to accept extra memory and parsing cost.</small>
+          </label>
+          <div class="integration-status developer-only">
+            <span data-i18n="integrationStatus">Cognitive services</span>
+            <span id="llm-status" class="chip muted">LLM · checking</span>
+            <span id="provider-status" class="chip muted">Provider · checking</span>
+          </div>
+        </div>
+      </details>
+      <div id="notice" class="notice hidden" role="alert"></div>
+    </section>
+
+    <section id="run-banner" class="run-banner panel run-surface">
+      <div class="run-identity"><span id="mode-badge" class="mode-badge">NO RUN</span><span id="run-status" class="run-status">IDLE</span><span id="run-origin" class="run-origin">NEW</span><code id="run-id" class="run-id"></code></div>
+      <p id="run-goal" class="run-goal">Choose an example or enter a goal.</p>
+      <div class="run-now"><span class="live-dot" aria-hidden="true"></span><span id="current-action" class="current-action">Waiting</span><span id="run-duration" class="monospace">—</span></div>
+    </section>
+
+    <section id="failure-panel" class="failure-panel panel run-surface hidden" aria-live="assertive">
+      <div><p class="eyebrow" data-i18n="diagnostic">EXECUTION SIGNAL</p><strong id="failure-code">RUN_FAILED</strong></div><p id="failure-message"></p>
+    </section>
+
+    <section class="execution-stage panel run-surface">
+      <div class="stage-heading">
+        <div><p class="eyebrow" data-i18n="coreInnovation">CORE CONTRIBUTION</p><h2 data-i18n="agentLoopTitle">Adaptive execution, backed by a real runtime</h2></div>
+        <p id="loop-explanation" data-i18n="loopWaiting">Waiting for a goal.</p>
+      </div>
+      <div id="agent-loop" class="agent-loop">
+        <div class="loop-step" data-loop="goal"><span>01</span><strong data-i18n="stepGoal">Goal</strong><small data-i18n="stepGoalHint">Natural language</small></div>
+        <i>→</i><div class="loop-step" data-loop="plan"><span>02</span><strong data-i18n="stepPlan">Plan</strong><small data-i18n="stepPlanHint">Validated DAG</small></div>
+        <i>→</i><div class="loop-step execution-highlight" data-loop="execute"><span>03</span><strong data-i18n="stepExecute">Execute</strong><small data-i18n="stepExecuteHint">CAPSuleRT</small></div>
+        <i>→</i><div class="loop-step" data-loop="observe"><span>04</span><strong data-i18n="stepObserve">Observe</strong><small data-i18n="stepObserveHint">Real outcome</small></div>
+        <i>→</i><div class="loop-step" data-loop="decide"><span>05</span><strong data-i18n="stepDecide">Adapt</strong><small data-i18n="stepDecideHint">Finish or re-plan</small></div>
+        <div class="replan-return"><span>↶</span><small data-i18n="replanReturn">Re-plan preserves verified work</small></div>
+      </div>
+
+      <div class="execution-board">
+        <article class="dag-panel stage-column">
+          <div class="section-heading compact"><div><p class="eyebrow">THINK → EXECUTE</p><h3 data-i18n="validatedDAG">Real Task DAG</h3></div><div id="plan-version-selector" class="version-selector"></div></div>
+          <div id="plan-transition" class="plan-transition hidden"></div><div id="plan-diff" class="plan-diff hidden"></div>
+          <div id="dag-view" class="empty-state">The validated plan will appear here.</div>
+        </article>
+        <article class="decision-panel stage-column">
+          <div class="decision-head"><p class="eyebrow" data-i18n="agentDecision">OBSERVE → ADAPT</p><div id="decision-type" class="decision-type">WAITING</div></div>
+          <div class="decision-fields">
+            <div><span data-i18n="observation">Observation</span><p id="decision-observation">No execution observation yet.</p></div>
+            <div><span data-i18n="reason">Reason</span><p id="decision-reason">No decision has been emitted.</p></div>
+            <div><span data-i18n="nextAction">Next action</span><p id="decision-action">Wait for a validated plan.</p></div>
+          </div>
+          <div id="decision-transition" class="decision-transition hidden"></div><div id="decision-history" class="decision-history"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="runtime-proof" class="runtime-proof panel run-surface">
+      <div class="proof-heading"><div><p class="eyebrow" data-i18n="measuredAdvantage">RUNTIME PROOF</p><h2 data-i18n="runtimeProofTitle">What CAPSuleRT contributed to this run</h2></div><p data-i18n="telemetryProof">Measured from Scheduler telemetry—not marketing copy.</p></div>
+      <div class="proof-grid">
+        <article><span data-i18n="peakParallel">Peak parallel workers</span><strong id="proof-parallel">—</strong><small id="proof-parallel-note">Waiting for dispatches.</small></article>
+        <article><span data-i18n="overlapFactor">Work overlap</span><strong id="proof-overlap">—</strong><small id="proof-overlap-note">Waiting for timings.</small></article>
+        <article><span data-i18n="recoveredWork">Verified outputs reused</span><strong id="proof-reused">—</strong><small id="proof-reused-note">Waiting for adaptation.</small></article>
+        <article><span id="proof-gate-label" data-i18n="evidenceGate">Verification gate</span><strong id="proof-evidence">—</strong><small id="proof-evidence-note">Waiting for verification.</small></article>
+      </div>
+      <div class="resource-proof"><span class="resource-dot"></span><strong data-i18n="resourceAware">Resource-aware scheduling</strong><span id="proof-pressure">Linux PSI has not been sampled.</span><small id="proof-isolation">Isolation status unavailable.</small></div>
+    </section>
+
+    <section id="experiment-panel" class="experiment-panel panel run-surface hidden">
+      <div class="section-heading compact"><div><p class="eyebrow" data-i18n="experimentOutcome">VERIFIED WORKER OUTPUT</p><h2 data-i18n="experimentComparison">Method comparison and autonomous recovery</h2></div><span id="experiment-best" class="experiment-best">Waiting</span></div>
+      <div id="experiment-recovery" class="experiment-recovery"><span>Waiting for a validated plan.</span></div>
+      <div class="experiment-table-wrap"><table class="experiment-table"><thead><tr><th data-i18n="method">Method</th><th data-i18n="accuracy">Accuracy</th><th data-i18n="workerRuntime">Worker runtime</th><th data-i18n="memoryPeak">Working set / budget</th><th data-i18n="attempt">Attempt</th><th data-i18n="state">State</th></tr></thead><tbody id="experiment-results"><tr><td colspan="6">Waiting for real worker output.</td></tr></tbody></table></div>
+      <p id="experiment-note" class="experiment-note" data-i18n="experimentDisclosure">Bounded three-method simulation driven by capsule-experiment.json: directory inspection, Scheduler, Worker processes, CPU work, failure and retry execute fresh; this is not arbitrary ML training.</p>
+    </section>
+
+    <aside class="key-panel panel research-only run-surface">
+      <div class="section-heading compact"><div><p class="eyebrow" data-i18n="outcome">VERIFIED RESEARCH</p><h2 data-i18n="atAGlance">Evidence at a glance</h2></div></div>
+      <div class="key-metrics"><div><span data-i18n="papers">Papers</span><strong id="metric-papers">0</strong></div><div><span data-i18n="analyzed">Analyzed</span><strong id="metric-analyzed">0</strong></div><div><span data-i18n="replans">Re-plans</span><strong id="metric-replans">0</strong></div><div><span data-i18n="reused">Reused</span><strong id="metric-reused">0</strong></div></div>
+      <div class="closure-card"><span data-i18n="citationClosure">Citation closure</span><strong id="metric-closure">—</strong><small data-i18n="closureHint">Only verified claims enter the report.</small></div>
+      <div id="quality-card" class="quality-card"><span data-i18n="answerCoverage">Answer completeness</span><strong id="metric-quality">—</strong><b id="metric-quality-score">—</b><small id="quality-gaps" data-i18n="coverageHint">Integrity and coverage are evaluated separately.</small></div>
+      <div class="evidence-mini" aria-label="Evidence funnel"><span><b id="metric-candidates">0</b> <i data-i18n="candidates">candidates</i></span><span>→</span><span><b id="metric-located">0</b> <i data-i18n="located">located</i></span><span>→</span><span class="good-text"><b id="metric-supported">0</b> <i data-i18n="supported">supported</i></span><span class="bad-text"><b id="metric-rejected">0</b> <i data-i18n="rejected">rejected</i></span></div>
+    </aside>
+
+    <section class="report-panel panel run-surface">
+      <div class="section-heading compact"><div><p class="eyebrow" data-i18n="verifiedOutput">FINAL ARTIFACT</p><h2 id="report-title" data-i18n="finalReport">Verified report</h2></div><a id="download-report" class="button secondary disabled" href="#" download data-i18n="downloadMarkdown">Download Markdown</a></div>
+      <article id="report" class="report"><div class="empty-state">The verified report will appear after completion.</div></article>
+    </section>
+
+    <details id="technical-details" class="technical-details panel run-surface">
+      <summary><div><span class="eyebrow" data-i18n="technicalDetails">TECHNICAL EVIDENCE</span><strong data-i18n="inspectSystem">Inspect telemetry, Scheduler state, evidence, and history</strong></div><span class="details-arrow">⌄</span></summary>
+      <div class="technical-content">
+        <section class="technical-grid">
+          <article class="activity-panel inner-panel"><div class="section-heading compact"><div><p class="eyebrow" data-i18n="telemetry">TELEMETRY</p><h3 data-i18n="liveActivity">Live activity</h3></div><div class="timeline-controls"><button id="timeline-presentation" class="mini-button active" type="button" data-i18n="important">Important</button><button id="timeline-developer" class="mini-button" type="button" data-i18n="allEvents">All events</button></div></div><div id="timeline" class="timeline" aria-live="polite"><div class="empty-state">Waiting for telemetry.</div></div><label class="toggle"><input id="autoscroll" type="checkbox" checked> <span data-i18n="autoScroll">Auto scroll</span></label></article>
+          <article class="runtime-panel inner-panel"><div class="section-heading compact"><div><p class="eyebrow">CAPSuleRT</p><h3 data-i18n="runtimeScheduler">Runtime & Scheduler</h3></div><span id="runtime-live" class="status-dot-label">Online</span></div><div class="runtime-grid"><div><strong id="metric-scheduler">0</strong><span>Tasks</span></div><div><strong id="metric-active">0</strong><span>Active</span></div><div><strong id="metric-running">0</strong><span>Running</span></div><div><strong id="metric-queue">0</strong><span>Queue</span></div><div><strong id="metric-completed">0</strong><span>Completed</span></div><div><strong id="metric-failed">0</strong><span>Failed</span></div><div><strong id="metric-cpu">—</strong><span>CPU PSI</span></div><div><strong id="metric-memory">—</strong><span>Memory PSI</span></div></div><p class="runtime-note">Linux PSI some.avg10; not per-task utilization.</p></article>
+        </section>
+        <section class="summary-panel inner-panel"><div class="section-heading compact"><div><p class="eyebrow" data-i18n="runSummary">RUN SUMMARY</p><h3 id="summary-title" data-i18n="researchResult">Result</h3></div></div><div id="summary-grid" class="summary-grid"><div class="empty-state">Summary appears as real run data becomes available.</div></div></section>
+        <section class="evidence-grid research-only">
+          <article class="evidence-panel inner-panel"><div class="section-heading compact"><div><p class="eyebrow">VERIFY</p><h3 data-i18n="evidenceInspect">Evidence inspect</h3></div><span id="evidence-count" class="counter">0 findings</span></div><div id="findings" class="finding-list"><div class="empty-state">Supported and rejected findings will appear here.</div></div></article>
+          <article class="result-panel inner-panel"><div class="result-tabs" role="tablist"><button class="tab active" data-tab="facts" type="button"><strong>FACT</strong><span>Directly supported</span></button><button class="tab" data-tab="inferences" type="button"><strong>INFERENCE</strong><span>Derived judgment</span></button><button class="tab" data-tab="proposals" type="button"><strong>PROPOSAL</strong><span>AI-generated</span></button></div><div id="result-items" class="result-items"><div class="empty-state">Verified results will appear here.</div></div></article>
+        </section>
+        <section class="papers-panel inner-panel research-only"><div class="section-heading compact"><div><p class="eyebrow" data-i18n="corpus">RESEARCH CORPUS</p><h3 data-i18n="papersDiagnostics">Papers & parser diagnostics</h3></div><span id="paper-count" class="counter">0 papers</span></div><div id="papers" class="paper-grid"><div class="empty-state">Retrieved paper metadata will appear here.</div></div></section>
+        <section class="detail-grid">
+          <article class="progress-panel inner-panel research-only"><div class="section-heading compact"><div><p class="eyebrow" data-i18n="pipelineDetail">PIPELINE</p><h3 data-i18n="researchProgress">Research progress</h3></div></div><div id="progress-stages" class="progress-stages"></div><div class="token-row"><span>Input tokens <strong id="input-tokens">Unavailable</strong></span><span>Output tokens <strong id="output-tokens">Unavailable</strong></span><span>LLM calls <strong id="metric-calls">0</strong></span></div></article>
+          <aside class="history-panel inner-panel"><div class="section-heading compact"><div><p class="eyebrow" data-i18n="persistedHistory">PERSISTED</p><h3 data-i18n="recentRuns">Recent runs</h3></div></div><div id="history" class="history-list"><div class="empty-state">No persisted runs yet.</div></div></aside>
+        </section>
+      </div>
+    </details>
+  </main>
+
+  <section id="help-panel" class="help-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <div class="help-card panel"><button id="help-close" class="icon-button" type="button" aria-label="Close help">×</button><p class="eyebrow">HOW CAPSuleAgent WORKS</p><h2 id="help-title" data-i18n="helpTitle">From goal to verified execution</h2><ol><li><strong data-i18n="helpPlan">Understand & Plan</strong><span data-i18n="helpPlanText">The LLM creates a capability-validated Task DAG.</span></li><li><strong data-i18n="helpExecute">Execute with CAPSuleRT</strong><span data-i18n="helpExecuteText">The Scheduler runs registered capabilities with dependency and resource control.</span></li><li><strong data-i18n="helpAdapt">Observe & Re-plan</strong><span data-i18n="helpAdaptText">Real outcomes revise the DAG while verified work is reused.</span></li><li><strong data-i18n="helpVerify">Verify Results</strong><span data-i18n="helpVerifyText">Only committed and verified outputs can satisfy the goal.</span></li></ol><p class="motto" data-i18n="motto">Reason freely. Execute safely. Verify deterministically.</p></div>
+  </section>
+  <footer data-i18n="motto">Reason freely. Execute safely. Verify deterministically.</footer>
+  <script src="/app.js" defer></script>
+</body>
+</html>

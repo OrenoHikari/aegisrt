@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "name": "CAPSuleAgent Stage 4 offline research eval",
+  "mode": "fixture",
+  "tasks": [
+    {
+      "id": "single-paper-understanding",
+      "category": "single_paper",
+      "scenario": "normal",
+      "query": "referring expression counting",
+      "paper_ranks": [1],
+      "gold_claim_types": ["problem", "method", "contribution", "dataset", "metric", "result", "limitation"]
+    },
+    {
+      "id": "multi-paper-comparison",
+      "category": "multi_paper",
+      "scenario": "normal",
+      "query": "visual grounding counting methods",
+      "paper_ranks": [1, 2, 3],
+      "gold_claim_types": ["problem", "method", "contribution", "dataset", "metric", "result", "limitation"]
+    },
+    {
+      "id": "dataset-metric-extraction",
+      "category": "dataset_metric",
+      "scenario": "normal",
+      "query": "counting datasets and metrics",
+      "paper_ranks": [1],
+      "gold_claim_types": ["problem", "method", "contribution", "dataset", "metric", "result", "limitation"]
+    },
+    {
+      "id": "method-contribution-identification",
+      "category": "contribution",
+      "scenario": "normal",
+      "query": "method contribution",
+      "paper_ranks": [2],
+      "gold_claim_types": ["problem", "method", "contribution", "dataset", "metric", "result", "limitation"]
+    },
+    {
+      "id": "limitation-identification",
+      "category": "limitation",
+      "scenario": "normal",
+      "query": "research limitations",
+      "paper_ranks": [3],
+      "gold_claim_types": ["problem", "method", "contribution", "dataset", "metric", "result", "limitation"]
+    },
+    {
+      "id": "cross-paper-trend",
+      "category": "trend",
+      "scenario": "normal",
+      "query": "cross paper trend",
+      "paper_ranks": [1, 2, 3],
+      "gold_claim_types": ["problem", "method", "contribution", "dataset", "metric", "result", "limitation"]
+    },
+    {
+      "id": "insufficient-search-replan",
+      "category": "recovery",
+      "scenario": "search-replan",
+      "query": "sparse referring expression counting",
+      "recovery_query": "referring expression counting visual grounding density estimation",
+      "paper_ranks": [1, 2],
+      "gold_claim_types": ["problem", "method", "contribution", "dataset", "metric", "result", "limitation"]
+    },
+    {
+      "id": "unavailable-paper-recovery",
+      "category": "recovery",
+      "scenario": "unavailable",
+      "query": "referring expression counting unavailable full text",
+      "paper_ranks": [1, 2, 3],
+      "gold_claim_types": ["problem", "method", "contribution", "dataset", "metric", "result", "limitation"]
+    },
+    {
+      "id": "unsupported-quantitative-claim",
+      "category": "evidence_guard",
+      "scenario": "normal",
+      "query": "unsupported claim verification",
+      "paper_ranks": [1],
+      "gold_claim_types": ["problem", "method", "contribution", "dataset", "metric", "result", "limitation"],
+      "injection": "unsupported_claim"
+    },
+    {
+      "id": "citation-hallucination",
+      "category": "citation_guard",
+      "scenario": "normal",
+      "query": "citation closure",
+      "paper_ranks": [1, 2],
+      "gold_claim_types": ["problem", "method", "contribution", "dataset", "metric", "result", "limitation"],
+      "injection": "hallucinated_citation"
+    }
+  ]
+}

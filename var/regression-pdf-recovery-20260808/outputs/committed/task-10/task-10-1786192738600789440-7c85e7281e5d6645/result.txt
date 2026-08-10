@@ -1,0 +1,37 @@
+Paper: SEA-Vision: A Multilingual Benchmark for Comprehensive Document and Scene Text Understanding in Southeast Asia
+Parser: python-pypdf
+Pages: 22
+Sections: 28
+Characters: 80750
+Duration: 529ms
+Fallback: false
+Truncated: false
+Warnings: 0
+- Unknown (308 chars)
+- Abstract (1553 chars)
+- Introduction (5001 chars)
+- Document Parsing (1546 chars)
+- Text-Centric Visual Question Answering (2075 chars)
+- Document and Scene Text Understanding (2742 chars)
+- SEA-Vision Benchmark (401 chars)
+- Data Acquisition (476 chars)
+- Data Annotation Pipeline (4016 chars)
+- Data Acquisition (952 chars)
+- Data Annotation (2993 chars)
+- Dataset Statistics (668 chars)
+- semantic categories, including reading order labels. We (634 chars)
+- Document Parsing Evaluation (670 chars)
+- TEC-VQA Evaluation (398 chars)
+- Baselines (3804 chars)
+- Overall Results (170 chars)
+- Document Parsing (3530 chars)
+- TEC-VQA (996 chars)
+- Conclusion (1130 chars)
+- References (6392 chars)
+- 2, 6 (9054 chars)
+- Ieee, 2018. 3 (4896 chars)
+- Fil 115 403 82.61 86.71 (15084 chars)
+- Answer the question directly and accurately based (380 chars)
+- Do not make assumptions or provide information not (3040 chars)
+- Pt, th, vi (7515 chars)
+- Question specifies the context and currency; answer exactly (272 chars)

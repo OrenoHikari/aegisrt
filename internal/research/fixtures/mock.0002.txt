@@ -1,0 +1,20 @@
+# Abstract
+Language-conditioned density maps support open-vocabulary object counting.
+
+# Introduction
+PROBLEM: Region-based pipelines miss crowded or heavily overlapping objects described by language.
+
+# Method
+METHOD: Language-Guided Density Estimation conditions a density-map decoder on a text embedding and integrates the predicted density.
+CONTRIBUTION: The approach supports open-vocabulary descriptions without requiring a fixed category classifier.
+DATASET: PhraseCount, FSC-147-Lang
+METRIC: MAE, normalized absolute error
+
+# Results
+RESULT: The model reports 8.7 MAE on PhraseCount using its language-conditioned split.
+
+# Limitations
+LIMITATION: Density supervision is expensive and the reported split differs from region-grounding evaluations.
+
+# References
+[1] FSC-147.

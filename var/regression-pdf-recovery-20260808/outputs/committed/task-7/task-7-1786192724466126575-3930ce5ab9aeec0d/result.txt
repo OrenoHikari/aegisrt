@@ -1,0 +1,30 @@
+Paper: Index-Preserving Lightweight Token Pruning for Efficient Document Understanding in Vision-Language Models
+Parser: python-pypdf
+Pages: 7
+Sections: 21
+Characters: 20914
+Duration: 256ms
+Fallback: false
+Truncated: false
+Warnings: 0
+- Unknown (58 chars)
+- Vision-languagemodels (111 chars)
+- ABSTRACT (659 chars)
+- INTRODUCTION (1640 chars)
+- RELATED WORK (842 chars)
+- Mlp (1213 chars)
+- METHOD (172 chars)
+- LIGHTWEIGHT TEXT-REGION CLASSIFIER (360 chars)
+- TOKEN PRUNING WITH INDEX PRESERVATION (574 chars)
+- FOREGROUND REFINEMENT WITH MAX-POOLING (865 chars)
+- EVALUATION SETUP (589 chars)
+- TOKEN ANDFLOPS REDUCTION (1015 chars)
+- IMPACT OF PRUNING AND MAX-POOLING (2147 chars)
+- COMPARISON WITH EXISTING METHODS (1312 chars)
+- ABLATION ON INDEXING STRATEGY (823 chars)
+- CONCLUSION (446 chars)
+- REFERENCES (5264 chars)
+- A.1 implementation details (1280 chars)
+- A.2 patch classifier dataset (349 chars)
+- A.3 ablation on patch size (438 chars)
+- 51 0.9628 203 0.9956 810 0.98112 3000 0.98 (717 chars)

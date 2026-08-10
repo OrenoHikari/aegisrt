@@ -1,0 +1,820 @@
+{
+  "goal": "调研 2023 至 2026 年视觉语言模型在文档理解中的轻量化方法，比较代表性模型、数据集、评估指标和主要局限。",
+  "query_history": [
+    "lightweight vision language model document understanding"
+  ],
+  "retrieved_paper_ids": [
+    "2502.09927",
+    "2509.06415",
+    "2509.10105",
+    "2509.26235"
+  ],
+  "references": [
+    {
+      "id": "2502.09927",
+      "title": "Granite Vision: a lightweight, open-source multimodal model for enterprise Intelligence",
+      "authors": [
+        "Granite Vision Team",
+        "Leonid Karlinsky",
+        "Assaf Arbelle",
+        "Abraham Daniels",
+        "Ahmed Nassar",
+        "Amit Alfassi",
+        "Bo Wu",
+        "Eli Schwartz",
+        "Dhiraj Joshi",
+        "Jovana Kondic",
+        "Nimrod Shabtay",
+        "Pengyuan Li",
+        "Roei Herzig",
+        "Shafiq Abedin",
+        "Shaked Perek",
+        "Sivan Harary",
+        "Udi Barzelay",
+        "Adi Raz Goldfarb",
+        "Aude Oliva",
+        "Ben Wieles",
+        "Bishwaranjan Bhattacharjee",
+        "Brandon Huang",
+        "Christoph Auer",
+        "Dan Gutfreund",
+        "David Beymer",
+        "David Wood",
+        "Hilde Kuehne",
+        "Jacob Hansen",
+        "Joseph Shtok",
+        "Ken Wong",
+        "Luis Angel Bathen",
+        "Mayank Mishra",
+        "Maksym Lysak",
+        "Michele Dolfi",
+        "Mikhail Yurochkin",
+        "Nikolaos Livathinos",
+        "Nimrod Harel",
+        "Ophir Azulai",
+        "Oshri Naparstek",
+        "Rafael Teixeira de Lima",
+        "Rameswar Panda",
+        "Sivan Doveh",
+        "Shubham Gupta",
+        "Subhro Das",
+        "Syed Zawad",
+        "Yusik Kim",
+        "Zexue He",
+        "Alexander Brooks",
+        "Gabe Goodhart",
+        "Anita Govindjee",
+        "Derek Leist",
+        "Ibrahim Ibrahim",
+        "Aya Soffer",
+        "David Cox",
+        "Kate Soule",
+        "Luis Lastras",
+        "Nirmit Desai",
+        "Shila Ofek-koifman",
+        "Sriram Raghavan",
+        "Tanveer Syeda-Mahmood",
+        "Peter Staar",
+        "Tal Drory",
+        "Rogerio Feris"
+      ],
+      "year": 2025,
+      "abstract": "We introduce Granite Vision, a lightweight large language model with vision capabilities, specifically designed to excel in enterprise use cases, particularly in visual document understanding. Our model is trained on a comprehensive instruction-following dataset, including document-related tasks, such as content extraction from tables, charts, diagrams, sketches, and infographics, as well as general image tasks. The architecture of Granite Vision is centered around visual modality alignment with a decoder-only, 2 billion parameter Granite large language model. Additionally, we introduce a dedicated safety classification approach in test-time that leverages a sparse set of attention vectors to identify potential harmful inputs. Despite its lightweight architecture, Granite Vision achieves strong results in standard benchmarks related to visual document understanding, as well as on the LiveXiv benchmark, which is designed to avoid test set contamination by using a constantly updated corpus of recently published Arxiv papers. We are releasing the model under the Apache-2 license, allowing for both research and commercial use, while offering complete visibility into the training data and other relevant details. See https://huggingface.co/ibm-granite/ for model weights.",
+      "arxiv_id": "2502.09927",
+      "url": "https://arxiv.org/abs/2502.09927",
+      "pdf_url": "https://arxiv.org/pdf/2502.09927v1",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    },
+    {
+      "id": "2509.06415",
+      "title": "Index-Preserving Lightweight Token Pruning for Efficient Document Understanding in Vision-Language Models",
+      "authors": [
+        "Jaemin Son",
+        "Sujin Choi",
+        "Inyong Yun"
+      ],
+      "year": 2025,
+      "abstract": "Recent progress in vision-language models (VLMs) has led to impressive results in document understanding tasks, but their high computational demands remain a challenge. To mitigate the compute burdens, we propose a lightweight token pruning framework that filters out non-informative background regions from document images prior to VLM processing. A binary patch-level classifier removes non-text areas, and a max-pooling refinement step recovers fragmented text regions to enhance spatial coherence. Experiments on real-world document datasets demonstrate that our approach substantially lowers computational costs, while maintaining comparable accuracy.",
+      "arxiv_id": "2509.06415",
+      "url": "https://arxiv.org/abs/2509.06415",
+      "pdf_url": "https://arxiv.org/pdf/2509.06415v2",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    },
+    {
+      "id": "2509.10105",
+      "title": "VARCO-VISION-2.0 Technical Report",
+      "authors": [
+        "Young-rok Cha",
+        "Jeongho Ju",
+        "SunYoung Park",
+        "Jong-Hyeon Lee",
+        "Younghyun Yu",
+        "Youngjune Kim"
+      ],
+      "year": 2025,
+      "abstract": "We introduce VARCO-VISION-2.0, an open-weight bilingual vision-language model (VLM) for Korean and English with improved capabilities compared to the previous model VARCO-VISION-14B. The model supports multi-image understanding for complex inputs such as documents, charts, and tables, and delivers layoutaware OCR by predicting both textual content and its spatial location. Trained with a four-stage curriculum with memory-efficient techniques, the model achieves enhanced multimodal alignment, while preserving core language abilities and improving safety via preference optimization. Extensive benchmark evaluations demonstrate strong spatial grounding and competitive results for both languages, with the 14B model achieving 8th place on the OpenCompass VLM leaderboard among models of comparable scale. Alongside the 14B-scale model, we release a 1.7B version optimized for on-device deployment. We believe these models advance the development of bilingual VLMs and their practical applications. Two variants of VARCO-VISION-2.0 are available at Hugging Face: a full-scale 14B model and a lightweight 1.7B model.",
+      "arxiv_id": "2509.10105",
+      "url": "https://arxiv.org/abs/2509.10105",
+      "pdf_url": "https://arxiv.org/pdf/2509.10105v2",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    },
+    {
+      "id": "2509.26235",
+      "title": "Interpret, prune and distill Donut : towards lightweight VLMs for VQA on document",
+      "authors": [
+        "Adnan Ben Mansour",
+        "Ayoub Karine",
+        "David Naccache"
+      ],
+      "year": 2025,
+      "abstract": "Recent advances in Visually-rich Document Understanding rely on large Vision-Language Models like Donut, which perform document-level Visual Question Answering without Optical Character Recognition. Despite their effectiveness, these models are too costly for real-time or resource-constrained applications. We investigate model compression through knowledge distillation, training compact student models from a larger teacher. We leverage mechanistic interpretability to drive student architecture design within this framework. By analyzing internal computations, we identify essential subcomponents to retain, while having a clear view of which subcomponents should be approximated, skipped, or reparametrized based on their function. This approach yields Donut-MINT (Mechanistic Interpretability-based Network Trimming), a pruned Donut variant that reduces inference time and memory usage while maintaining strong performance on DocVQA, a standard benchmark for document Visual Question Answering. Our method reframes compression as circuit discovery, bridging interpretability research and practical Vision-Language Model deployment.",
+      "arxiv_id": "2509.26235",
+      "url": "https://arxiv.org/abs/2509.26235",
+      "pdf_url": "https://arxiv.org/pdf/2509.26235v1",
+      "provider": "arxiv",
+      "metadata_sources": [
+        "arxiv"
+      ],
+      "full_text_available": true
+    }
+  ],
+  "evidence": [
+    {
+      "id": "2509.06415-e2",
+      "source": "https://arxiv.org/abs/2509.06415",
+      "paper_id": "2509.06415",
+      "claim": "The proposed method is a lightweight pre-encoder token pruning framework that removes non-informative background patches using a binary text-region classifier with a max-pooling refinement step.",
+      "section": "ABSTRACT",
+      "section_id": "section-003",
+      "start": 240,
+      "end": 422,
+      "snippet": "We propose a lightweight pre-encoder token pruning framework that\nremoves non-informative background patches using a binary text-region classifier\nwith a max-pooling refinement step.",
+      "producing_task": "task-12",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.06415-e3",
+      "source": "https://arxiv.org/abs/2509.06415",
+      "paper_id": "2509.06415",
+      "claim": "The framework preserves token indices to maintain the spatial correspondence required for layout-sensitive recognition.",
+      "section": "ABSTRACT",
+      "section_id": "section-003",
+      "start": 423,
+      "end": 542,
+      "snippet": "The framework preserves token indices to\nmaintain the spatial correspondence required for layout-sensitive recognition.",
+      "producing_task": "task-12",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.06415-e4",
+      "source": "https://arxiv.org/abs/2509.06415",
+      "paper_id": "2509.06415",
+      "claim": "The proposed method discards background patches at the earliest stage, before any computation occurs in a VLM.",
+      "section": "METHOD",
+      "section_id": "section-007",
+      "start": 0,
+      "end": 141,
+      "snippet": "We propose an index-preserving pruning method that discards background patches at the earliest\nstage, before any computation occurs in a VLM.",
+      "producing_task": "task-12",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.06415-e5",
+      "source": "https://arxiv.org/abs/2509.06415",
+      "paper_id": "2509.06415",
+      "claim": "ToMe showed low ANLS and accuracy because shuffling and rearranging tokens collapses the index structure, leading to poor text recognition.",
+      "section": "COMPARISON WITH EXISTING METHODS",
+      "section_id": "section-014",
+      "start": 710,
+      "end": 886,
+      "snippet": "ToMe (Bolya et al., 2022)\nshowed low ANLS and accuracy. As it shuffles\nand rearranges tokens at each merge step, the\nindex structure collapses leading to poor text\nrecognition.",
+      "producing_task": "task-12",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.06415-e6",
+      "source": "https://arxiv.org/abs/2509.06415",
+      "paper_id": "2509.06415",
+      "claim": "DocKylin with DTS showed limited performance because its merging strategy treats tokens highly correlated with others as background, which fails when the assumption of similar background patterns does not hold.",
+      "section": "COMPARISON WITH EXISTING METHODS",
+      "section_id": "section-014",
+      "start": 1026,
+      "end": 1312,
+      "snippet": "DocKylin (Zhang et al., 2025) with DTS showed limited performance. Its merging strategy treats\ntokens highly correlated with others as background, under the assumption that backgrounds share\nsimilar visual patterns. When this assumption does not hold, the method becomes less effective.",
+      "producing_task": "task-12",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.06415-e7",
+      "source": "https://arxiv.org/abs/2509.06415",
+      "paper_id": "2509.06415",
+      "claim": "Two images in the CORD subset were fully pruned and excluded from FLOPs computation, assigned 0 score for F1 and normalized TED accuracy.",
+      "section": "EVALUATION SETUP",
+      "section_id": "section-011",
+      "start": 384,
+      "end": 589,
+      "snippet": "Two images in the CORD subset were fully pruned, meaning all patches were removed by the\nclassifier. We excluded them from the FLOPs computation and assigned 0 score for F1 and the\nnormalized TED accuracy.",
+      "producing_task": "task-12",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e1",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "Existing models are predominantly trained on natural images, limiting performance in visual document understanding.",
+      "section": "I NTRODUCTION",
+      "section_id": "section-004",
+      "start": 954,
+      "end": 1307,
+      "snippet": "In addition, existing models are predominantly trained on natural\nimages, which can limit their performance in other domains, such as visual document understanding, where\nthe unique visual characteristics, such as layouts, fonts, and graphics, significantly differ from natural images\nand require a more fine-grained comprehension of the visual content.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e2",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "Granite Vision is a compact vision-language model with approximately 3 billion parameters, tailored to excel in enterprise use cases.",
+      "section": "I NTRODUCTION",
+      "section_id": "section-004",
+      "start": 1308,
+      "end": 1467,
+      "snippet": "In this work, we introduce Granite Vision, a compact vision-language model with approximately 3 billion\nparameters1, tailored to excel in enterprise use cases.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e3",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "The first version of Granite Vision is particularly focused on visual document understanding.",
+      "section": "I NTRODUCTION",
+      "section_id": "section-004",
+      "start": 1468,
+      "end": 1718,
+      "snippet": "Although our model can process general images, the\nfirst version of Granite Vision is particularly focused on visual document understanding, enabling automated\ncontent extraction from tables, charts, infographics, plots, diagrams, sketches, and more.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e4",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "Granite Vision extends the Granite family of LLMs trained on more than 12 trillion tokens.",
+      "section": "I NTRODUCTION",
+      "section_id": "section-004",
+      "start": 1852,
+      "end": 2142,
+      "snippet": "Granite Vision extends the Granite family of large language models ( Granite Team (2024)), which\nhave been trained on more than 12 trillion tokens, achieving state-of-the-art performance for their size, while\nbeing designed for enterprise usage, with full visibility into the training data.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e6",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "A comprehensive instruction-following dataset for visual document understanding was curated, comprising around 13 million images and 80 million instructions.",
+      "section": "Barque steak",
+      "section_id": "section-005",
+      "start": 517,
+      "end": 933,
+      "snippet": "As a key contribution of our work, we meticulously curate a comprehensive instruction-following dataset\nfor visual document understanding, comprising around 13 million images and 80 million instructions, which\nspan a diverse set of of tasks, including document question-answering , scene text understanding, key-value\nextraction, text grounding, layout parsing, captioning, UI understanding, and code (see Figure 2).",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e7",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "Training data is enriched by instruction-following data for general images from public datasets.",
+      "section": "Barque steak",
+      "section_id": "section-005",
+      "start": 1125,
+      "end": 1361,
+      "snippet": "In addition to documents, our\ntraining data is further enriched by the inclusion of instruction-following data for general images from public\ndatasets (Tong et al., 2024; Li et al., 2024b; Laurenc ¸on et al., 2024b; Liu et al., 2023b).",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e8",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "The model demonstrates competitive results on standard vision-language benchmarks.",
+      "section": "Barque steak",
+      "section_id": "section-005",
+      "start": 2596,
+      "end": 2740,
+      "snippet": "In addition to its strong performance in enterprise settings, our model demonstrates competitive\nresults on standard vision-language benchmarks.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e9",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "The model is publicly available under the Apache-2 license, allowing visibility into training data and procedures.",
+      "section": "Barque steak",
+      "section_id": "section-005",
+      "start": 2741,
+      "end": 2903,
+      "snippet": "To promote openness and collaboration, we make the model\npublicly available under the Apache-2 license, allowing visibility into the training data and procedures.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e10",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "Granite Vision uniquely achieves state-of-the-art results on standard document and other benchmarks at a significantly reduced scale (~3B parameters).",
+      "section": "M ULTIMODAL LARGE LANGUAGE MODELS",
+      "section_id": "section-006",
+      "start": 1812,
+      "end": 2019,
+      "snippet": "Building on these insights, our model uniquely achieves state-of-the-art results on standard document and\nother benchmarks, all while operating at a significantly reduced scale (around 3 billion parameters).",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e11",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "Document understanding data covers general document images, charts, flowcharts, diagrams, and more, encompassing diverse visual Q\u0026A tasks.",
+      "section": "D ATA",
+      "section_id": "section-008",
+      "start": 479,
+      "end": 685,
+      "snippet": "Our document understanding data (Figure 2) covers a\nvariety of document classes such as general document images, charts, flowcharts, diagrams and several more\nencompassing a diverse set of visual Q\u0026A tasks.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2502.09927-e12",
+      "source": "https://arxiv.org/abs/2502.09927",
+      "paper_id": "2502.09927",
+      "claim": "The highest scoring model on ChartQA is Granite Vision 3.1 with a score of 0.86.",
+      "section": "Barque steak",
+      "section_id": "section-005",
+      "start": 30,
+      "end": 178,
+      "snippet": "What is the highest scoring model on\nChartQA and what is the score?\nThe highest scoring model on ChartQA is\nGranite Vision 3.1 with a score of 0.86.",
+      "producing_task": "task-13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.26235-e2",
+      "source": "https://arxiv.org/abs/2509.26235",
+      "paper_id": "2509.26235",
+      "claim": "Donut-MINT achieves significant reductions in parameters and computation while closely matching teacher accuracy on DocVQA.",
+      "section": "Introduction",
+      "section_id": "section-004",
+      "start": 3165,
+      "end": 3427,
+      "snippet": "Our experiments show that our pruned model, Donut-MINT (Mechanistic\nInterpretability-guided Network Trimming), achieves significant reductions in\nboth parameters and computation, while closely matching the teacher model’s\naccuracy on DocVQA after distillation.",
+      "producing_task": "task-16",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.26235-e3",
+      "source": "https://arxiv.org/abs/2509.26235",
+      "paper_id": "2509.26235",
+      "claim": "Donut-MINT is a lightweight model that achieves competitive performance on DocVQA.",
+      "section": "Introduction",
+      "section_id": "section-004",
+      "start": 4429,
+      "end": 4652,
+      "snippet": "We introduce\nDonut-MINT, a lightweight model that achieves competitive performance on\nthe DocVQA dataset [31], thereby validating our methodology and illustrating\nhow interpretability can drive principled model compression.",
+      "producing_task": "task-16",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.26235-e4",
+      "source": "https://arxiv.org/abs/2509.26235",
+      "paper_id": "2509.26235",
+      "claim": "The study centers on Donut as a proof of concept for a broader class of VLMs.",
+      "section": "Introduction",
+      "section_id": "section-004",
+      "start": 3069,
+      "end": 3164,
+      "snippet": "While\nour study centers on Donut, we view it as a proof of concept for a broader class\nof VLMs.",
+      "producing_task": "task-16",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.26235-e5",
+      "source": "https://arxiv.org/abs/2509.26235",
+      "paper_id": "2509.26235",
+      "claim": "Donut uses explicit cross-attention between visual features and decoder tokens, making modality fusion interpretable.",
+      "section": "Introduction",
+      "section_id": "section-004",
+      "start": 2751,
+      "end": 2910,
+      "snippet": "Second,\nDonut uses explicit cross-attention between visual features and decoder tokens,\nmaking its modality fusion interpretable and structurally disentangled.",
+      "producing_task": "task-16",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.26235-e6",
+      "source": "https://arxiv.org/abs/2509.26235",
+      "paper_id": "2509.26235",
+      "claim": "Donut is trained to copy text spans from the image rather than generate free-form answers, making attribution of internal mechanisms more tractable.",
+      "section": "Introduction",
+      "section_id": "section-004",
+      "start": 2911,
+      "end": 3068,
+      "snippet": "Third,\nit is trained to copy text spans from the image rather than generate free-form\nanswers, which makes attribution of internal mechanisms more tractable.",
+      "producing_task": "task-16",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.10105-e1",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "The model is trained with a four-stage curriculum with memory-efficient techniques.",
+      "section": "Abstract",
+      "section_id": "section-003",
+      "start": 380,
+      "end": 591,
+      "snippet": "Trained\nwith a four-stage curriculum with memory-efficient techniques, the model achieves\nenhanced multimodal alignment, while preserving core language abilities and\nimproving safety via preference optimization.",
+      "producing_task": "task-22",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.10105-e2",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "A 1.7B version optimized for on-device deployment is released.",
+      "section": "Abstract",
+      "section_id": "section-003",
+      "start": 814,
+      "end": 906,
+      "snippet": "Alongside the 14B-scale model, we release\na 1.7B version optimized for on-device deployment.",
+      "producing_task": "task-22",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.10105-e4",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "VARCO-VISION-2.0 is built on the LLaVA-OneVision architecture, combining a large language model, a vision encoder, and a two-layer MLP connector.",
+      "section": "Architecture",
+      "section_id": "section-005",
+      "start": 0,
+      "end": 218,
+      "snippet": "VARCO-VISION-2.0 is built on the LLaV A-OneVision [2] architecture, combining a large language\nmodel (LLM), a vision encoder, and a two-layer MLP connector that projects image features into the\nLLM’s embedding space.",
+      "producing_task": "task-22",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.10105-e6",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "The patch-16 setting reduces the number of visual tokens compared to patch-14.",
+      "section": "Architecture",
+      "section_id": "section-005",
+      "start": 816,
+      "end": 1030,
+      "snippet": "The patch-16 setting reduces the number\nof visual tokens compared to patch-14; for example, a 384×384 input produces 242 = 576tokens\nwith patch-16, considerably fewer than the 272 = 729tokens produced by patch-14.",
+      "producing_task": "task-22",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.10105-e7",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "The training pipeline follows a four-stage curriculum designed to progressively build multimodal capability.",
+      "section": "Training Strategies and Datasets",
+      "section_id": "section-006",
+      "start": 0,
+      "end": 115,
+      "snippet": "Our training pipeline follows a four-stage curriculum [6, 7] designed to progressively build multimodal\ncapability.",
+      "producing_task": "task-22",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "2509.10105-e8",
+      "source": "https://arxiv.org/abs/2509.10105",
+      "paper_id": "2509.10105",
+      "claim": "The model is trained on approximately 6.5 billion text tokens and 30.4 billion image tokens.",
+      "section": "Training Strategies and Datasets",
+      "section_id": "section-006",
+      "start": 510,
+      "end": 602,
+      "snippet": "The model is trained on approximately 6.5 billion text tokens and 30.4 billion image tokens.",
+      "producing_task": "task-22",
+      "status": "SUPPORTED"
+    }
+  ],
+  "facts": [
+    {
+      "kind": "FACT",
+      "statement": "The proposed method is a lightweight pre-encoder token pruning framework that removes non-informative background patches using a binary text-region classifier with a max-pooling refinement step.",
+      "evidence_ids": [
+        "2509.06415-e2"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "The framework preserves token indices to maintain the spatial correspondence required for layout-sensitive recognition.",
+      "evidence_ids": [
+        "2509.06415-e3"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "The proposed method discards background patches at the earliest stage, before any computation occurs in a VLM.",
+      "evidence_ids": [
+        "2509.06415-e4"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "ToMe showed low ANLS and accuracy because shuffling and rearranging tokens collapses the index structure, leading to poor text recognition.",
+      "evidence_ids": [
+        "2509.06415-e5"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "DocKylin with DTS showed limited performance because its merging strategy treats tokens highly correlated with others as background, which fails when the assumption of similar background patterns does not hold.",
+      "evidence_ids": [
+        "2509.06415-e6"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "Two images in the CORD subset were fully pruned and excluded from FLOPs computation, assigned 0 score for F1 and normalized TED accuracy.",
+      "evidence_ids": [
+        "2509.06415-e7"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "Existing models are predominantly trained on natural images, limiting performance in visual document understanding.",
+      "evidence_ids": [
+        "2502.09927-e1"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "Granite Vision is a compact vision-language model with approximately 3 billion parameters, tailored to excel in enterprise use cases.",
+      "evidence_ids": [
+        "2502.09927-e2"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "The first version of Granite Vision is particularly focused on visual document understanding.",
+      "evidence_ids": [
+        "2502.09927-e3"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "Granite Vision extends the Granite family of LLMs trained on more than 12 trillion tokens.",
+      "evidence_ids": [
+        "2502.09927-e4"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "A comprehensive instruction-following dataset for visual document understanding was curated, comprising around 13 million images and 80 million instructions.",
+      "evidence_ids": [
+        "2502.09927-e6"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "Training data is enriched by instruction-following data for general images from public datasets.",
+      "evidence_ids": [
+        "2502.09927-e7"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "The model demonstrates competitive results on standard vision-language benchmarks.",
+      "evidence_ids": [
+        "2502.09927-e8"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "The model is publicly available under the Apache-2 license, allowing visibility into training data and procedures.",
+      "evidence_ids": [
+        "2502.09927-e9"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "Granite Vision uniquely achieves state-of-the-art results on standard document and other benchmarks at a significantly reduced scale (~3B parameters).",
+      "evidence_ids": [
+        "2502.09927-e10"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "Document understanding data covers general document images, charts, flowcharts, diagrams, and more, encompassing diverse visual Q\u0026A tasks.",
+      "evidence_ids": [
+        "2502.09927-e11"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "The highest scoring model on ChartQA is Granite Vision 3.1 with a score of 0.86.",
+      "evidence_ids": [
+        "2502.09927-e12"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "Donut-MINT achieves significant reductions in parameters and computation while closely matching teacher accuracy on DocVQA.",
+      "evidence_ids": [
+        "2509.26235-e2"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "Donut-MINT is a lightweight model that achieves competitive performance on DocVQA.",
+      "evidence_ids": [
+        "2509.26235-e3"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "The study centers on Donut as a proof of concept for a broader class of VLMs.",
+      "evidence_ids": [
+        "2509.26235-e4"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "Donut uses explicit cross-attention between visual features and decoder tokens, making modality fusion interpretable.",
+      "evidence_ids": [
+        "2509.26235-e5"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "Donut is trained to copy text spans from the image rather than generate free-form answers, making attribution of internal mechanisms more tractable.",
+      "evidence_ids": [
+        "2509.26235-e6"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "The model is trained with a four-stage curriculum with memory-efficient techniques.",
+      "evidence_ids": [
+        "2509.10105-e1"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "A 1.7B version optimized for on-device deployment is released.",
+      "evidence_ids": [
+        "2509.10105-e2"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "VARCO-VISION-2.0 is built on the LLaVA-OneVision architecture, combining a large language model, a vision encoder, and a two-layer MLP connector.",
+      "evidence_ids": [
+        "2509.10105-e4"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "The patch-16 setting reduces the number of visual tokens compared to patch-14.",
+      "evidence_ids": [
+        "2509.10105-e6"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "The training pipeline follows a four-stage curriculum designed to progressively build multimodal capability.",
+      "evidence_ids": [
+        "2509.10105-e7"
+      ]
+    },
+    {
+      "kind": "FACT",
+      "statement": "The model is trained on approximately 6.5 billion text tokens and 30.4 billion image tokens.",
+      "evidence_ids": [
+        "2509.10105-e8"
+      ]
+    }
+  ],
+  "inferences": [
+    {
+      "kind": "INFERENCE",
+      "statement": "The reviewed work separates into 3 distinct technical routes rather than one uniform method.",
+      "evidence_ids": [
+        "2509.06415-e2",
+        "2509.06415-e3",
+        "2509.06415-e4",
+        "2509.06415-e5",
+        "2509.06415-e6",
+        "2509.06415-e7",
+        "2502.09927-e1",
+        "2502.09927-e2",
+        "2502.09927-e3",
+        "2502.09927-e4",
+        "2502.09927-e6",
+        "2502.09927-e7",
+        "2502.09927-e8",
+        "2502.09927-e9",
+        "2502.09927-e10",
+        "2502.09927-e11",
+        "2502.09927-e12",
+        "2509.26235-e2",
+        "2509.26235-e3",
+        "2509.26235-e4",
+        "2509.26235-e5",
+        "2509.26235-e6",
+        "2509.10105-e1",
+        "2509.10105-e2",
+        "2509.10105-e4",
+        "2509.10105-e6",
+        "2509.10105-e7",
+        "2509.10105-e8"
+      ]
+    },
+    {
+      "kind": "INFERENCE",
+      "statement": "The reported numerical results are not directly comparable because the reviewed papers use different datasets or evaluation splits.",
+      "evidence_ids": [
+        "2502.09927-e6",
+        "2502.09927-e7"
+      ]
+    }
+  ],
+  "research_directions": [
+    "Granite Vision extends the Granite family of LLMs trained on more than 12 trillion tokens.",
+    "The model is trained with a four-stage curriculum with memory-efficient techniques.",
+    "The proposed method is a lightweight pre-encoder token pruning framework that removes non-informative background patches using a binary text-region classifier with a max-pooling refinement step."
+  ],
+  "method_comparison": [
+    {
+      "paper_id": "2509.06415",
+      "method": "The proposed method is a lightweight pre-encoder token pruning framework that removes non-informative background patches using a binary text-region classifier with a max-pooling refinement step.",
+      "datasets": null,
+      "metrics": null,
+      "limitations": [
+        "Two images in the CORD subset were fully pruned and excluded from FLOPs computation, assigned 0 score for F1 and normalized TED accuracy."
+      ]
+    },
+    {
+      "paper_id": "2502.09927",
+      "method": "Granite Vision extends the Granite family of LLMs trained on more than 12 trillion tokens.",
+      "datasets": [
+        "Document understanding data covers general document images",
+        "and more",
+        "charts",
+        "diagrams",
+        "encompassing diverse visual Q\u0026A tasks.",
+        "flowcharts"
+      ],
+      "metrics": null,
+      "limitations": null
+    },
+    {
+      "paper_id": "2509.26235",
+      "method": "",
+      "datasets": null,
+      "metrics": null,
+      "limitations": [
+        "The study centers on Donut as a proof of concept for a broader class of VLMs."
+      ]
+    },
+    {
+      "paper_id": "2509.10105",
+      "method": "The model is trained with a four-stage curriculum with memory-efficient techniques.",
+      "datasets": null,
+      "metrics": null,
+      "limitations": null
+    }
+  ],
+  "datasets": [
+    "Document understanding data covers general document images",
+    "and more",
+    "charts",
+    "diagrams",
+    "encompassing diverse visual Q\u0026A tasks.",
+    "flowcharts"
+  ],
+  "metrics": null,
+  "limitations": [
+    "The study centers on Donut as a proof of concept for a broader class of VLMs.",
+    "Two images in the CORD subset were fully pruned and excluded from FLOPs computation, assigned 0 score for F1 and normalized TED accuracy."
+  ]
+}

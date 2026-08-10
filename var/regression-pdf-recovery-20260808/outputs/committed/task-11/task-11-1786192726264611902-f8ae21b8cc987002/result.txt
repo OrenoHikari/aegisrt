@@ -1,0 +1,41 @@
+Paper: Interpret, prune and distill Donut : towards lightweight VLMs for VQA on document
+Parser: python-pypdf
+Pages: 20
+Sections: 32
+Characters: 26329
+Duration: 552ms
+Fallback: false
+Truncated: false
+Warnings: 0
+- Unknown (224 chars)
+- DIENS, École Normale Supérieure of Paris, Paris, France (31 chars)
+- Be-ys Research, Paris, France (1250 chars)
+- Introduction (5115 chars)
+- Mechanistic Interpretability (2760 chars)
+- Compression T echniques for T ransformer-based Models (2572 chars)
+- Our framework (857 chars)
+- Donut overview (794 chars)
+- S0 c0 m0 s1 c1 m1 s2 c2 m2 s3 c3 m3 (311 chars)
+- Mechanistic Interpretability (2001 chars)
+- Guided Pruning (1181 chars)
+- Knowledge distillation (1012 chars)
+- Setup (2293 chars)
+- Interpretability insights (1116 chars)
+- S0.sav (18 chars)
+- C0.cav (18 chars)
+- M0.ff (18 chars)
+- S1.sav (18 chars)
+- C1.cav (18 chars)
+- M1.ff (18 chars)
+- S2.sav (18 chars)
+- C2.cav (18 chars)
+- M2.ff (18 chars)
+- S3.sav (18 chars)
+- C3.cav (18 chars)
+- M3.ff (1859 chars)
+- 1.05 1.10 1.15 1.20 1.25 1.30 1.35 (192 chars)
+- 1.05 1.10 1.15 1.20 1.25 1.30 1.35 (2429 chars)
+- S0.sav (18 chars)
+- C0.cav (18 chars)
+- M0.ff (18 chars)
+- S1.sav (18 chars)

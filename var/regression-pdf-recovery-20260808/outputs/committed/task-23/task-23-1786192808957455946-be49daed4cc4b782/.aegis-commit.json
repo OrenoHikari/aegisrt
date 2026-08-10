@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "transaction_id": "task-23-1786192808957455946-be49daed4cc4b782",
+  "agent_id": "task-23",
+  "created_at": "2026-08-08T12:40:08.957608143Z",
+  "committed_at": "2026-08-08T12:40:08.97481454Z",
+  "file_count": 2,
+  "total_bytes": 36782,
+  "files": [
+    {
+      "path": "result.json",
+      "sha256": "e3c726ec742b4967e1029d2fb7cfdb2ab558e8bd84016cf85d9ea75e776ed30a",
+      "size_bytes": 36586,
+      "mode": "0444"
+    },
+    {
+      "path": "result.txt",
+      "sha256": "ac5b43535c952b4bb5e4c0c898217ad0966ccfd9ed43f33c33916df8797bf898",
+      "size_bytes": 196,
+      "mode": "0444"
+    }
+  ]
+}

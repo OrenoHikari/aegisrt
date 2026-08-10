@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "name": "real-small",
+  "mode": "real",
+  "goals": [
+    {
+      "id": "rec-representative-methods",
+      "category": "single-task",
+      "goal": "调研 Referring Expression Counting 领域的代表性工作，比较主要方法、数据集和评估指标，总结当前问题，并设计一个后续实验方案。",
+      "max_papers": 5
+    },
+    {
+      "id": "open-vocabulary-detection",
+      "category": "method-comparison",
+      "goal": "比较近五年开放词汇目标检测的主要技术路线、训练监督来源、优势与局限，并给出证据支持的结论。",
+      "max_papers": 4
+    },
+    {
+      "id": "document-layout-benchmarks",
+      "category": "datasets-metrics",
+      "goal": "调研文档版面分析常用的公开数据集和评估指标，说明它们覆盖的任务以及比较时的主要陷阱。",
+      "max_papers": 3
+    },
+    {
+      "id": "small-language-model-trends",
+      "category": "trend-analysis",
+      "goal": "总结 2023 年以来小语言模型高效推理研究的主要趋势，并区分论文事实与跨论文推断。",
+      "max_papers": 4
+    },
+    {
+      "id": "graph-foundation-experiment",
+      "category": "experiment-design",
+      "goal": "基于图基础模型的代表性工作，提出一个可复现的 baseline、数据集、指标和消融实验方案，并明确证据与建议的边界。",
+      "max_papers": 4
+    }
+  ]
+}

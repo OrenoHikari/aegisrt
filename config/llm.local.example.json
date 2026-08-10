@@ -1,0 +1,6 @@
+{
+  "base_url": "https://api.deepseek.com",
+  "api_key": "replace-with-your-deepseek-key",
+  "model": "deepseek-v4-pro",
+  "thinking": "disabled"
+}

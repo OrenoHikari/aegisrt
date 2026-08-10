@@ -1,0 +1,20 @@
+# Abstract
+REC-Bench studies compositional language and counting under distribution shift.
+
+# Introduction
+PROBLEM: Existing datasets use incompatible language templates and do not expose cross-dataset generalization.
+
+# Method
+METHOD: REC-Bench standardizes compositional query types and evaluates region and density baselines on controlled shifts.
+CONTRIBUTION: The benchmark separates attribute, relation, and negation queries and publishes a shared evaluation protocol.
+DATASET: REC-Bench
+METRIC: MAE, exact-count accuracy, calibration error
+
+# Results
+RESULT: All evaluated baselines lose at least 18 percent exact-count accuracy under relational distribution shift.
+
+# Limitations
+LIMITATION: REC-Bench contains synthetic query balancing and may not represent naturally occurring user language.
+
+# References
+[1] Referring expression comprehension survey.

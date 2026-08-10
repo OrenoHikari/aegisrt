@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "transaction_id": "task-2-1786192723008652645-2847aa07bec06550",
+  "agent_id": "task-2",
+  "created_at": "2026-08-08T12:38:43.00892924Z",
+  "committed_at": "2026-08-08T12:38:44.446878514Z",
+  "file_count": 3,
+  "total_bytes": 1308128,
+  "files": [
+    {
+      "path": "paper.pdf",
+      "sha256": "5c5f6655b854bac3cfdecd105af34c4dacf0dd0a0dce0f6e0579c4609abc8525",
+      "size_bytes": 1306594,
+      "mode": "0444"
+    },
+    {
+      "path": "result.json",
+      "sha256": "00155bb7bab87705fb5d5e4eed445e2eae1f32abbb56029c1858cb8d0bc77b7c",
+      "size_bytes": 1442,
+      "mode": "0444"
+    },
+    {
+      "path": "result.txt",
+      "sha256": "38546665bb4d7e1bf835c233117b72b9c8d0b8beec7c9311aa4c2937add8c33c",
+      "size_bytes": 92,
+      "mode": "0444"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "paper": {
+    "id": "2509.06415",
+    "title": "Index-Preserving Lightweight Token Pruning for Efficient Document Understanding in Vision-Language Models",
+    "authors": [
+      "Jaemin Son",
+      "Sujin Choi",
+      "Inyong Yun"
+    ],
+    "year": 2025,
+    "abstract": "Recent progress in vision-language models (VLMs) has led to impressive results in document understanding tasks, but their high computational demands remain a challenge. To mitigate the compute burdens, we propose a lightweight token pruning framework that filters out non-informative background regions from document images prior to VLM processing. A binary patch-level classifier removes non-text areas, and a max-pooling refinement step recovers fragmented text regions to enhance spatial coherence. Experiments on real-world document datasets demonstrate that our approach substantially lowers computational costs, while maintaining comparable accuracy.",
+    "arxiv_id": "2509.06415",
+    "url": "https://arxiv.org/abs/2509.06415",
+    "pdf_url": "https://arxiv.org/pdf/2509.06415v2",
+    "provider": "arxiv",
+    "metadata_sources": [
+      "arxiv"
+    ],
+    "full_text_available": true
+  },
+  "query": "lightweight vision language model document understanding",
+  "rank": 1,
+  "available": true,
+  "retryable": false,
+  "content_type": "application/pdf",
+  "bytes": 1306594,
+  "source_url": "https://arxiv.org/pdf/2509.06415v2",
+  "artifact": "paper.pdf"
+}

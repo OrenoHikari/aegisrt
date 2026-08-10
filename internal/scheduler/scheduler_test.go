@@ -133,3 +133,28 @@ func TestSchedulerRejectsDuplicateAgentID(t *testing.T) {
 	s.Wait()
 	s.Stop()
 }
+
+func TestSchedulerPropagatesJobContextAndMetadata(t *testing.T) {
+	executor := &fakeExecutor{}
+	s, err := New(executor, 1, 4)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithCancel(context.Background())
+	metadata := map[string]string{"run_id": "run-1", "iteration": "2"}
+	if err := s.Submit(Job{
+		Agent: agent.New("cancelled-agent", "test", "fake", nil), Context: ctx,
+		Metadata: metadata, Timeout: time.Second,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	metadata["run_id"] = "mutated"
+	cancel()
+	s.Start()
+	s.Wait()
+	s.Stop()
+	records := s.Snapshot()
+	if len(records) != 1 || records[0].Phase != PhaseFailed || records[0].Metadata["run_id"] != "run-1" {
+		t.Fatalf("unexpected cancellation record: %+v", records)
+	}
+}

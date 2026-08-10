@@ -1,0 +1,4 @@
+PROPOSAL hypothesis: Combining complementary components from the reviewed routes "Granite Vision extends the Granite family of LLMs trained on more than 12 trillion tokens." and "The model is trained with a four-stage curriculum with memory-efficient techniques." will improve the primary evaluation metrics for the research goal "设计一个可以在单张消费级 GPU 上执行的后续实验，基于视觉语言模型在文档理解中的轻量化方法调研。" under a common protocol.
+Baselines: 4
+Ablations: 3
+Risks: 3

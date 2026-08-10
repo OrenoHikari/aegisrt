@@ -1,0 +1,6 @@
+Paper: Index-Preserving Lightweight Token Pruning for Efficient Document Understanding in Vision-Language Models
+Problem: 
+Method: The proposed method is a lightweight pre-encoder token pruning framework that removes non-informative background patches using a binary text-region classifier with a max-pooling refinement step.
+Datasets: 
+Metrics: 
+Evidence: 7

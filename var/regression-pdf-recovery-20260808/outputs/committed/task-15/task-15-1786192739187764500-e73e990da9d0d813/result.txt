@@ -1,0 +1,6 @@
+Paper: SEA-Vision: A Multilingual Benchmark for Comprehensive Document and Scene Text Understanding in Southeast Asia
+Problem: 
+Method: 
+Datasets: 
+Metrics: 
+Evidence: 0

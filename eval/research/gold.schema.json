@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CAPSuleAgent real research gold annotations",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "suite", "goals"],
+  "properties": {
+    "version": {"const": 1},
+    "suite": {"type": "string", "minLength": 1},
+    "goals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["goal_id", "status", "papers"],
+        "properties": {
+          "goal_id": {"type": "string", "minLength": 1},
+          "status": {"enum": ["PENDING", "IN_PROGRESS", "COMPLETE"]},
+          "papers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["paper_id", "findings"],
+              "properties": {
+                "paper_id": {"type": "string", "minLength": 1},
+                "title": {"type": "string"},
+                "findings": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 5,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["claim", "section", "evidence", "reviewed", "evidence_exists", "supports_claim", "overstated", "attribution_correct"],
+                    "properties": {
+                      "claim": {"type": "string", "minLength": 1},
+                      "section": {"type": "string", "minLength": 1},
+                      "evidence": {"type": "string", "minLength": 1},
+                      "reviewed": {"type": "boolean"},
+                      "evidence_exists": {"type": "boolean"},
+                      "supports_claim": {"type": "boolean"},
+                      "overstated": {"type": "boolean"},
+                      "attribution_correct": {"type": "boolean"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

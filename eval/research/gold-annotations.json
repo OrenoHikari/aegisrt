@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "suite": "real-small",
+  "goals": [
+    {"goal_id": "rec-representative-methods", "status": "PENDING", "papers": []},
+    {"goal_id": "open-vocabulary-detection", "status": "PENDING", "papers": []},
+    {"goal_id": "document-layout-benchmarks", "status": "PENDING", "papers": []},
+    {"goal_id": "small-language-model-trends", "status": "PENDING", "papers": []},
+    {"goal_id": "graph-foundation-experiment", "status": "PENDING", "papers": []}
+  ]
+}

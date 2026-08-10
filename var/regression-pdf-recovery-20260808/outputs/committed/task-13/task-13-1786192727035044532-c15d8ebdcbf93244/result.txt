@@ -1,0 +1,6 @@
+Paper: Granite Vision: a lightweight, open-source multimodal model for enterprise Intelligence
+Problem: Existing models are predominantly trained on natural images, limiting performance in visual document understanding.
+Method: Granite Vision extends the Granite family of LLMs trained on more than 12 trillion tokens.
+Datasets: Document understanding data covers general document images, and more, charts, diagrams, encompassing diverse visual Q&A tasks., flowcharts
+Metrics: 
+Evidence: 12
